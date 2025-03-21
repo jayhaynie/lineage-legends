@@ -1,0 +1,27 @@
+#create-profile-div {
+    position: absolute;
+    display: block;
+}
+#log-in-div {
+    position: absolute;
+    display: block;
+    top: 10%;
+}
+#create-username-div {
+    position: absolute;
+    display: none;
+    top: 10%;
+}
+#log-in-username-div {
+    position: absolute;
+    display: none;
+    top: 10%;
+}
+#create-header {
+    position: absolute;
+    display: none;
+}
+#log-header {
+    position: absolute;
+    display: none;
+}
