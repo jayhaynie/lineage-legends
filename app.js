@@ -2,25 +2,32 @@ document.addEventListener('DOMContentLoaded', () => {
 	
 })
 
-const createProfileButtonDiv = document.getElementById("create-profile-div");
-const createProfileButton = document.getElementById("create-profile-button");
-const createUsernameDiv = document.getElementById("create-username-div");
+const titleButton = document.getElementById("title-button");
 const createHeader = document.getElementById("create-header");
-const logInButtonDiv = document.getElementById("log-in-div");
-const logInButton = document.getElementById("log-in-button");
-const logInUsernameDiv = document.getElementById("log-in-username-div");
+const createButton = document.getElementById("create-button");
 const logHeader = document.getElementById("log-header");
+const logButton = document.getElementById("log-button");
 
-createProfileButton.addEventListener('click', function() {
-    createProfileButtonDiv.style.display = "none";
-    logInButtonDiv.style.display = "none";
-    createUsernameDiv.style.display = "block";
+//change background, hide old button, show headers and new buttons
+titleButton.addEventListener('click', function() {
+    document.body.style.backgroundImage = "url('images/account-background.png')";
+    titleButton.style.display = "none";
     createHeader.style.display = "block";
+    createButton.style.display = "block";
+    logHeader.style.display = "block";
+    logButton.style.display = "block";
 });
 
-logInButton.addEventListener('click', function() {
-    createProfileButtonDiv.style.display = "none";
-    logInButtonDiv.style.display = "none";
-    logInUsernameDiv.style.display = "block";
-    logHeader.style.display = "block";
+createButton.addEventListener('click', function() {
+    createHeader.style.display = "none";
+    createButton.style.display = "none";
+    logHeader.style.display = "none";
+    logButton.style.display = "none";
+});
+
+logButton.addEventListener('click', function() {
+    createHeader.style.display = "none";
+    createButton.style.display = "none";
+    logHeader.style.display = "none";
+    logButton.style.display = "none";
 });

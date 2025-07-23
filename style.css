@@ -1,27 +1,69 @@
-#create-profile-div {
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-image: url('images/title-background.png');
+    background-size: cover;      
+    background-repeat: no-repeat; 
+    background-position: center;
+}
+
+/* TITLE PAGE */
+#title-button {
     position: absolute;
     display: block;
+    top: 90%;
+    left: 45%;
+    width: 8%;
+    height: 5%;
+    font-size: 30px;
+    font-weight: bold;
+    color: goldenrod;
+    background-color: grey;
 }
-#log-in-div {
-    position: absolute;
-    display: block;
-    top: 10%;
-}
-#create-username-div {
-    position: absolute;
-    display: none;
-    top: 10%;
-}
-#log-in-username-div {
-    position: absolute;
-    display: none;
-    top: 10%;
-}
+
+/* CREATE/LOG IN PAGE */
 #create-header {
     position: absolute;
     display: none;
+    top: 40%;
+    left: 23%;
+    font-size: 30px;
+    font-weight: bold;
+    color: royalblue;
+}
+#create-button {
+    position: absolute;
+    display: none;
+    top: 50%;
+    left: 25%;
+    width: 8%;
+    height: 10%;
+    font-size: 30px;
+    font-weight: bold;
+    color: goldenrod;
+    background-color: grey;
 }
 #log-header {
     position: absolute;
     display: none;
+    top: 40%;
+    left: 63%;
+    font-size: 30px;
+    font-weight: bold;
+    color: royalblue;
+}
+#log-button {
+    position: absolute;
+    display: none;
+    top: 51%;
+    left: 67%;
+    width: 8%;
+    height: 5%;
+    font-size: 30px;
+    font-weight: bold;
+    color: goldenrod;
+    background-color: grey;
 }
