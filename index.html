@@ -13,6 +13,59 @@
 
 		<h2 id="log-header">RETURNING PLAYERS</h2>
 		<button id="log-button">LOG IN</button>
+
+		<h2 id="create-headerTwo">CREATE ACCOUNT</h2>
+		<h2 id="log-headerTwo">LOG IN</h2>
+		<div id="input-username-div">
+			<label id ="label-username" for="input-username">USERNAME</label>
+			<input type="text" id="input-username" name="input-username">
+		</div>
+		<div id="input-password-div">
+			<label id ="label-password" for="input-password">PASSWORD</label>
+			<input type="text" id="input-password" name="input-password">
+		</div>
+		<button id="switch-to-log">Log In Instead</button>
+		<button id="switch-to-create">Create Account Instead</button>
+		<button id="submit-button">PLAY</button>
+
+		<div id="select-leader-div">
+			<h2 id="select-leader-header">LEADER</h2>
+			<img id="gold-left-arrow" src="images/gold-left-arrow.png">
+			<img id="gold-right-arrow" src="images/gold-right-arrow.png">
+			<div id="select-leader-image-div">
+				<img id="select-leader-image" src="images/leader-characters/braynieLeader.png">
+				<p id="select-leader-health">h0</p>
+				<p id="select-leader-protection">p0</p>
+				<p id="select-leader-ability1-name">Ability Name</p>
+				<p id="select-leader-ability1-desc">ability description that may go a little bit longer to explain</p>
+				<p id="select-leader-ability2-name">Ability Name</p>
+				<p id="select-leader-ability2-desc">ability description</p>
+			</div>
+			<h2 id="select-leader-type">SUPPORT</h2>
+		</div>
+		<div id="select-fcard-div">
+			<h2 id="select-fcard-header">FIRST CARD</h2>
+			<img id="silver-left-arrow" src="images/silver-left-arrow.png">
+			<img id="silver-right-arrow" src="images/silver-right-arrow.png">
+			<div id="select-fcard-image-div">
+				<img id="select-fcard-image" src="images/base-characters/jonatorBase.png">
+				<p id="select-fcard-health">h0</p>
+				<p id="select-fcard-protection">p0</p>
+				<p id="select-fcard-ability1-name">Ability Name</p>
+				<p id="select-fcard-ability1-desc">ability description that may go a little bit longer to explain</p>
+				<p id="select-fcard-ability2-name">Ability Name</p>
+				<p id="select-fcard-ability2-desc">ability description</p>
+			</div>
+			<h2 id="select-fcard-type">FIGHTER</h2>
+		</div>
+		<audio id="menu-music" src="sounds/menu.mp3" loop="true"></audio>
+		<img id="music-icon" src="images/white-note.png">
+		<div id="music-options">
+			<button id="mute-music-button">Mute</button>
+			<input type="range" id="music-volume-slider" min="0" max="1" step="0.01" value="1">
+			<label for="music-volume-slider">Volume</label>
+			<button id="close-music-options">Close</button>
+		</div>
 	</body>
 	<script src="app.js" charset="UTF-8"></script>
 </html>

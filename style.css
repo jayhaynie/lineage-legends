@@ -23,6 +23,24 @@ body {
     color: goldenrod;
     background-color: grey;
 }
+#music-icon {
+    display: none;
+    position: absolute;
+    top: 5%;
+    right: 2%;
+    height: 7%;
+    width: 4%;
+}
+#music-options {
+    display: none;
+    position: absolute;
+    top: 5%;
+    right: 8%;
+    background:#222;
+    color:#fff;
+    padding:20px;
+    border-radius:10px;
+}
 
 /* CREATE/LOG IN PAGE */
 #create-header {
@@ -66,4 +84,283 @@ body {
     font-weight: bold;
     color: goldenrod;
     background-color: grey;
+}
+#create-headerTwo {
+    position: absolute;
+    display: none;
+    top: 25%;
+    left: 10%;
+    font-size: 40px;
+    font-weight: bold;
+    color: royalblue;
+}
+#log-headerTwo {
+    position: absolute;
+    display: none;
+    top: 25%;
+    left: 10%;
+    font-size: 40px;
+    font-weight: bold;
+    color: royalblue;
+}
+#input-username-div {
+    position: absolute;
+    display: none;
+    top: 40%;
+    left: 10%;
+}
+#label-username {
+    font-size: 20px;
+    font-weight: bold;
+    color: lightgrey;
+}
+#input-username {
+    font-size: 20px;
+    font-weight: bold;
+    color: forestgreen;
+}
+#input-password-div {
+    position: absolute;
+    display: none;
+    top: 60%;
+    left: 10%;
+}
+#label-password {
+    font-size: 20px;
+    font-weight: bold;
+    color: lightgrey;
+}
+#input-password {
+    font-size: 20px;
+    font-weight: bold;
+    color: forestgreen;
+}
+#submit-button {
+    position: absolute;
+    display: none;
+    top: 66%;
+    left: 18%;
+    width: 8%;
+    height: 5%;
+    font-size: 30px;
+    font-weight: bold;
+    color: forestgreen;
+    background-color: grey;
+}
+#switch-to-log {
+    position: absolute;
+    display: none;
+    top: 85%;
+    left: 18%;
+    width: 8%;
+    height: 10%;
+    font-size: 30px;
+    font-weight: bold;
+    color: goldenrod;
+    background-color: grey;
+}
+#switch-to-create {
+    position: absolute;
+    display: none;
+    top: 85%;
+    left: 14%;
+    width: 14%;
+    height: 10%;
+    font-size: 30px;
+    font-weight: bold;
+    color: goldenrod;
+    background-color: grey;
+}
+
+#select-leader-div {
+    position: absolute;
+    display: none;
+    top: 21%;
+    left: 33%;
+    height: 78%;
+    width: 30%;
+    /* border: solid, 4px, red; */
+}
+#select-fcard-div {
+    position: absolute;
+    display: none;
+    top: 21%;
+    left: 66%;
+    height: 78%;
+    width: 30%;
+    /* border: solid, 4px, orange; */
+}
+#select-leader-header {
+    position: absolute;
+    left: 34%;
+    font-size: 40px;
+    font-weight: bold;
+    color: royalblue;
+}
+#select-fcard-header {
+    position: absolute;
+    left: 30%;
+    font-size: 40px;
+    font-weight: bold;
+    color: royalblue;
+}
+#gold-left-arrow {
+    position: absolute;
+    top: 45%;
+    left: 0%;
+    height: 10%;
+    width: 10%;
+}
+#gold-right-arrow {
+    position: absolute;
+    top: 45%;
+    right: 0%;
+    height: 10%;
+    width: 10%;
+}
+#silver-left-arrow {
+    position: absolute;
+    top: 45%;
+    left: 0%;
+    height: 10%;
+    width: 10%;
+}
+#silver-right-arrow {
+    position: absolute;
+    top: 45%;
+    right: 0%;
+    height: 10%;
+    width: 10%;
+}
+#select-leader-image-div {
+    position: absolute;
+    top: 12%;
+    left: 15%;
+    width: 70%;
+    /* border: solid, 4px, orange; */
+}
+#select-fcard-image-div {
+    position: absolute;
+    top: 12%;
+    left: 15%;
+    width: 70%;
+    /* border: solid, 4px, red; */
+}
+#select-leader-image {
+    width: 100%;
+}
+#select-fcard-image {
+    width: 100%;
+}
+#select-leader-type {
+    position: absolute;
+    bottom: 0%;
+    left: 38.5%;
+    font-size: 30px;
+    font-weight: bold;
+    color: cyan;
+}
+#select-fcard-type {
+    position: absolute;
+    bottom: 0%;
+    left: 38.5%;
+    font-size: 30px;
+    font-weight: bold;
+    color: cyan;
+}
+#select-leader-health {
+    position: absolute;
+    top: 43%;
+    left: 13.5%;
+    font-size: 200%;
+    color: white;
+    font-weight: bold;
+}
+#select-fcard-health {
+    position: absolute;
+    top: 43%;
+    left: 13.5%;
+    font-size: 200%;
+    color: white;
+    font-weight: bold;
+}
+#select-leader-protection {
+    position: absolute;
+    top: 43%;
+    left: 78.5%;
+    font-size: 200%;
+    color: white;
+    font-weight: bold;
+}
+#select-fcard-protection {
+    position: absolute;
+    top: 43%;
+    left: 78.5%;
+    font-size: 200%;
+    color: white;
+    font-weight: bold;
+}
+#select-leader-ability1-name {
+    position: absolute;
+    top: 57%;
+    left: 10%;
+    font-size: 150%;
+    color: blue;
+    font-weight: bold;
+}
+#select-fcard-ability1-name {
+    position: absolute;
+    top: 57%;
+    left: 10%;
+    font-size: 150%;
+    color: blue;
+    font-weight: bold;
+}
+#select-leader-ability1-desc {
+    position: absolute;
+    top: 62%;
+    left: 10%;
+    font-size: 125%;
+    font-weight: bold;
+    padding-right: 10%;
+}
+#select-fcard-ability1-desc {
+    position: absolute;
+    top: 62%;
+    left: 10%;
+    font-size: 125%;
+    font-weight: bold;
+    padding-right: 10%;
+}
+#select-leader-ability2-name {
+    position: absolute;
+    top: 72%;
+    left: 10%;
+    font-size: 150%;
+    color: purple;
+    font-weight: bold;
+}
+#select-fcard-ability2-name {
+    position: absolute;
+    top: 72%;
+    left: 10%;
+    font-size: 150%;
+    color: purple;
+    font-weight: bold;
+}
+#select-leader-ability2-desc {
+    position: absolute;
+    top: 77%;
+    left: 10%;
+    font-size: 125%;
+    font-weight: bold;
+    padding-right: 10%;
+}
+#select-fcard-ability2-desc {
+    position: absolute;
+    top: 77%;
+    left: 10%;
+    font-size: 125%;
+    font-weight: bold;
+    padding-right: 10%;
 }
