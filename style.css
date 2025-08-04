@@ -270,32 +270,32 @@ body {
 }
 #select-leader-health {
     position: absolute;
-    top: 43%;
+    top: 1%;
     left: 13.5%;
     font-size: 200%;
-    color: white;
+    color: forestgreen;
     font-weight: bold;
 }
 #select-fcard-health {
     position: absolute;
-    top: 43%;
+    top: 1%;
     left: 13.5%;
     font-size: 200%;
-    color: white;
+    color: forestgreen;
     font-weight: bold;
 }
 #select-leader-protection {
     position: absolute;
-    top: 43%;
-    left: 78.5%;
+    top: 1%;
+    left: 80%;
     font-size: 200%;
     color: white;
     font-weight: bold;
 }
 #select-fcard-protection {
     position: absolute;
-    top: 43%;
-    left: 78.5%;
+    top: 1%;
+    left: 80%;
     font-size: 200%;
     color: white;
     font-weight: bold;
@@ -303,7 +303,7 @@ body {
 #select-leader-ability1-name {
     position: absolute;
     top: 57%;
-    left: 10%;
+    left: 15%;
     font-size: 150%;
     color: blue;
     font-weight: bold;
@@ -311,7 +311,7 @@ body {
 #select-fcard-ability1-name {
     position: absolute;
     top: 57%;
-    left: 10%;
+    left: 15%;
     font-size: 150%;
     color: blue;
     font-weight: bold;
@@ -319,23 +319,23 @@ body {
 #select-leader-ability1-desc {
     position: absolute;
     top: 62%;
-    left: 10%;
+    left: 15%;
     font-size: 125%;
     font-weight: bold;
-    padding-right: 10%;
+    padding-right: 15%;
 }
 #select-fcard-ability1-desc {
     position: absolute;
     top: 62%;
-    left: 10%;
+    left: 15%;
     font-size: 125%;
     font-weight: bold;
-    padding-right: 10%;
+    padding-right: 15%;
 }
 #select-leader-ability2-name {
     position: absolute;
     top: 72%;
-    left: 10%;
+    left: 15%;
     font-size: 150%;
     color: purple;
     font-weight: bold;
@@ -343,7 +343,7 @@ body {
 #select-fcard-ability2-name {
     position: absolute;
     top: 72%;
-    left: 10%;
+    left: 15%;
     font-size: 150%;
     color: purple;
     font-weight: bold;
@@ -351,16 +351,80 @@ body {
 #select-leader-ability2-desc {
     position: absolute;
     top: 77%;
-    left: 10%;
+    left: 15%;
     font-size: 125%;
     font-weight: bold;
-    padding-right: 10%;
+    padding-right: 15%;
 }
 #select-fcard-ability2-desc {
     position: absolute;
     top: 77%;
-    left: 10%;
+    left: 15%;
     font-size: 125%;
     font-weight: bold;
-    padding-right: 10%;
+    padding-right: 15%;
+}
+#select-leader-ability1-cost {
+    position: absolute;
+    top: 57%;
+    left: 7%;
+    font-size: 200%;
+    color: slategray;
+    font-weight: bold;
+}
+#select-leader-ability1-uses {
+    position: absolute;
+    top: 57%;
+    right: 7%;
+    font-size: 200%;
+    color: slategray;
+    font-weight: bold;
+}
+#select-leader-ability2-cost {
+    position: absolute;
+    top: 72%;
+    left: 7%;
+    font-size: 200%;
+    color: slategray;
+    font-weight: bold;
+}
+#select-leader-ability2-uses {
+    position: absolute;
+    top: 72%;
+    right: 7%;
+    font-size: 200%;
+    color: slategray;
+    font-weight: bold;
+}
+#select-fcard-ability1-cost {
+    position: absolute;
+    top: 57%;
+    left: 7%;
+    font-size: 200%;
+    color: slategray;
+    font-weight: bold;
+}
+#select-fcard-ability1-uses {
+    position: absolute;
+    top: 57%;
+    right: 7%;
+    font-size: 200%;
+    color: slategray;
+    font-weight: bold;
+}
+#select-fcard-ability2-cost {
+    position: absolute;
+    top: 72%;
+    left: 7%;
+    font-size: 200%;
+    color: slategray;
+    font-weight: bold;
+}
+#select-fcard-ability2-uses {
+    position: absolute;
+    top: 72%;
+    right: 7%;
+    font-size: 200%;
+    color: slategray;
+    font-weight: bold;
 }

@@ -24,9 +24,9 @@ titleButton.addEventListener('click', function() {
     logHeader.style.display = "block";
     logButton.style.display = "block";
 
-    //start playing music
-    menuMusic.play();
-    musicIcon.style.display = "block";
+    // start playing music
+    // menuMusic.play();
+    // musicIcon.style.display = "block";
 });
 
 // Music stuff
@@ -172,8 +172,12 @@ const selectLeaderHealth = document.getElementById("select-leader-health");
 const selectLeaderProtection = document.getElementById("select-leader-protection");
 const selectLeaderAbility1Name = document.getElementById("select-leader-ability1-name");
 const selectLeaderAbility1Desc = document.getElementById("select-leader-ability1-desc");
+const selectLeaderAbility1Cost = document.getElementById("select-leader-ability1-cost");
+const selectLeaderAbility1Uses = document.getElementById("select-leader-ability1-uses");
 const selectLeaderAbility2Name = document.getElementById("select-leader-ability2-name");
 const selectLeaderAbility2Desc = document.getElementById("select-leader-ability2-desc");
+const selectLeaderAbility2Cost = document.getElementById("select-leader-ability2-cost");
+const selectLeaderAbility2Uses = document.getElementById("select-leader-ability2-uses");
 const selectLeaderType = document.getElementById("select-leader-type");
 
 const selectFcardImage = document.getElementById("select-fcard-image");
@@ -181,8 +185,12 @@ const selectFcardHealth = document.getElementById("select-fcard-health");
 const selectFcardProtection = document.getElementById("select-fcard-protection");
 const selectFcardAbility1Name = document.getElementById("select-fcard-ability1-name");
 const selectFcardAbility1Desc = document.getElementById("select-fcard-ability1-desc");
+const selectFcardAbility1Cost = document.getElementById("select-fcard-ability1-cost");
+const selectFcardAbility1Uses = document.getElementById("select-fcard-ability1-uses");
 const selectFcardAbility2Name = document.getElementById("select-fcard-ability2-name");
 const selectFcardAbility2Desc = document.getElementById("select-fcard-ability2-desc");
+const selectFcardAbility2Cost = document.getElementById("select-fcard-ability2-cost");
+const selectFcardAbility2Uses = document.getElementById("select-fcard-ability2-uses");
 const selectFcardType = document.getElementById("select-fcard-type");
 
 function loadLeader(image_id) {
@@ -194,8 +202,16 @@ function loadLeader(image_id) {
         selectLeaderProtection.textContent = "0"; // characters don't start with protection
         selectLeaderAbility1Name.textContent = data.ability1_name;
         selectLeaderAbility1Desc.textContent = data.ability1_desc;
+        selectLeaderAbility1Cost.textContent = data.ability1_cost;
+        if (data.ability1_uses > 99) {
+            selectLeaderAbility1Uses.innerHTML = '<img src="images/infinity-icon.png" style="width: 0.8em; height: 0.6em;">';
+        } else {
+            selectLeaderAbility1Uses.textContent = data.ability1_uses;
+        };
         selectLeaderAbility2Name.textContent = data.ability2_name;
         selectLeaderAbility2Desc.textContent = data.ability2_desc;
+        selectLeaderAbility2Cost.textContent = data.ability2_cost;
+        selectLeaderAbility2Uses.textContent = data.ability2_uses;
         selectLeaderType.textContent = data.type;
     })
     .catch(err => console.log(err));
@@ -210,8 +226,16 @@ function loadFcard(image_id) {
         selectFcardProtection.textContent = "0"; // characters don't start with protection
         selectFcardAbility1Name.textContent = data.ability1_name;
         selectFcardAbility1Desc.textContent = data.ability1_desc;
+        selectFcardAbility1Cost.textContent = data.ability1_cost;
+        if (data.ability1_uses > 99) {
+            selectFcardAbility1Uses.innerHTML = '<img src="images/infinity-icon.png" style="width: 0.8em; height: 0.6em;">';
+        } else {
+            selectFcardAbility1Uses.textContent = data.ability1_uses;
+        };
         selectFcardAbility2Name.textContent = data.ability2_name;
         selectFcardAbility2Desc.textContent = data.ability2_desc;
+        selectFcardAbility2Cost.textContent = data.ability2_cost;
+        selectFcardAbility2Uses.textContent = data.ability2_uses;
         selectFcardType.textContent = data.type;
     })
     .catch(err => console.log(err));
