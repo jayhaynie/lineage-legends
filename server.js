@@ -27,10 +27,49 @@ const pool = new Pool({
 app.post('/api/players', async (req, res) => {
   const { username, password } = req.body;
   try {
+    // Check if username exists
+    const exists = await pool.query('SELECT 1 FROM players WHERE username = $1', [username]);
+    if (exists.rows.length > 0) {
+      return res.status(409).json({ error: 'Username already exists, please log in or choose another username' });
+    }
+    // Insert new user
     const result = await pool.query(
       'INSERT INTO players (username, password) VALUES ($1, $2) RETURNING *',
       [username, password]
     );
+    // Sanitize table names (only allow alphanumeric and underscore)
+    const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
+    const progressTable = `${safeUsername}_progress`;
+    const cardsTable = `${safeUsername}_cards`;
+
+    // Create progress table
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS ${progressTable} (
+        arcane_track INT DEFAULT 0,
+        bandit_track INT DEFAULT 0,
+        ghoul_track INT DEFAULT 0,
+        legion_track INT DEFAULT 0,
+        bond INT DEFAULT 0,
+        wisdom INT DEFAULT 0
+      )
+    `);
+
+    // Create cards table
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS ${cardsTable} (
+        image_id VARCHAR(30),
+        function VARCHAR(30),
+        armor INT,
+        ability1_name VARCHAR(30),
+        ability1_desc VARCHAR(60),
+        ability1_cost INT,
+        ability1_uses INT,
+        ability2_name VARCHAR(30),
+        ability2_desc VARCHAR(60),
+        ability2_cost INT,
+        ability2_uses INT
+      )
+    `);
     res.status(201).json(result.rows[0]);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -79,7 +118,21 @@ app.get('/api/characters', async (req, res) => {
   }
 });
 
-
+app.get('/api/leader/:image_id', async (req, res) => {
+  const { image_id } = req.params;
+  try {
+    const result = await pool.query(
+      'SELECT * FROM characters_leader WHERE image_id = $1',
+      [image_id]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Leader not found' });
+    }
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 
 

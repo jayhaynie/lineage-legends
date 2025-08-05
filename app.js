@@ -132,24 +132,31 @@ switchToCreate.addEventListener('click', function() {
     console.log("New - " + entryMethod.newAccount + " Log - " + entryMethod.logIn);
 });
 
-
-//write and read from database for creat or log in
-const submitUsername = document.getElementById("input-username").value;
-const submitPassword = document.getElementById("input-password").value;
-
 submitButton.addEventListener('click', function() {
     const submitUsername = document.getElementById("input-username").value;
     const submitPassword = document.getElementById("input-password").value;
 
     if (entryMethod.newAccount === 1) {
-        fetch('http://localhost:3000/api/players', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: submitUsername, password: submitPassword })
-        })
-        .then(res => res.json())
-        .then(data => console.log(data));
-    }
+    fetch('http://localhost:3000/api/players', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: submitUsername, password: submitPassword })
+    })
+    .then(async res => {
+        if (res.status === 409) {
+            const data = await res.json();
+            alert(data.error); // Or show a message in your UI
+        } else {
+            return res.json();
+        }
+    })
+    .then(data => {
+        if (data) {
+            console.log(data);
+            // Proceed with account creation success
+        }
+    });
+}
     
     if (entryMethod.logIn === 1) {
         fetch(`http://localhost:3000/api/players/${submitUsername}`)
@@ -194,12 +201,12 @@ const selectFcardAbility2Uses = document.getElementById("select-fcard-ability2-u
 const selectFcardType = document.getElementById("select-fcard-type");
 
 function loadLeader(image_id) {
-  fetch(`http://localhost:3000/api/character/${image_id}`)
+  fetch(`http://localhost:3000/api/leader/${image_id}`)
     .then(res => res.json())
     .then(data => {
         selectLeaderImage.src = `images/leader-characters/${data.image_id}Leader.png`;
         selectLeaderHealth.textContent = data.health_max;
-        selectLeaderProtection.textContent = "0"; // characters don't start with protection
+        selectLeaderProtection.textContent = "0";
         selectLeaderAbility1Name.textContent = data.ability1_name;
         selectLeaderAbility1Desc.textContent = data.ability1_desc;
         selectLeaderAbility1Cost.textContent = data.ability1_cost;
@@ -207,7 +214,7 @@ function loadLeader(image_id) {
             selectLeaderAbility1Uses.innerHTML = '<img src="images/infinity-icon.png" style="width: 0.8em; height: 0.6em;">';
         } else {
             selectLeaderAbility1Uses.textContent = data.ability1_uses;
-        };
+        }
         selectLeaderAbility2Name.textContent = data.ability2_name;
         selectLeaderAbility2Desc.textContent = data.ability2_desc;
         selectLeaderAbility2Cost.textContent = data.ability2_cost;
@@ -242,8 +249,11 @@ function loadFcard(image_id) {
 }
 
 //cycle through leaders or fcards
-let imageIds = [];
-let imageIdsIndex = 0;
+let baseImageIds = [];
+let baseImageIdsIndex = 0;
+
+let leaderImageIds = [];
+let leaderImageIdsIndex = 0;
 
 const goldLeftArrow = document.getElementById("gold-left-arrow");
 const goldRightArrow = document.getElementById("gold-right-arrow");
@@ -254,40 +264,51 @@ const silverRightArrow = document.getElementById("silver-right-arrow");
 fetch('http://localhost:3000/api/characters')
   .then(res => res.json())
   .then(names => {
-    imageIds = names;
-    if (imageIds.length > 0) {
-        const randomIndex = Math.floor(Math.random() * imageIds.length);
-        loadLeader(imageIds[randomIndex]);
-        loadFcard(imageIds[randomIndex]);
+    baseImageIds = names;
+    if (baseImageIds.length > 0) {
+        const randomIndex = Math.floor(Math.random() * baseImageIds.length);
+        loadFcard(baseImageIds[randomIndex]);
     }
-    console.log(imageIds);
-    console.log(imageIdsIndex);
+    console.log(baseImageIds);
+    console.log(baseImageIdsIndex);
+  });
+
+fetch('http://localhost:3000/api/characters')
+  .then(res => res.json())
+  .then(names => {
+    leaderImageIds = names;
+    if (leaderImageIds.length > 0) {
+        const randomIndex = Math.floor(Math.random() * leaderImageIds.length);
+        loadLeader(leaderImageIds[randomIndex]);
+    }
+    console.log(leaderImageIds);
+    console.log(leaderImageIdsIndex);
   });
 
 // Left gold arrow button
 goldLeftArrow.addEventListener('click', function() {
-  if (imageIds.length === 0) return;
-  imageIdsIndex = (imageIdsIndex - 1 + imageIds.length) % imageIds.length;
-  loadLeader(imageIds[imageIdsIndex]);
+  if (leaderImageIds.length === 0) return;
+  leaderImageIdsIndex = (leaderImageIdsIndex - 1 + leaderImageIds.length) % leaderImageIds.length;
+  loadLeader(leaderImageIds[leaderImageIdsIndex]);
 });
 
 // Right gold arrow button
 goldRightArrow.addEventListener('click', function() {
-  if (imageIds.length === 0) return;
-  imageIdsIndex = (imageIdsIndex + 1) % imageIds.length;
-  loadLeader(imageIds[imageIdsIndex]);
+  if (leaderImageIds.length === 0) return;
+  leaderImageIdsIndex = (leaderImageIdsIndex + 1) % leaderImageIds.length;
+  loadLeader(leaderImageIds[leaderImageIdsIndex]);
 });
 
 // Left silver arrow button
 silverLeftArrow.addEventListener('click', function() {
-  if (imageIds.length === 0) return;
-  imageIdsIndex = (imageIdsIndex - 1 + imageIds.length) % imageIds.length;
-  loadFcard(imageIds[imageIdsIndex]);
+  if (baseImageIds.length === 0) return;
+  baseImageIdsIndex = (baseImageIdsIndex - 1 + baseImageIds.length) % baseImageIds.length;
+  loadFcard(baseImageIds[baseImageIdsIndex]);
 });
 
 // Right silver arrow button
 silverRightArrow.addEventListener('click', function() {
-  if (imageIds.length === 0) return;
-  imageIdsIndex = (imageIdsIndex + 1) % imageIds.length;
-  loadFcard(imageIds[imageIdsIndex]);
+  if (baseImageIds.length === 0) return;
+  baseImageIdsIndex = (baseImageIdsIndex + 1) % baseImageIds.length;
+  loadFcard(baseImageIds[baseImageIdsIndex]);
 });
