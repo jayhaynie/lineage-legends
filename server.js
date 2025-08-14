@@ -42,17 +42,12 @@ app.post('/api/players', async (req, res) => {
     const progressTable = `${safeUsername}_progress`;
     const cardsTable = `${safeUsername}_cards`;
 
-    // Create progress table
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS ${progressTable} (
-        arcane_track INT DEFAULT 0,
-        bandit_track INT DEFAULT 0,
-        ghoul_track INT DEFAULT 0,
-        legion_track INT DEFAULT 0,
-        bond INT DEFAULT 0,
-        wisdom INT DEFAULT 0
-      )
-    `);
+    // Insert a new row into the existing player_progress table
+    await pool.query(
+    `INSERT INTO player_progress (username, arcane_track, bandit_track, ghoul_track, legion_track, bond, wisdom)
+    VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+    [username, 0, 0, 0, 0, 0, 0] // or use actual values if you have them
+    );
 
     // Create cards table
     await pool.query(`

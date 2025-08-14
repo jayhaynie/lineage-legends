@@ -132,6 +132,13 @@ switchToCreate.addEventListener('click', function() {
     console.log("New - " + entryMethod.newAccount + " Log - " + entryMethod.logIn);
 });
 
+let dialogueProgress = "0.0";
+
+const dialogueSpeakerImage = document.getElementById("dialogue-speaker-image");
+const dialogueDiv = document.getElementById("dialogue-div");
+const dialogueSpeaker = document.getElementById("dialogue-speaker");
+const dialogueText = document.getElementById("dialogue-text");
+
 submitButton.addEventListener('click', function() {
     const submitUsername = document.getElementById("input-username").value;
     const submitPassword = document.getElementById("input-password").value;
@@ -154,9 +161,23 @@ submitButton.addEventListener('click', function() {
         if (data) {
             console.log(data);
             // Proceed with account creation success
+            document.body.style.backgroundImage = "url('images/background1.png')";
+            selectFcardDiv.style.display = "none";
+            selectLeaderDiv.style.display = "none";
+            createHeaderTwo.style.display = "none";
+            inputUsername.style.display = "none";
+            inputPassword.style.display = "none";
+            switchToLog.style.display = "none";
+            submitButton.style.display = "none";
+
+            dialogueDiv.style.display = "block";
+            dialogueSpeakerImage.style.display = "block";
+            dialogueSpeaker.textContent = "???";
+            dialogueText.textContent = `Thank you for showing up ${submitUsername}, we could really use your help.`;
+            dialogueProgress = "1.1";
         }
     });
-}
+    }
     
     if (entryMethod.logIn === 1) {
         fetch(`http://localhost:3000/api/players/${submitUsername}`)
@@ -170,6 +191,22 @@ submitButton.addEventListener('click', function() {
                 }
             })
             .catch(err => console.log("User not found or error:", err));
+    }
+});
+
+const dialogueArrow = document.getElementById("dialogue-arrow");
+dialogueArrow.addEventListener('click', function() {
+    if (dialogueProgress === "1.1") {
+        dialogueSpeaker.textContent = "ALDEN";
+        dialogueText.textContent = "I am Alden. Over the years enemy factions have been taking our land for themselves. We are simple farmers and traders without real leaders to protect us."
+        dialogueProgress = "1.2";
+    } else if (dialogueProgress === "1.2") {
+        document.body.style.backgroundImage = "url('images/maps/map_home.png')";
+        dialogueText.textContent = "This island is all we have been able to keep from them, but I fear not for much longer. I know very little of war, but use this island as a base to gather allies and resources."
+        dialogueProgress = "1.3";
+    } else if (dialogueProgress === "1.3") {
+        dialogueText.textContent = "You will need to fight through the enemy factions until you find their leader. Gather bond - our currency to finance your way to victory. On your way you will find traders to barter with, if you can recruit them to the island I'm sure they will give you discounted prices. Lastly - build what structures or defenses you may need  to be successful on your journey."
+        dialogueProgress = "1.4";
     }
 });
 
