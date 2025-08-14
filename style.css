@@ -451,17 +451,18 @@ body {
 }
 #dialogue-speaker {
     position: absolute;
-    top: 2%;
+    top: 0%;
     left: 3%;
-    font-size: 200%;
+    font-size: 300%;
     font-weight: bold;
+    color: gold;
 }
 #dialogue-text {
     position: absolute;
-    top: 18%;
+    top: 22%;
     left: 3%;
     padding-right: 5%;
-    font-size: 150%;
+    font-size: 200%;
     font-weight: bold;
 }
 #dialogue-arrow {
@@ -470,4 +471,124 @@ body {
     bottom: 7%;
     height: 20%;
     width: 3%;
+}
+
+/* home map */
+#home-buttons-div {
+    position: absolute;
+    display: none;
+    height: 100%;
+    width: 100%;
+}
+#home-sail-button {
+    position: absolute;
+    left: 10%;
+    bottom: 10%;
+    color: blue;
+    font-size: 30px;
+    font-weight: bold;
+}
+#home-build-button {
+    position: absolute;
+    left: 30%;
+    top: 50%;
+    color: blue;
+    font-size: 30px;
+    font-weight: bold;
+}
+#home-trade-button {
+    position: absolute;
+    left: 60%;
+    top: 55%;
+    color: blue;
+    font-size: 30px;
+    font-weight: bold;
+}
+#home-alden-button {
+    position: absolute;
+    right: 5%;
+    bottom: 5%;
+    color: gold;
+    font-size: 30px;
+    font-weight: bold;
+}
+/* arcane map */
+#arcane-buttons-div {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+/* legion map */
+#legion-buttons-div {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+/* bandit map */
+#bandit-buttons-div {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+/* ghoul map */
+#ghoul-buttons-div {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+/* sailing map */
+#sailing-map-div {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+.backing-img {
+    position: absolute;
+    top: 3%;
+    left: 3%;
+    width: 94%;
+    height: 94%;
+}
+#sail-to-text {
+    position: absolute;
+    top: 8%;
+    left: 45%;
+    font-size: 350%;
+    font-size: bold;
+    color: white;
+}
+#sailing-home-img {
+    position: absolute;
+    top: 35%;
+    left: 35%;
+    width: 20%;
+}
+#sailing-bandit-img {
+    position: absolute;
+    top: 10%;
+    left: 18%;
+    width: 20%;
+}
+#sailing-ghoul-img {
+    position: absolute;
+    top: 55%;
+    left: 12%;
+    width: 20%;
+}
+#sailing-legion-img {
+    position: absolute;
+    top: 45%;
+    left: 58%;
+    width: 20%;
+}
+#sailing-arcane-img {
+    position: absolute;
+    top: 70%;
+    left: 63%;
+    width: 20%;
 }

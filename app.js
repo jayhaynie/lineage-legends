@@ -133,6 +133,7 @@ switchToCreate.addEventListener('click', function() {
 });
 
 let dialogueProgress = "0.0";
+let leaderName = 'leaderName';
 
 const dialogueSpeakerImage = document.getElementById("dialogue-speaker-image");
 const dialogueDiv = document.getElementById("dialogue-div");
@@ -161,6 +162,7 @@ submitButton.addEventListener('click', function() {
         if (data) {
             console.log(data);
             // Proceed with account creation success
+
             document.body.style.backgroundImage = "url('images/background1.png')";
             selectFcardDiv.style.display = "none";
             selectLeaderDiv.style.display = "none";
@@ -173,7 +175,7 @@ submitButton.addEventListener('click', function() {
             dialogueDiv.style.display = "block";
             dialogueSpeakerImage.style.display = "block";
             dialogueSpeaker.textContent = "???";
-            dialogueText.textContent = `Thank you for showing up ${submitUsername}, we could really use your help.`;
+            dialogueText.textContent = `Thank you for showing up ${leaderName}, we could really use your help.`;
             dialogueProgress = "1.1";
         }
     });
@@ -195,6 +197,7 @@ submitButton.addEventListener('click', function() {
 });
 
 const dialogueArrow = document.getElementById("dialogue-arrow");
+const homeButtonsDiv = document.getElementById("home-buttons-div");
 dialogueArrow.addEventListener('click', function() {
     if (dialogueProgress === "1.1") {
         dialogueSpeaker.textContent = "ALDEN";
@@ -207,6 +210,14 @@ dialogueArrow.addEventListener('click', function() {
     } else if (dialogueProgress === "1.3") {
         dialogueText.textContent = "You will need to fight through the enemy factions until you find their leader. Gather bond - our currency to finance your way to victory. On your way you will find traders to barter with, if you can recruit them to the island I'm sure they will give you discounted prices. Lastly - build what structures or defenses you may need  to be successful on your journey."
         dialogueProgress = "1.4";
+    } else if (dialogueProgress === "1.4") {
+        dialogueText.textContent = `Heavens bless you on this adventure ${leaderName}. Return to me when you have defeated your first enemy leader and we will increase your abilities.`;
+        dialogueProgress = "1.5";
+    } else if (dialogueProgress === "1.5") {
+        dialogueDiv.style.display = "none";
+        dialogueSpeakerImage.style.display = "none";
+
+        homeButtonsDiv.style.display = "block";
     }
 });
 
@@ -257,6 +268,7 @@ function loadLeader(image_id) {
         selectLeaderAbility2Cost.textContent = data.ability2_cost;
         selectLeaderAbility2Uses.textContent = data.ability2_uses;
         selectLeaderType.textContent = data.type;
+        leaderName = data.name;
     })
     .catch(err => console.log(err));
 }
@@ -281,6 +293,7 @@ function loadFcard(image_id) {
         selectFcardAbility2Cost.textContent = data.ability2_cost;
         selectFcardAbility2Uses.textContent = data.ability2_uses;
         selectFcardType.textContent = data.type;
+        leaderName = data.name;
     })
     .catch(err => console.log(err));
 }
@@ -348,4 +361,166 @@ silverRightArrow.addEventListener('click', function() {
   if (baseImageIds.length === 0) return;
   baseImageIdsIndex = (baseImageIdsIndex + 1) % baseImageIds.length;
   loadFcard(baseImageIds[baseImageIdsIndex]);
+});
+
+//home buttons
+// homeButtonsDiv already defined above
+const legionButtonsDiv = document.getElementById("legion-buttons-div");
+const banditButtonsDiv = document.getElementById("bandit-buttons-div");
+const ghoulButtonsDiv = document.getElementById("ghoul-buttons-div");
+const arcaneButtonsDiv = document.getElementById("arcane-buttons-div");
+
+const homeSailButton = document.getElementById("home-sail-button");
+const homeTradeButton = document.getElementById("home-trade-button");
+const homeBuildButton = document.getElementById("home-build-button");
+const homeAldenButton = document.getElementById("home-alden-button");
+
+const banditSailButton = document.getElementById("bandit-sail-button");
+
+const ghoulSailButton = document.getElementById("ghoul-sail-button");
+
+const legionSailButton = document.getElementById("legion-sail-button");
+
+const arcaneSailButton = document.getElementById("arcane-sail-button");
+
+const sailingMapDiv = document.getElementById("sailing-map-div");
+const sailingHomeImg = document.getElementById("sailing-home-img");
+const sailingBanditImg = document.getElementById("sailing-bandit-img");
+const sailingGhoulImg = document.getElementById("sailing-ghoul-img");
+const sailingLegionImg = document.getElementById("sailing-legion-img");
+const sailingArcaneImg = document.getElementById("sailing-arcane-img");
+
+// sailing buttons logic
+let currentlyAt = "home";
+
+homeSailButton.addEventListener('click', function() {
+    sailingMapDiv.style.display = "block";
+    sailingArcaneImg.style.filter = "blur(5px)";
+    sailingBanditImg.style.filter = "blur(0px)";
+    sailingGhoulImg.style.filter = "blur(0px)";
+    sailingLegionImg.style.filter = "blur(0px)";
+    sailingHomeImg.style.filter = "blur(0px)";
+
+
+});
+banditSailButton.addEventListener('click', function() {
+    sailingMapDiv.style.display = "block";
+    sailingArcaneImg.style.filter = "blur(5px)";
+    sailingBanditImg.style.filter = "blur(0px)";
+    sailingGhoulImg.style.filter = "blur(0px)";
+    sailingLegionImg.style.filter = "blur(5px)";
+    sailingHomeImg.style.filter = "blur(0px)";
+
+
+});
+ghoulSailButton.addEventListener('click', function() {
+    sailingMapDiv.style.display = "block";
+    sailingArcaneImg.style.filter = "blur(5px)";
+    sailingBanditImg.style.filter = "blur(0px)";
+    sailingGhoulImg.style.filter = "blur(0px)";
+    sailingLegionImg.style.filter = "blur(5px)";
+    sailingHomeImg.style.filter = "blur(0px)";
+
+
+});
+legionSailButton.addEventListener('click', function() {
+    sailingMapDiv.style.display = "block";
+    sailingArcaneImg.style.filter = "blur(0px)";
+    sailingBanditImg.style.filter = "blur(5px)";
+    sailingGhoulImg.style.filter = "blur(5px)";
+    sailingLegionImg.style.filter = "blur(0px)";
+    sailingHomeImg.style.filter = "blur(0px)";
+
+
+});
+arcaneSailButton.addEventListener('click', function() {
+    sailingMapDiv.style.display = "block";
+    sailingArcaneImg.style.filter = "blur(0px)";
+    sailingBanditImg.style.filter = "blur(5px)";
+    sailingGhoulImg.style.filter = "blur(5px)";
+    sailingLegionImg.style.filter = "blur(0px)";
+    sailingHomeImg.style.filter = "blur(5px)";
+
+
+});
+
+sailingHomeImg.addEventListener('click', function() {
+    if (currentlyAt === "arcane") {
+        // do nothing
+    } else {
+        sailingMapDiv.style.display = "none";
+        ghoulButtonsDiv.style.display = "none";
+        legionButtonsDiv.style.display = "none";
+        banditButtonsDiv.style.display = "none";
+        arcaneButtonsDiv.style.display = "none";
+        currentlyAt = "home";
+
+        document.body.style.backgroundImage = "url('images/maps/map_home.png')";
+        homeButtonsDiv.style.display = "block";
+    }
+    
+});
+sailingArcaneImg.addEventListener('click', function() {
+    if (currentlyAt === "home" || currentlyAt === "ghoul" || currentlyAt === "bandit") {
+        //do nothing
+    } else {
+        sailingMapDiv.style.display = "none";
+        homeButtonsDiv.style.display = "none";
+        legionButtonsDiv.style.display = "none";
+        banditButtonsDiv.style.display = "none";
+        ghoulButtonsDiv.style.display = "none";
+        currentlyAt = "arcane";
+
+        document.body.style.backgroundImage = "url('images/maps/map_arcane.png')";
+        arcaneButtonsDiv.style.display = "block";
+    }
+    
+});
+sailingBanditImg.addEventListener('click', function() {
+    if (currentlyAt === "arcane" || currentlyAt === "legion") {
+        // do nothing
+    } else {
+        sailingMapDiv.style.display = "none";
+        homeButtonsDiv.style.display = "none";
+        legionButtonsDiv.style.display = "none";
+        arcaneButtonsDiv.style.display = "none";
+        ghoulButtonsDiv.style.display = "none";
+        currentlyAt = "bandit";
+
+        document.body.style.backgroundImage = "url('images/maps/map_bandit.png')";
+        banditButtonsDiv.style.display = "block";
+    }
+    
+});
+sailingGhoulImg.addEventListener('click', function() {
+    if (currentlyAt === "arcane" || currentlyAt === "legion") {
+        // do nothing
+    } else {
+        sailingMapDiv.style.display = "none";
+        homeButtonsDiv.style.display = "none";
+        legionButtonsDiv.style.display = "none";
+        banditButtonsDiv.style.display = "none";
+        arcaneButtonsDiv.style.display = "none";
+        currentlyAt = "ghoul";
+
+        document.body.style.backgroundImage = "url('images/maps/map_ghoul.png')";
+        ghoulButtonsDiv.style.display = "block";
+    }
+    
+});
+sailingLegionImg.addEventListener('click', function() {
+    if (currentlyAt === "bandit" || currentlyAt === "ghoul") {
+        // do nothing
+    } else {
+        sailingMapDiv.style.display = "none";
+        homeButtonsDiv.style.display = "none";
+        ghoulButtonsDiv.style.display = "none";
+        banditButtonsDiv.style.display = "none";
+        arcaneButtonsDiv.style.display = "none";
+        currentlyAt = "legion";
+
+        document.body.style.backgroundImage = "url('images/maps/map_legion.png')";
+        legionButtonsDiv.style.display = "block";
+    }
+    
 });
