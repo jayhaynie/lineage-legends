@@ -443,7 +443,7 @@ arcaneSailButton.addEventListener('click', function() {
 
 
 });
-
+//clickable images for sailing
 sailingHomeImg.addEventListener('click', function() {
     if (currentlyAt === "arcane") {
         // do nothing
@@ -522,5 +522,49 @@ sailingLegionImg.addEventListener('click', function() {
         document.body.style.backgroundImage = "url('images/maps/map_legion.png')";
         legionButtonsDiv.style.display = "block";
     }
+    
+});
+
+//battle logic
+function randomBetween(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+let difficulty = 1;
+
+const difficulty1 = {
+    enemies: randomBetween(1, 3),
+    reward: (20 * randomBetween(1, 3))
+
+}
+
+function randomEnemy() {
+    fetch(`http://localhost:3000/api/enemies/type/${currentlyAt}`)
+  .then(res => res.json())
+  .then(enemies => {
+    chosenEnemy = enemies[randomBetween(1, 6)];
+  })
+  .catch(err => console.log(err));
+}
+
+// function loadBaseEnemy
+
+// for (let i = 1; i <= difficulty${difficulty}.enemies; i++) {
+//     loadBaseEnemy
+// }
+
+//bandit battle buttons
+const banditCliffButton = document.getElementById("bandit-cliff-button");
+const banditCampButton = document.getElementById("bandit-camp-button");
+const banditGroveButton = document.getElementById("bandit-grove-button");
+const banditRiversideButton = document.getElementById("bandit-riverside-button");
+const banditCrossingButton = document.getElementById("bandit-crossing-button");
+const banditUpstreamButton = document.getElementById("bandit-upstream-button");
+const banditThicketButton = document.getElementById("bandit-thicket-button");
+const banditFortButton = document.getElementById("bandit-fort-button");
+
+banditCliffButton.addEventListener('click', function() {
+    document.body.style.backgroundImage = "url('images/battlegrounds/ground_bandit.png')";
+    banditButtonsDiv.style.display = "none";
+    
     
 });

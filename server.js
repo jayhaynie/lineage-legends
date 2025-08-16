@@ -34,20 +34,14 @@ app.post('/api/players', async (req, res) => {
     }
     // Insert new user
     const result = await pool.query(
-      'INSERT INTO players (username, password) VALUES ($1, $2) RETURNING *',
-      [username, password]
+    `INSERT INTO players (username, password, arcane_track, bandit_track, ghoul_track, legion_track, pirate_track, bond, wisdom)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`,
+    [username, password, 0, 0, 0, 0, 0, 0, 0]
     );
     // Sanitize table names (only allow alphanumeric and underscore)
     const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
-    const progressTable = `${safeUsername}_progress`;
     const cardsTable = `${safeUsername}_cards`;
 
-    // Insert a new row into the existing player_progress table
-    await pool.query(
-    `INSERT INTO player_progress (username, arcane_track, bandit_track, ghoul_track, legion_track, bond, wisdom)
-    VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-    [username, 0, 0, 0, 0, 0, 0] // or use actual values if you have them
-    );
 
     // Create cards table
     await pool.query(`
@@ -129,7 +123,21 @@ app.get('/api/leader/:image_id', async (req, res) => {
   }
 });
 
-
+app.get('/api/enemies/type/:type', async (req, res) => {
+  const { type } = req.params;
+  try {
+    const result = await pool.query(
+      'SELECT * FROM enemy WHERE type = $1',
+      [type]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'No enemies found for this type' });
+    }
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 
 app.listen(port, () => {

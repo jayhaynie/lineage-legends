@@ -519,12 +519,156 @@ body {
     width: 100%;
     height: 100%;
 }
+#arcane-sail-button {
+    position: absolute;
+    left: 10%;
+    top: 45%;
+    color: blue;
+    font-size: 30px;
+    font-weight: bold;
+}
+#arcane-trade-button {
+    position: absolute;
+    left: 70%;
+    top: 20%;
+    color: blue;
+    font-size: 30px;
+    font-weight: bold;
+}
+#arcane-beach1-button {
+    position: absolute;
+    left: 30%;
+    top: 65%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+#arcane-beach2-button {
+    position: absolute;
+    left: 55%;
+    top: 85%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+#arcane-academy-button {
+    position: absolute;
+    left: 30%;
+    top: 95%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+#arcane-fields-button {
+    position: absolute;
+    left: 65%;
+    top: 70%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+#arcane-falls-button {
+    position: absolute;
+    left: 50%;
+    top: 35%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+#arcane-town-button {
+    position: absolute;
+    left: 60%;
+    top: 30%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+#arcane-college-button {
+    position: absolute;
+    left: 60%;
+    top: 10%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
 /* legion map */
 #legion-buttons-div {
     position: absolute;
     display: none;
     width: 100%;
     height: 100%;
+}
+#legion-sail-button {
+    position: absolute;
+    left: 10%;
+    top: 60%;
+    color: blue;
+    font-size: 30px;
+    font-weight: bold;
+}
+#legion-trade-button {
+    position: absolute;
+    left: 80%;
+    top: 55%;
+    color: blue;
+    font-size: 30px;
+    font-weight: bold;
+}
+#legion-cliff-button {
+    position: absolute;
+    left: 40%;
+    top: 85%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+#legion-plains1-button {
+    position: absolute;
+    left: 55%;
+    top: 75%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+#legion-crossroads-button {
+    position: absolute;
+    left: 70%;
+    top: 70%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+#legion-plains2-button {
+    position: absolute;
+    left: 85%;
+    top: 85%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+#legion-steeps-button {
+    position: absolute;
+    left: 60%;
+    top: 45%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+#legion-courtyard-button {
+    position: absolute;
+    left: 45%;
+    top: 30%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+#legion-castle-button {
+    position: absolute;
+    left: 38%;
+    top: 25%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
 }
 /* bandit map */
 #bandit-buttons-div {
@@ -533,12 +677,156 @@ body {
     width: 100%;
     height: 100%;
 }
+#bandit-sail-button {
+    position: absolute;
+    left: 90%;
+    top: 90%;
+    color: blue;
+    font-size: 30px;
+    font-weight: bold;
+}
+#bandit-cliff-button {
+    position: absolute;
+    left: 85%;
+    top: 75%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+#bandit-camp-button {
+    position: absolute;
+    left: 50%;
+    top: 85%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+#bandit-grove-button {
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+#bandit-riverside-button {
+    position: absolute;
+    left: 45%;
+    top: 50%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+#bandit-crossing-button {
+    position: absolute;
+    left: 32%;
+    top: 20%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+#bandit-upstream-button {
+    position: absolute;
+    left: 28%;
+    top: 3%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+#bandit-thicket-button {
+    position: absolute;
+    left: 15%;
+    top: 40%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+#bandit-fort-button {
+    position: absolute;
+    left: 5%;
+    top: 10%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
 /* ghoul map */
 #ghoul-buttons-div {
     position: absolute;
     display: none;
     width: 100%;
     height: 100%;
+}
+#ghoul-sail-button {
+    position: absolute;
+    left: 90%;
+    top: 25%;
+    color: blue;
+    font-size: 30px;
+    font-weight: bold;
+}
+#ghoul-beach-button {
+    position: absolute;
+    left: 75%;
+    top: 25%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+#ghoul-walls-button {
+    position: absolute;
+    left: 85%;
+    top: 45%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+#ghoul-houses1-button {
+    position: absolute;
+    left: 75%;
+    top: 80%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+#ghoul-entrance-button {
+    position: absolute;
+    left: 40%;
+    top: 60%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+#ghoul-houses2-button {
+    position: absolute;
+    left: 20%;
+    top: 65%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+#ghoul-caves1-button {
+    position: absolute;
+    left: 40%;
+    top: 40%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+#ghoul-caves2-button {
+    position: absolute;
+    left: 55%;
+    top: 35%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+#ghoul-citadel-button {
+    position: absolute;
+    left: 50%;
+    top: 20%;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
 }
 /* sailing map */
 #sailing-map-div {
@@ -591,4 +879,54 @@ body {
     top: 70%;
     left: 63%;
     width: 20%;
+}
+
+/* battle */
+#battle-divs {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+#enemy1-div {
+    position: absolute;
+    top: 12%;
+    left: 15%;
+    width: 70%;
+    /* border: solid, 4px, red; */
+}
+#enemy1-img {
+    width: 100%;
+}
+#enemy1-health {
+    position: absolute;
+    top: 1%;
+    left: 13.5%;
+    font-size: 200%;
+    color: forestgreen;
+    font-weight: bold;
+}
+#enemy1-protection {
+    position: absolute;
+    top: 1%;
+    left: 80%;
+    font-size: 200%;
+    color: white;
+    font-weight: bold;
+}
+#enemy1-ability1-name {
+    position: absolute;
+    top: 57%;
+    left: 15%;
+    font-size: 150%;
+    color: blue;
+    font-weight: bold;
+}
+#enemy1-ability1-desc {
+    position: absolute;
+    top: 62%;
+    left: 15%;
+    font-size: 125%;
+    font-weight: bold;
+    padding-right: 15%;
 }
