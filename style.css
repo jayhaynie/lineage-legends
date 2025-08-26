@@ -888,11 +888,57 @@ body {
     width: 100%;
     height: 100%;
 }
+
+#deck-div {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 40%;
+    left: 2%;
+    height: 20%;
+    /* border: solid, 2px, red; */
+}
+#deck-img {
+    height: 100%;
+    filter: blur(2px);
+}
+
+#energy-title {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 47%;
+    right: 7%;
+    font-size: 2vw;
+    color: white;
+}
+#energy-count {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 47%;
+    right: 4%;
+    font-size: 2vw;
+    color: red;
+}
+
+#end-turn-button {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 53%;
+    right: 5.5%;
+    font-size: 1.5vw;
+    font-weight: bold;
+}
+
+/* enemy divs */
 #enemy1-div {
     position: absolute;
-    top: 12%;
-    left: 15%;
-    width: 70%;
+    display: none;
+    top: 2%;
+    left: 44%;
+    width: 12%;
     /* border: solid, 4px, red; */
 }
 #enemy1-img {
@@ -900,33 +946,1110 @@ body {
 }
 #enemy1-health {
     position: absolute;
-    top: 1%;
-    left: 13.5%;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    left: 10%;
     font-size: 200%;
     color: forestgreen;
     font-weight: bold;
+    /* border: solid, 4px, blue; */
 }
 #enemy1-protection {
     position: absolute;
-    top: 1%;
-    left: 80%;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    right: 12%;
     font-size: 200%;
     color: white;
     font-weight: bold;
+    /* border: solid, 4px, blue; */
 }
 #enemy1-ability1-name {
     position: absolute;
-    top: 57%;
+    margin: 0;
+    padding: 0;
+    top: 60%;
     left: 15%;
-    font-size: 150%;
+    font-size: 1vw;
     color: blue;
     font-weight: bold;
 }
 #enemy1-ability1-desc {
     position: absolute;
-    top: 62%;
+    margin: 0;
+    padding: 0;
+    top: 67%;
     left: 15%;
-    font-size: 125%;
+    font-size: 0.6vw;
     font-weight: bold;
     padding-right: 15%;
+}
+
+#enemy2-div {
+    position: absolute;
+    display: none;
+    top: 2%;
+    left: 58%;
+    width: 12%;
+    /* border: solid, 4px, red; */
+}
+#enemy2-img {
+    width: 100%;
+}
+#enemy2-health {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    left: 10%;
+    font-size: 200%;
+    color: forestgreen;
+    font-weight: bold;
+    /* border: solid, 4px, blue; */
+}
+#enemy2-protection {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    right: 12%;
+    font-size: 200%;
+    color: white;
+    font-weight: bold;
+    /* border: solid, 4px, blue; */
+}
+#enemy2-ability1-name {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 60%;
+    left: 15%;
+    font-size: 1vw;
+    color: blue;
+    font-weight: bold;
+}
+#enemy2-ability1-desc {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 67%;
+    left: 15%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    padding-right: 15%;
+}
+
+#enemy3-div {
+    position: absolute;
+    display: none;
+    top: 2%;
+    left: 30%;
+    width: 12%;
+    /* border: solid, 4px, red; */
+}
+#enemy3-img {
+    width: 100%;
+}
+#enemy3-health {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    left: 10%;
+    font-size: 200%;
+    color: forestgreen;
+    font-weight: bold;
+    /* border: solid, 4px, blue; */
+}
+#enemy3-protection {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    right: 12%;
+    font-size: 200%;
+    color: white;
+    font-weight: bold;
+    /* border: solid, 4px, blue; */
+}
+#enemy3-ability1-name {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 60%;
+    left: 15%;
+    font-size: 1vw;
+    color: blue;
+    font-weight: bold;
+}
+#enemy3-ability1-desc {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 67%;
+    left: 15%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    padding-right: 15%;
+}
+
+#enemy4-div {
+    position: absolute;
+    display: none;
+    top: 2%;
+    left: 72%;
+    width: 12%;
+    /* border: solid, 4px, red; */
+}
+#enemy4-img {
+    width: 100%;
+}
+#enemy4-health {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    left: 10%;
+    font-size: 200%;
+    color: forestgreen;
+    font-weight: bold;
+    /* border: solid, 4px, blue; */
+}
+#enemy4-protection {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    right: 12%;
+    font-size: 200%;
+    color: white;
+    font-weight: bold;
+    /* border: solid, 4px, blue; */
+}
+#enemy4-ability1-name {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 60%;
+    left: 15%;
+    font-size: 1vw;
+    color: blue;
+    font-weight: bold;
+}
+#enemy4-ability1-desc {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 67%;
+    left: 15%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    padding-right: 15%;
+}
+
+#enemy5-div {
+    position: absolute;
+    display: none;
+    top: 2%;
+    left: 16%;
+    width: 12%;
+    /* border: solid, 4px, red; */
+}
+#enemy5-img {
+    width: 100%;
+}
+#enemy5-health {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    left: 10%;
+    font-size: 200%;
+    color: forestgreen;
+    font-weight: bold;
+    /* border: solid, 4px, blue; */
+}
+#enemy5-protection {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    right: 12%;
+    font-size: 200%;
+    color: white;
+    font-weight: bold;
+    /* border: solid, 4px, blue; */
+}
+#enemy5-ability1-name {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 60%;
+    left: 15%;
+    font-size: 1vw;
+    color: blue;
+    font-weight: bold;
+}
+#enemy5-ability1-desc {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 67%;
+    left: 15%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    padding-right: 15%;
+}
+
+#enemy6-div {
+    position: absolute;
+    display: none;
+    top: 2%;
+    left: 86%;
+    width: 12%;
+    /* border: solid, 4px, red; */
+}
+#enemy6-img {
+    width: 100%;
+}
+#enemy6-health {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    left: 10%;
+    font-size: 200%;
+    color: forestgreen;
+    font-weight: bold;
+    /* border: solid, 4px, blue; */
+}
+#enemy6-protection {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    right: 12%;
+    font-size: 200%;
+    color: white;
+    font-weight: bold;
+    /* border: solid, 4px, blue; */
+}
+#enemy6-ability1-name {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 60%;
+    left: 15%;
+    font-size: 1vw;
+    color: blue;
+    font-weight: bold;
+}
+#enemy6-ability1-desc {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 67%;
+    left: 15%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    padding-right: 15%;
+}
+
+#enemy7-div {
+    position: absolute;
+    display: none;
+    top: 2%;
+    left: 2%;
+    width: 12%;
+    /* border: solid, 4px, red; */
+}
+#enemy7-img {
+    width: 100%;
+}
+#enemy7-health {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    left: 10%;
+    font-size: 200%;
+    color: forestgreen;
+    font-weight: bold;
+    /* border: solid, 4px, blue; */
+}
+#enemy7-protection {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    right: 12%;
+    font-size: 200%;
+    color: white;
+    font-weight: bold;
+    /* border: solid, 4px, blue; */
+}
+#enemy7-ability1-name {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 60%;
+    left: 15%;
+    font-size: 1vw;
+    color: blue;
+    font-weight: bold;
+}
+#enemy7-ability1-desc {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 67%;
+    left: 15%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    padding-right: 15%;
+}
+
+/* char divs */
+#char1-div {
+    position: absolute;
+    display: none;
+    bottom: 2%;
+    left: 44%;
+    width: 12%;
+    /* border: solid, 4px, red; */
+}
+#char1-img {
+    width: 100%;
+}
+#char1-health {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    left: 10%;
+    font-size: 200%;
+    color: forestgreen;
+    font-weight: bold;
+    /* border: solid, 4px, blue; */
+}
+#char1-protection {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    right: 10%;
+    font-size: 200%;
+    color: white;
+    font-weight: bold;
+    /* border: solid, 4px, blue; */
+}
+#char1-ability1-name {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 60%;
+    left: 15%;
+    font-size: 1vw;
+    color: blue;
+    font-weight: bold;
+}
+#char1-ability1-desc {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 67%;
+    left: 15%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    padding-right: 15%;
+}
+#char1-ability2-name {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 75%;
+    left: 15%;
+    font-size: 1vw;
+    color: blue;
+    font-weight: bold;
+}
+#char1-ability2-desc {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 82%;
+    left: 15%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    padding-right: 15%;
+}
+#char1-ability1-cost {
+    position: absolute;
+    top: 62%;
+    left: 7%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    color: red;
+}
+#char1-ability1-uses {
+    position: absolute;
+    top: 62%;
+    right: 9%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    color: green;
+}
+#char1-ability2-cost {
+    position: absolute;
+    top: 74%;
+    left: 7%;
+    font-size: 0.8vw;
+    font-weight: bold;
+    color: red;
+}
+#char1-ability2-uses {
+    position: absolute;
+    top: 74%;
+    right: 9%;
+    font-size: 0.8vw;
+    font-weight: bold;
+    color: green;
+}
+
+#char2-div {
+    position: absolute;
+    display: none;
+    bottom: 2%;
+    left: 58%;
+    width: 12%;
+    /* border: solid, 4px, red; */
+}
+#char2-img {
+    width: 100%;
+}
+#char2-health {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    left: 10%;
+    font-size: 200%;
+    color: forestgreen;
+    font-weight: bold;
+    /* border: solid, 4px, blue; */
+}
+#char2-protection {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    right: 10%;
+    font-size: 200%;
+    color: white;
+    font-weight: bold;
+    /* border: solid, 4px, blue; */
+}
+#char2-ability1-name {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 60%;
+    left: 15%;
+    font-size: 1vw;
+    color: blue;
+    font-weight: bold;
+}
+#char2-ability1-desc {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 67%;
+    left: 15%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    padding-right: 15%;
+}
+#char2-ability2-name {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 75%;
+    left: 15%;
+    font-size: 1vw;
+    color: blue;
+    font-weight: bold;
+}
+#char2-ability2-desc {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 82%;
+    left: 15%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    padding-right: 15%;
+}
+#char2-ability1-cost {
+    position: absolute;
+    top: 62%;
+    left: 7%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    color: red;
+}
+#char2-ability1-uses {
+    position: absolute;
+    top: 62%;
+    right: 9%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    color: green;
+}
+#char2-ability2-cost {
+    position: absolute;
+    top: 74%;
+    left: 7%;
+    font-size: 0.8vw;
+    font-weight: bold;
+    color: red;
+}
+#char2-ability2-uses {
+    position: absolute;
+    top: 74%;
+    right: 9%;
+    font-size: 0.8vw;
+    font-weight: bold;
+    color: green;
+}
+
+#char3-div {
+    position: absolute;
+    display: none;
+    bottom: 2%;
+    left: 30%;
+    width: 12%;
+    /* border: solid, 4px, red; */
+}
+#char3-img {
+    width: 100%;
+}
+#char3-health {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    left: 10%;
+    font-size: 200%;
+    color: forestgreen;
+    font-weight: bold;
+    /* border: solid, 4px, blue; */
+}
+#char3-protection {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    right: 10%;
+    font-size: 200%;
+    color: white;
+    font-weight: bold;
+    /* border: solid, 4px, blue; */
+}
+#char3-ability1-name {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 60%;
+    left: 15%;
+    font-size: 1vw;
+    color: blue;
+    font-weight: bold;
+}
+#char3-ability1-desc {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 67%;
+    left: 15%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    padding-right: 15%;
+}
+#char3-ability2-name {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 75%;
+    left: 15%;
+    font-size: 1vw;
+    color: blue;
+    font-weight: bold;
+}
+#char3-ability2-desc {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 82%;
+    left: 15%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    padding-right: 15%;
+}
+#char3-ability1-cost {
+    position: absolute;
+    top: 62%;
+    left: 7%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    color: red;
+}
+#char3-ability1-uses {
+    position: absolute;
+    top: 62%;
+    right: 9%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    color: green;
+}
+#char3-ability2-cost {
+    position: absolute;
+    top: 74%;
+    left: 7%;
+    font-size: 0.8vw;
+    font-weight: bold;
+    color: red;
+}
+#char3-ability2-uses {
+    position: absolute;
+    top: 74%;
+    right: 9%;
+    font-size: 0.8vw;
+    font-weight: bold;
+    color: green;
+}
+
+#char4-div {
+    position: absolute;
+    display: none;
+    bottom: 2%;
+    left: 72%;
+    width: 12%;
+    /* border: solid, 4px, red; */
+}
+#char4-img {
+    width: 100%;
+}
+#char4-health {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    left: 10%;
+    font-size: 200%;
+    color: forestgreen;
+    font-weight: bold;
+    /* border: solid, 4px, blue; */
+}
+#char4-protection {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    right: 10%;
+    font-size: 200%;
+    color: white;
+    font-weight: bold;
+    /* border: solid, 4px, blue; */
+}
+#char4-ability1-name {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 60%;
+    left: 15%;
+    font-size: 1vw;
+    color: blue;
+    font-weight: bold;
+}
+#char4-ability1-desc {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 67%;
+    left: 15%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    padding-right: 15%;
+}
+#char4-ability2-name {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 75%;
+    left: 15%;
+    font-size: 1vw;
+    color: blue;
+    font-weight: bold;
+}
+#char4-ability2-desc {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 82%;
+    left: 15%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    padding-right: 15%;
+}
+#char4-ability1-cost {
+    position: absolute;
+    top: 62%;
+    left: 7%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    color: red;
+}
+#char4-ability1-uses {
+    position: absolute;
+    top: 62%;
+    right: 9%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    color: green;
+}
+#char4-ability2-cost {
+    position: absolute;
+    top: 74%;
+    left: 7%;
+    font-size: 0.8vw;
+    font-weight: bold;
+    color: red;
+}
+#char4-ability2-uses {
+    position: absolute;
+    top: 74%;
+    right: 9%;
+    font-size: 0.8vw;
+    font-weight: bold;
+    color: green;
+}
+
+#char5-div {
+    position: absolute;
+    display: none;
+    bottom: 2%;
+    left: 16%;
+    width: 12%;
+    /* border: solid, 4px, red; */
+}
+#char5-img {
+    width: 100%;
+}
+#char5-health {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    left: 10%;
+    font-size: 200%;
+    color: forestgreen;
+    font-weight: bold;
+    /* border: solid, 4px, blue; */
+}
+#char5-protection {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    right: 10%;
+    font-size: 200%;
+    color: white;
+    font-weight: bold;
+    /* border: solid, 4px, blue; */
+}
+#char5-ability1-name {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 60%;
+    left: 15%;
+    font-size: 1vw;
+    color: blue;
+    font-weight: bold;
+}
+#char5-ability1-desc {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 67%;
+    left: 15%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    padding-right: 15%;
+}
+#char5-ability2-name {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 75%;
+    left: 15%;
+    font-size: 1vw;
+    color: blue;
+    font-weight: bold;
+}
+#char5-ability2-desc {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 82%;
+    left: 15%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    padding-right: 15%;
+}
+#char5-ability1-cost {
+    position: absolute;
+    top: 62%;
+    left: 7%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    color: red;
+}
+#char5-ability1-uses {
+    position: absolute;
+    top: 62%;
+    right: 9%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    color: green;
+}
+#char5-ability2-cost {
+    position: absolute;
+    top: 74%;
+    left: 7%;
+    font-size: 0.8vw;
+    font-weight: bold;
+    color: red;
+}
+#char5-ability2-uses {
+    position: absolute;
+    top: 74%;
+    right: 9%;
+    font-size: 0.8vw;
+    font-weight: bold;
+    color: green;
+}
+
+#char6-div {
+    position: absolute;
+    display: none;
+    bottom: 2%;
+    left: 86%;
+    width: 12%;
+    /* border: solid, 4px, red; */
+}
+#char6-img {
+    width: 100%;
+}
+#char6-health {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    left: 10%;
+    font-size: 200%;
+    color: forestgreen;
+    font-weight: bold;
+    /* border: solid, 4px, blue; */
+}
+#char6-protection {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    right: 10%;
+    font-size: 200%;
+    color: white;
+    font-weight: bold;
+    /* border: solid, 4px, blue; */
+}
+#char6-ability1-name {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 60%;
+    left: 15%;
+    font-size: 1vw;
+    color: blue;
+    font-weight: bold;
+}
+#char6-ability1-desc {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 67%;
+    left: 15%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    padding-right: 15%;
+}
+#char6-ability2-name {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 75%;
+    left: 15%;
+    font-size: 1vw;
+    color: blue;
+    font-weight: bold;
+}
+#char6-ability2-desc {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 82%;
+    left: 15%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    padding-right: 15%;
+}
+#char6-ability1-cost {
+    position: absolute;
+    top: 62%;
+    left: 7%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    color: red;
+}
+#char6-ability1-uses {
+    position: absolute;
+    top: 62%;
+    right: 9%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    color: green;
+}
+#char6-ability2-cost {
+    position: absolute;
+    top: 74%;
+    left: 7%;
+    font-size: 0.8vw;
+    font-weight: bold;
+    color: red;
+}
+#char6-ability2-uses {
+    position: absolute;
+    top: 74%;
+    right: 9%;
+    font-size: 0.8vw;
+    font-weight: bold;
+    color: green;
+}
+
+#char7-div {
+    position: absolute;
+    display: none;
+    bottom: 2%;
+    left: 2%;
+    width: 12%;
+    /* border: solid, 4px, red; */
+}
+#char7-img {
+    width: 100%;
+}
+#char7-health {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    left: 10%;
+    font-size: 200%;
+    color: forestgreen;
+    font-weight: bold;
+    /* border: solid, 4px, blue; */
+}
+#char7-protection {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 4%;
+    right: 10%;
+    font-size: 200%;
+    color: white;
+    font-weight: bold;
+    /* border: solid, 4px, blue; */
+}
+#char7-ability1-name {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 60%;
+    left: 15%;
+    font-size: 1vw;
+    color: blue;
+    font-weight: bold;
+}
+#char7-ability1-desc {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 67%;
+    left: 15%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    padding-right: 15%;
+}
+#char7-ability2-name {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 75%;
+    left: 15%;
+    font-size: 1vw;
+    color: blue;
+    font-weight: bold;
+}
+#char7-ability2-desc {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 82%;
+    left: 15%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    padding-right: 15%;
+}
+#char7-ability1-cost {
+    position: absolute;
+    top: 62%;
+    left: 7%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    color: red;
+}
+#char7-ability1-uses {
+    position: absolute;
+    top: 62%;
+    right: 9%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    color: green;
+}
+#char7-ability2-cost {
+    position: absolute;
+    top: 74%;
+    left: 7%;
+    font-size: 0.8vw;
+    font-weight: bold;
+    color: red;
+}
+#char7-ability2-uses {
+    position: absolute;
+    top: 74%;
+    right: 9%;
+    font-size: 0.8vw;
+    font-weight: bold;
+    color: green;
 }

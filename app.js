@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-	
 })
 
 const titleButton = document.getElementById("title-button");
@@ -140,15 +139,20 @@ const dialogueDiv = document.getElementById("dialogue-div");
 const dialogueSpeaker = document.getElementById("dialogue-speaker");
 const dialogueText = document.getElementById("dialogue-text");
 
+let currentUsername = "";
+
 submitButton.addEventListener('click', function() {
     const submitUsername = document.getElementById("input-username").value;
     const submitPassword = document.getElementById("input-password").value;
+
+    const leaderImageId = leaderImageIds[leaderImageIdsIndex]; // currently selected leader
+    const baseImageId = baseImageIds[baseImageIdsIndex];
 
     if (entryMethod.newAccount === 1) {
     fetch('http://localhost:3000/api/players', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: submitUsername, password: submitPassword })
+        body: JSON.stringify({ username: submitUsername, password: submitPassword, leader_image_id: leaderImageId, base_image_id: baseImageId })
     })
     .then(async res => {
         if (res.status === 409) {
@@ -160,7 +164,7 @@ submitButton.addEventListener('click', function() {
     })
     .then(data => {
         if (data) {
-            console.log(data);
+            currentUsername = submitUsername;
             // Proceed with account creation success
 
             document.body.style.backgroundImage = "url('images/background1.png')";
@@ -176,6 +180,7 @@ submitButton.addEventListener('click', function() {
             dialogueSpeakerImage.style.display = "block";
             dialogueSpeaker.textContent = "???";
             dialogueText.textContent = `Thank you for showing up ${leaderName}, we could really use your help.`;
+
             dialogueProgress = "1.1";
         }
     });
@@ -293,7 +298,6 @@ function loadFcard(image_id) {
         selectFcardAbility2Cost.textContent = data.ability2_cost;
         selectFcardAbility2Uses.textContent = data.ability2_uses;
         selectFcardType.textContent = data.type;
-        leaderName = data.name;
     })
     .catch(err => console.log(err));
 }
@@ -318,9 +322,9 @@ fetch('http://localhost:3000/api/characters')
     if (baseImageIds.length > 0) {
         const randomIndex = Math.floor(Math.random() * baseImageIds.length);
         loadFcard(baseImageIds[randomIndex]);
+        baseImageIdsIndex = randomIndex; // <-- Set index
+        selectedBaseImageId = baseImageIds[randomIndex]; // <-- Set selected image ID
     }
-    console.log(baseImageIds);
-    console.log(baseImageIdsIndex);
   });
 
 fetch('http://localhost:3000/api/characters')
@@ -330,9 +334,9 @@ fetch('http://localhost:3000/api/characters')
     if (leaderImageIds.length > 0) {
         const randomIndex = Math.floor(Math.random() * leaderImageIds.length);
         loadLeader(leaderImageIds[randomIndex]);
+        leaderImageIdsIndex = randomIndex; // <-- Set index
+        selectedLeaderImageId = leaderImageIds[randomIndex]; // <-- Set selected image ID
     }
-    console.log(leaderImageIds);
-    console.log(leaderImageIdsIndex);
   });
 
 // Left gold arrow button
@@ -525,32 +529,91 @@ sailingLegionImg.addEventListener('click', function() {
     
 });
 
-//battle logic
+
+
 function randomBetween(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 let difficulty = 1;
 
-const difficulty1 = {
-    enemies: randomBetween(1, 3),
-    reward: (20 * randomBetween(1, 3))
+const difficulties = {
+    1: { minEnemies: 1, maxEnemies: 3, reward: 200 },
+    2: { minEnemies: 2, maxEnemies: 4, reward: 500 },
+    3: { minEnemies: 3, maxEnemies: 5, reward: 800 },
+    4: { minEnemies: 4, maxEnemies: 6, reward: 1200 }
+    // Add more as needed
+};
 
+function randomEnemy(difficulty) {
+    const settings = difficulties[difficulty];
+    const numEnemies = randomBetween(settings.minEnemies, settings.maxEnemies);
+
+    for (let i = 1; i <= numEnemies; i++) {
+        fetch(`http://localhost:3000/api/enemies/type/${currentlyAt}`)
+        .then(res => res.json())
+        .then(enemies => {
+            chosenEnemy = enemies[randomBetween(0, enemies.length - 1)];
+
+            document.getElementById(`enemy${i}-div`).style.display = "block";
+            document.getElementById(`enemy${i}-img`).src = `images/enemies/${chosenEnemy.image_id}.png`;
+            document.getElementById(`enemy${i}-health`).textContent = chosenEnemy.health_max;
+            document.getElementById(`enemy${i}-protection`).textContent = "0";
+            document.getElementById(`enemy${i}-ability1-name`).textContent = chosenEnemy.ability1_name;
+            document.getElementById(`enemy${i}-ability1-desc`).textContent = chosenEnemy.ability1_desc;
+
+            console.log(chosenEnemy);
+            console.log(numEnemies);
+        })
+        .catch(err => console.log(err));
+    }
 }
 
-function randomEnemy() {
-    fetch(`http://localhost:3000/api/enemies/type/${currentlyAt}`)
-  .then(res => res.json())
-  .then(enemies => {
-    chosenEnemy = enemies[randomBetween(1, 6)];
-  })
-  .catch(err => console.log(err));
+function playLeader(username) {
+    fetch(`http://localhost:3000/api/${username}/cards/leader`)
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('char1-div').style.display = 'block';
+            document.getElementById(`char1-img`).src = `images/leader-characters/${data.image_id}Leader.png`;
+            document.getElementById(`char1-health`).textContent = data.health_max;
+            document.getElementById(`char1-protection`).textContent = "0";
+            document.getElementById(`char1-ability1-name`).textContent = data.ability1_name;
+            document.getElementById(`char1-ability1-desc`).textContent = data.ability1_desc;
+            document.getElementById(`char1-ability1-cost`).textContent = data.ability1_cost;
+            if (data.ability1_uses > 99) {
+                document.getElementById(`char1-ability1-uses`).innerHTML = '<img src="images/infinity-icon.png" style="width: 1.2em; height: 0.8em;">';
+            } else {
+                document.getElementById(`char1-ability1-uses`).textContent = data.ability1_uses;
+            }
+            document.getElementById(`char1-ability2-name`).textContent = data.ability2_name;
+            document.getElementById(`char1-ability2-desc`).textContent = data.ability2_desc;
+            document.getElementById(`char1-ability2-cost`).textContent = data.ability2_cost;
+            document.getElementById(`char1-ability2-uses`).textContent = data.ability2_uses;
+        })
+        .catch(err => console.log(err));
 }
 
-// function loadBaseEnemy
+let deckCount = 1;
+let energyCount = 2;
 
-// for (let i = 1; i <= difficulty${difficulty}.enemies; i++) {
-//     loadBaseEnemy
-// }
+//battle logic
+function startBattle(username) {
+    fetch(`http://localhost:3000/api/${username}/cards/base`)
+        .then(res => res.json())
+        .then(baseCards => {
+            deckCount = baseCards.length; 
+            energyCount = 2 + baseCards.length;
+            document.getElementById("energy-count").textContent = energyCount;
+            
+        })
+        .catch(err => console.log(err));
+}
+
+function endBattle() {
+    //hide and show stuff
+}
+
+const battleDivs = document.getElementById("battle-divs");
+
 
 //bandit battle buttons
 const banditCliffButton = document.getElementById("bandit-cliff-button");
@@ -565,6 +628,20 @@ const banditFortButton = document.getElementById("bandit-fort-button");
 banditCliffButton.addEventListener('click', function() {
     document.body.style.backgroundImage = "url('images/battlegrounds/ground_bandit.png')";
     banditButtonsDiv.style.display = "none";
-    
-    
+
+    startBattle(currentUsername);
+    battleDivs.style.display = "block";
+    difficulty = 1;
+    randomEnemy(difficulty);
+
+    playLeader(currentUsername); // Use the username of the logged-in player
+
+    console.log("cliff button clicked - difficulty: " + difficulty);
 });
+
+//Next step is to make it possible to click the deck of cards and play a base card onto the next div
+// - deck should have the right img and blur based on how many base cards are in the deck
+// - drawing a card should take 2 energy
+// - guardrails to determine which div a drawn card plays to
+// - guardrails to determine when all divs are Filled
+// - gameplan with dean about combat system (how would he approach unique types of abilities handling)

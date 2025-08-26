@@ -25,7 +25,7 @@ const pool = new Pool({
 
 // Create a new user
 app.post('/api/players', async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, leader_image_id, base_image_id } = req.body;
   try {
     // Check if username exists
     const exists = await pool.query('SELECT 1 FROM players WHERE username = $1', [username]);
@@ -44,21 +44,53 @@ app.post('/api/players', async (req, res) => {
 
 
     // Create cards table
-    await pool.query(`
+     await pool.query(`
       CREATE TABLE IF NOT EXISTS ${cardsTable} (
+        name VARCHAR(30),
+        type VARCHAR(30),
+        heirloom_id VARCHAR(30),
         image_id VARCHAR(30),
-        function VARCHAR(30),
-        armor INT,
+        health_max INT,
         ability1_name VARCHAR(30),
-        ability1_desc VARCHAR(60),
+        ability1_desc VARCHAR(100),
         ability1_cost INT,
         ability1_uses INT,
         ability2_name VARCHAR(30),
-        ability2_desc VARCHAR(60),
+        ability2_desc VARCHAR(100),
         ability2_cost INT,
         ability2_uses INT
       )
     `);
+
+    // Copy leader row
+    await pool.query(`
+      INSERT INTO ${cardsTable} (name, type, heirloom_id, image_id, health_max, ability1_name, ability1_desc, ability1_cost, ability1_uses, ability2_name, ability2_desc, ability2_cost, ability2_uses)
+      SELECT name, type, heirloom_id, image_id, health_max, ability1_name, ability1_desc, ability1_cost, ability1_uses, ability2_name, ability2_desc, ability2_cost, ability2_uses
+      FROM characters_leader WHERE image_id = $1
+    `, [leader_image_id]);
+
+    // Copy base row
+    await pool.query(`
+      INSERT INTO ${cardsTable} (name, type, heirloom_id, image_id, health_max, ability1_name, ability1_desc, ability1_cost, ability1_uses, ability2_name, ability2_desc, ability2_cost, ability2_uses)
+      SELECT name, type, heirloom_id, image_id, health_max, ability1_name, ability1_desc, ability1_cost, ability1_uses, ability2_name, ability2_desc, ability2_cost, ability2_uses
+      FROM characters_base WHERE image_id = $1
+    `, [base_image_id]);
+
+    // Update type column for leader card
+    await pool.query(`
+      UPDATE ${cardsTable}
+      SET type = 'leader'
+      WHERE image_id = $1
+    `, [leader_image_id]);
+
+    // Update type column for base card
+    await pool.query(`
+      UPDATE ${cardsTable}
+      SET type = 'base'
+      WHERE image_id = $1
+    `, [base_image_id]);
+
+
     res.status(201).json(result.rows[0]);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -107,22 +139,6 @@ app.get('/api/characters', async (req, res) => {
   }
 });
 
-app.get('/api/leader/:image_id', async (req, res) => {
-  const { image_id } = req.params;
-  try {
-    const result = await pool.query(
-      'SELECT * FROM characters_leader WHERE image_id = $1',
-      [image_id]
-    );
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Leader not found' });
-    }
-    res.json(result.rows[0]);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
 app.get('/api/enemies/type/:type', async (req, res) => {
   const { type } = req.params;
   try {
@@ -139,6 +155,52 @@ app.get('/api/enemies/type/:type', async (req, res) => {
   }
 });
 
+app.get('/api/leader/:image_id', async (req, res) => {
+  const { image_id } = req.params;
+  try {
+    const result = await pool.query(
+      'SELECT * FROM characters_leader WHERE image_id = $1',
+      [image_id]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Leader not found' });
+    }
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/:username/cards/leader', async (req, res) => {
+  const { username } = req.params;
+  const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
+  const cardsTable = `${safeUsername}_cards`;
+  try {
+    const result = await pool.query(
+      `SELECT * FROM ${cardsTable} WHERE type = 'leader' LIMIT 1`
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Leader card not found' });
+    }
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/:username/cards/base', async (req, res) => {
+  const { username } = req.params;
+  const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
+  const cardsTable = `${safeUsername}_cards`;
+  try {
+    const result = await pool.query(
+      `SELECT * FROM ${cardsTable} WHERE type = 'base'`
+    );
+    res.json(result.rows); // returns an array of base cards
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
