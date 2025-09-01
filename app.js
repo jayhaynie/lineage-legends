@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
 })
 
+// function fadeMusic {
+
+// }
+
 const titleButton = document.getElementById("title-button");
 const createHeader = document.getElementById("create-header");
 const createButton = document.getElementById("create-button");
@@ -8,6 +12,7 @@ const logHeader = document.getElementById("log-header");
 const logButton = document.getElementById("log-button");
 
 const menuMusic = document.getElementById("menu-music");
+const combatMusic = document.getElementById("combat-music");
 const musicIcon = document.getElementById("music-icon");
 const musicOptions = document.getElementById("music-options");
 const muteMusicButton = document.getElementById("mute-music-button");
@@ -192,15 +197,28 @@ submitButton.addEventListener('click', function() {
             .then(data => {
                 if (data.password === submitPassword) {
                     console.log("Login successful!");
-                    // Proceed to next step in your app
+                    currentUsername = submitUsername;
+
+                    selectFcardDiv.style.display = "none";
+                    selectLeaderDiv.style.display = "none";
+                    logHeaderTwo.style.display = "none";
+                    inputUsername.style.display = "none";
+                    inputPassword.style.display = "none";
+                    switchToCreate.style.display = "none";
+                    submitButton.style.display = "none";
+                    
+                    document.body.style.backgroundImage = "url('images/maps/map_home.png')";
+                    homeButtonsDiv.style.display = "block";
                 } else {
-                    console.log("Incorrect password.");
+                    console.log("unable to log in");
+                    alert("Incorrect username or password, please try again or create a new account");
                 }
             })
             .catch(err => console.log("User not found or error:", err));
     }
 });
 
+//creation alden dialogue
 const dialogueArrow = document.getElementById("dialogue-arrow");
 const homeButtonsDiv = document.getElementById("home-buttons-div");
 dialogueArrow.addEventListener('click', function() {
@@ -394,6 +412,8 @@ const sailingGhoulImg = document.getElementById("sailing-ghoul-img");
 const sailingLegionImg = document.getElementById("sailing-legion-img");
 const sailingArcaneImg = document.getElementById("sailing-arcane-img");
 
+const battleDivs = document.getElementById("battle-divs");
+
 // sailing buttons logic
 let currentlyAt = "home";
 
@@ -535,6 +555,8 @@ function randomBetween(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 let difficulty = 1;
+numberOfEnemies = 0;
+enemyArray = [];
 
 const difficulties = {
     1: { minEnemies: 1, maxEnemies: 3, reward: 200 },
@@ -561,8 +583,10 @@ function randomEnemy(difficulty) {
             document.getElementById(`enemy${i}-ability1-name`).textContent = chosenEnemy.ability1_name;
             document.getElementById(`enemy${i}-ability1-desc`).textContent = chosenEnemy.ability1_desc;
 
+            numberOfEnemies = numEnemies;
             console.log(chosenEnemy);
             console.log(numEnemies);
+            enemyArray.push(chosenEnemy);
         })
         .catch(err => console.log(err));
     }
@@ -594,25 +618,397 @@ function playLeader(username) {
 
 let deckCount = 1;
 let energyCount = 2;
+let deckCards = [];
+let nextDiv = 2;
+
+
+function showDeck() {
+    if (deckCount > 2) {
+        document.getElementById("deck-img").src = "images/deckplus.png"; 
+        document.getElementById("deck-img").style.filter = "blur(0px)";
+    } else if (deckCount === 2) {
+        document.getElementById("deck-img").src = "images/deck2.png";
+        document.getElementById("deck-img").style.filter = "blur(0px)";
+    } else if (deckCount === 1) {
+        document.getElementById("deck-img").src = "images/deck1.png";
+        document.getElementById("deck-img").style.filter = "blur(0px)";
+    } else if (deckCount === 0) {
+        document.getElementById("deck-img").src = "images/deck1.png";
+        document.getElementById("deck-img").style.filter = "blur(2px)";
+    }
+}
+
+function resetTargeting() {
+    // Reset yellow backgrounds for all ability name elements
+    document.querySelectorAll('[id^="char"][id$="-ability1-name"], [id^="char"][id$="-ability2-name"]').forEach(elem => {
+        elem.style.backgroundColor = "";
+    });
+
+    // Reset cyan borders for all character divs
+    document.querySelectorAll('.charDiv').forEach(div => {
+        div.style.border = "";
+    });
+
+    // Reset orange borders for all enemy divs
+    document.querySelectorAll('.enemyDiv').forEach(div => {
+        div.style.border = "";
+    });
+
+    // Reset targeting variables
+    selectedCharDiv = null;
+    selectedAbility = "";
+    charSelected = 0;
+    abilitySelected = 0;
+
+    console.log("charSelected? " + charSelected);
+    console.log("abilitySelected? " + abilitySelected);
+}
 
 //battle logic
+let inBattle = 0;
+
 function startBattle(username) {
+    // combatMusic.play();
+    inBattle = 1;
+
     fetch(`http://localhost:3000/api/${username}/cards/base`)
         .then(res => res.json())
         .then(baseCards => {
             deckCount = baseCards.length; 
-            energyCount = 2 + baseCards.length;
+            energyCount = 4 + baseCards.length;
+            deckCards = baseCards;
+
             document.getElementById("energy-count").textContent = energyCount;
-            
+            // Deck image handling
+            showDeck();
         })
         .catch(err => console.log(err));
 }
 
 function endBattle() {
-    //hide and show stuff
+    inBattle = 0;
+    numberOfEnemies = 0;
+    enemyArray = [];
+    //show victory screen, earned bond
 }
 
-const battleDivs = document.getElementById("battle-divs");
+
+
+//draw from deck
+function playDrawnCard() {
+    const randomDraw = Math.floor(Math.random() * deckCards.length);
+    const drawnCard = deckCards[randomDraw];
+
+    document.getElementById(`char${nextDiv}-div`).style.display = "block";
+    document.getElementById(`char${nextDiv}-img`).src = `images/base-characters/${drawnCard.image_id}Base.png`;
+    document.getElementById(`char${nextDiv}-health`).textContent = drawnCard.health_max;
+    document.getElementById(`char${nextDiv}-protection`).textContent = "0";
+    document.getElementById(`char${nextDiv}-ability1-name`).textContent = drawnCard.ability1_name;
+    document.getElementById(`char${nextDiv}-ability1-desc`).textContent = drawnCard.ability1_desc;
+    document.getElementById(`char${nextDiv}-ability1-cost`).textContent = drawnCard.ability1_cost;
+    if (drawnCard.ability1_uses > 99) {
+        document.getElementById(`char${nextDiv}-ability1-uses`).innerHTML = '<img src="images/infinity-icon.png" style="width: 1.2em; height: 0.8em;">';
+    } else {
+        document.getElementById(`char${nextDiv}-ability1-uses`).textContent = drawnCard.ability1_uses;
+    }
+    document.getElementById(`char${nextDiv}-ability2-name`).textContent = drawnCard.ability2_name;
+    document.getElementById(`char${nextDiv}-ability2-desc`).textContent = drawnCard.ability2_desc;
+    document.getElementById(`char${nextDiv}-ability2-cost`).textContent = drawnCard.ability2_cost;
+    document.getElementById(`char${nextDiv}-ability2-uses`).textContent = drawnCard.ability2_uses;
+
+    deckCards.splice(randomDraw, 1);
+};
+
+//Clicking on the deck
+document.getElementById("deck-img").addEventListener("click", function() {
+    if (energyCount >= 2 & deckCount > 0 & nextDiv <= 7) {
+        // console.log("deck clicked");
+        // console.log("before deckCards: ", deckCards);
+        // console.log("before energyCount: " + energyCount);
+        // console.log("before deckCount: " + deckCount);
+        // console.log("before nextDiv: " + nextDiv);
+
+        // Logic to draw a card from the deck
+        playDrawnCard();
+
+        energyCount -= 2; //subtract 2 from current value of energyCount
+        document.getElementById("energy-count").textContent = energyCount;
+        deckCount -= 1;
+        nextDiv += 1;
+
+        showDeck();
+
+        // console.log("after deckCards: ", deckCards);
+        // console.log("after energyCount: " + energyCount);
+        // console.log("after deckCount: " + deckCount);
+        // console.log("after nextDiv: " + nextDiv);
+    } else if (energyCount <2) {
+        alert("Not enough energy (2) to draw another card");
+    } else if (deckCount <1) {
+        alert("No more cards in the deck");
+    } else if (nextDiv > 6) {
+        alert("No more battle space for another character");
+    }
+});
+
+
+//battle targeting
+let selectedCharDiv = null;
+let selectedAbility = "";
+let selectedChar = "";
+
+let charSelected = 0;
+let abilitySelected = 0;
+
+let selectedEnemy = "";
+let selectedEnemyDiv = "";
+
+let targetType = "";
+
+
+
+
+
+//char ability handling
+function applyCharAbility() {
+    if (selectedAbility === "Slash" && selectedEnemyDiv) {
+        // Get the enemy health element by div number
+        const healthElem = document.getElementById(`enemy${selectedEnemyDiv}-health`);
+        if (healthElem) {
+            // Subtract 5 from current health
+            let currentHealth = parseInt(healthElem.textContent, 10);
+            currentHealth -= 5;
+            healthElem.textContent = currentHealth;
+            console.log(`Applied Slash: enemy${selectedEnemyDiv} health is now ${currentHealth}`);
+        }
+        const divElem = document.getElementById(`enemy${selectedEnemyDiv}-div`);
+        if (divElem) {
+            divElem.style.border = "2px solid red";
+            setTimeout(function() {
+                // Your code here
+                divElem.style.border = "";
+            }, 3000);
+        }
+    }
+}
+
+//choose a character to attack
+function abilityTarget() {
+        // Find all visible character divs
+        const visibleCharDivs = Array.from(document.querySelectorAll('.charDiv'))
+            .filter(div => div.style.display !== "none");
+
+        if (visibleCharDivs.length === 0) return null;
+
+        // Pick a random character div
+        const randomIndex = Math.floor(Math.random() * visibleCharDivs.length);
+        return visibleCharDivs[randomIndex];
+}
+
+//enemy ability handling
+function applyEnemyAbility(abilityName) {
+    // Use abilityTarget to pick a random visible character div
+    const targetDiv = abilityTarget();
+    if (!targetDiv) return;
+
+    const charNum = targetDiv.id.match(/\d+/)[0];
+    const healthElem = document.getElementById(`char${charNum}-health`);
+
+    //bandit abilities
+    if (abilityName === "Slash") {
+        if (healthElem) {
+            let currentHealth = parseInt(healthElem.textContent, 10);
+            currentHealth -= 5;
+            healthElem.textContent = currentHealth;
+            targetDiv.style.border = "2px solid red";
+            setTimeout(() => {
+                targetDiv.style.border = "";
+            }, 2000);
+            console.log(`Enemy used Slash: char${charNum} health is now ${currentHealth}`);
+        }
+    }
+    if (abilityName === "Stab") {
+        if (healthElem) {
+            let currentHealth = parseInt(healthElem.textContent, 10);
+            currentHealth -= 5;
+            healthElem.textContent = currentHealth;
+            targetDiv.style.border = "2px solid red";
+            setTimeout(() => {
+                targetDiv.style.border = "";
+            }, 2000);
+            console.log(`Enemy used Stab: char${charNum} health is now ${currentHealth}`);
+        }
+    }
+    if (abilityName === "Defend") {
+        if (healthElem) {
+            let currentHealth = parseInt(healthElem.textContent, 10);
+            currentHealth -= 5;
+            healthElem.textContent = currentHealth;
+            targetDiv.style.border = "2px solid red";
+            setTimeout(() => {
+                targetDiv.style.border = "";
+            }, 2000);
+            console.log(`Enemy used Slash: char${charNum} health is now ${currentHealth}`);
+        }
+    }
+}
+
+
+
+
+
+
+// ^ find out how to use targetCharacter (turn it into abilityTarget) to determine if the ability is supposed to target an enemy, character or both, then pass to applyEnemyAbility to specify what happends to the target
+
+
+
+
+
+//enemy turn handling
+function enemyTurn() {
+    enemyArray.forEach((enemy, index) => {
+        // Highlight enemy border orange
+        const enemyDiv = document.getElementById(`enemy${index + 1}-div`);
+        if (enemyDiv) {
+            enemyDiv.style.border = "2px solid orange";
+            setTimeout(() => {
+                enemyDiv.style.border = "";
+                // Pass ability1_name to applyEnemyAbility after x second wait
+                applyEnemyAbility(enemy.ability1_name);
+            }, 2000);
+        }
+    });
+}
+
+
+
+
+
+
+document.querySelectorAll('.charDiv').forEach(div => { //char border cyan or gone when clicked
+    div.addEventListener('click', function() {
+
+        // Toggle border on or off 
+        if (div.style.border === "2px solid cyan") {
+            div.style.border = "";
+            selectedCharDiv = null;
+            charSelected = 0;
+        } else {//removes border from other divs
+            resetTargeting();
+
+            div.style.border = "2px solid cyan";
+            selectedCharDiv = div;
+            // console.log(selectedCharDiv);
+
+            //grab character's image_id from HTML element
+            const imgElem = div.querySelector('img');
+            let src = imgElem.src.split('/').pop();
+            let image_id = src.replace('Base.png', '').replace('Leader.png', '');
+
+            selectedChar = image_id;
+            charSelected = 1;
+            console.log("charSelected? " + charSelected + " " + image_id);
+        }
+    });
+});
+
+document.addEventListener('keydown', function(event) {//selecting or unselecting char ability
+    if (!selectedCharDiv) return; // No div selected
+
+    const charNum = selectedCharDiv.id.match(/\d+/)[0]; // Extract number from div id
+    const ability1Elem = document.getElementById(`char${charNum}-ability1-name`);
+    const ability2Elem = document.getElementById(`char${charNum}-ability2-name`);
+
+    if (event.key === "1") {
+        // Remove highlight from ability2
+        if (ability2Elem.style.backgroundColor === "yellow") {
+            ability2Elem.style.backgroundColor = "";
+            abilitySelected = 0;
+        }
+        // Toggle highlight for ability1
+        if (ability1Elem.style.backgroundColor === "yellow") {
+            ability1Elem.style.backgroundColor = "";
+            selectedAbility = "";
+            abilitySelected = 0;
+        } else {
+            ability1Elem.style.backgroundColor = "yellow";
+            selectedAbility = ability1Elem.innerText;
+            abilitySelected = 1;
+            console.log(ability1Elem.innerText);
+        }
+        console.log("abilitySelected? " + abilitySelected);
+    } else if (event.key === "2") {
+        // Remove highlight from ability1
+        if (ability1Elem.style.backgroundColor === "yellow") {
+            ability1Elem.style.backgroundColor = "";
+            selectedAbility = "";
+            abilitySelected = 0;
+        }
+        // Toggle highlight for ability2
+        if (ability2Elem.style.backgroundColor === "yellow") {
+            ability2Elem.style.backgroundColor = "";
+            selectedAbility = "";
+            abilitySelected = 0;
+        } else {
+            ability2Elem.style.backgroundColor = "yellow";
+            selectedAbility = ability2Elem.innerText;
+            abilitySelected = 1;
+            console.log(ability2Elem.innerText);
+        }
+        console.log("abilitySelected? " + abilitySelected);
+    }
+});
+
+document.querySelectorAll('.enemyDiv').forEach(div => { //enemy border orange or gone when clicked
+    div.addEventListener('click', function() {
+        if (charSelected === 1 & abilitySelected === 1) {
+            // Toggle border on or off 
+            if (div.style.border === "2px solid orange") {
+                div.style.border = "";
+            } else {
+                div.style.border = "2px solid orange";
+
+                //grab enemy's image_id from HTML element
+            const imgElem = div.querySelector('img');
+            let src = imgElem.src.split('/').pop();
+            image_id = src.replace('.png', '');
+
+            selectedEnemy = image_id;
+            console.log("selectedEnemy? ", image_id);
+
+            //grab enemy's div number from its id (e.g., "enemy3-div" -> "3")
+            const enemyNum = div.id.match(/\d+/)[0];
+            selectedEnemyDiv = enemyNum;
+            console.log("selectedEnemyDiv? ", enemyNum);
+
+            applyCharAbility();
+            }
+        } else {
+            alert("Select a character and an ability before targeting an enemy");
+            resetTargeting();
+        }
+    });
+});
+
+
+
+document.addEventListener('keydown', function(event) {
+    if (inBattle === 1) {
+        if (event.key === "Escape") {
+        resetTargeting();
+        }
+    }
+});
+
+document.getElementById('end-turn-button').addEventListener('click', function() {
+    resetTargeting();
+    if (inBattle === 1 & numberOfEnemies === 0) {
+        endBattle();
+    }
+
+    //start enemies turn function
+    enemyTurn();
+});
 
 
 //bandit battle buttons
@@ -626,7 +1022,7 @@ const banditThicketButton = document.getElementById("bandit-thicket-button");
 const banditFortButton = document.getElementById("bandit-fort-button");
 
 banditCliffButton.addEventListener('click', function() {
-    document.body.style.backgroundImage = "url('images/battlegrounds/ground_bandit.png')";
+    document.body.style.backgroundImage = `url('images/battlegrounds/ground_${currentlyAt}.png')`;
     banditButtonsDiv.style.display = "none";
 
     startBattle(currentUsername);
@@ -639,9 +1035,34 @@ banditCliffButton.addEventListener('click', function() {
     console.log("cliff button clicked - difficulty: " + difficulty);
 });
 
+
+
+
+
+//subtract energy for using an ability
+//reset targeting after using an ability
+//clicking deck resets targeting
+
+
+
+
+
+
+
+
 //Next step is to make it possible to click the deck of cards and play a base card onto the next div
-// - deck should have the right img and blur based on how many base cards are in the deck
-// - drawing a card should take 2 energy
-// - guardrails to determine which div a drawn card plays to
-// - guardrails to determine when all divs are Filled
+// - log in should work (pull players db table info landing on alder's island) XXXXXXXXXXX
+// - deck should have the right img and blur based on how many base cards are in the deck XXXXX
+// - drawing a card should take 2 energy XXXXXXX
+// - guardrails to determine which div a drawn card plays to XXXXXX
+// - guardrails to determine when all divs are Filled XXXXXX
+// - make a help button that shows an example of how to battle
 // - gameplan with dean about combat system (how would he approach unique types of abilities handling)
+
+//make and designate music for each: bandit, ghoul, legion, arcane, pirate - also menu, trade, map 
+//code functions to have the currentmusic fade out and the new music fade in
+//change code for leader and fcard selection so you can't have the same leader and fcard
+//code traders to not offer leader's base card
+
+//there's going to be an issue with nextDiv if the enemies kill char 2 while 3 4 and 5 are alive
+//Log in page should display previous players in the deadspace on the right (progress, etc.)

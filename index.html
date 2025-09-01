@@ -18,11 +18,11 @@
 		<h2 id="log-headerTwo">LOG IN</h2>
 		<div id="input-username-div">
 			<label id ="label-username" for="input-username">USERNAME</label>
-			<input type="text" id="input-username" name="input-username">
+			<input type="text" id="input-username" name="input-username" autocomplete="off">
 		</div>
 		<div id="input-password-div">
 			<label id ="label-password" for="input-password">PASSWORD</label>
-			<input type="text" id="input-password" name="input-password">
+			<input type="text" id="input-password" name="input-password" autocomplete="off">
 		</div>
 		<button id="switch-to-log">Log In Instead</button>
 		<button id="switch-to-create">Create Account Instead</button>
@@ -70,7 +70,8 @@
 			<h2 id="select-fcard-type">FIGHTER</h2>
 		</div>
 
-		<audio id="menu-music" src="sounds/menu.mp3" loop="true"></audio>
+		<audio id="menu-music" src="sounds/Listnening - Lineage Legends.mp3" loop="true"></audio>
+		<audio id="combat-music" src="sounds/With Haste - Lineage Legends.mp3" loop="true"></audio>
 		<img id="music-icon" src="images/white-note.png">
 		<div id="music-options">
 			<button id="mute-music-button">Mute</button>
@@ -160,50 +161,51 @@
 			<p id="energy-title">ENERGY</p>
 			<p id="energy-count">10</p>
 			<button id="end-turn-button">END TURN</button>
+			<p id="action-phrase"></p>
 			<!-- enemy divs -->
-			<div id="enemy1-div">
+			<div class="enemyDiv" id="enemy1-div">
 				<img id="enemy1-img" src="images/enemies/bandit1.png">
 				<p id="enemy1-health">10</p>
 				<p id="enemy1-protection">10</p>
 				<p id="enemy1-ability1-name">Ability Name</p>
 				<p id="enemy1-ability1-desc">ability description that may go a little bit longer to explain</p>
 			</div>
-			<div id="enemy2-div">
+			<div class="enemyDiv" id="enemy2-div">
 				<img id="enemy2-img" src="images/enemies/bandit2.png">
 				<p id="enemy2-health">10</p>
 				<p id="enemy2-protection">10</p>
 				<p id="enemy2-ability1-name">Ability Name</p>
 				<p id="enemy2-ability1-desc">ability description that may go a little bit longer to explain</p>
 			</div>
-			<div id="enemy3-div">
+			<div class="enemyDiv" id="enemy3-div">
 				<img id="enemy3-img" src="images/enemies/bandit3.png">
 				<p id="enemy3-health">10</p>
 				<p id="enemy3-protection">10</p>
 				<p id="enemy3-ability1-name">Ability Name</p>
 				<p id="enemy3-ability1-desc">ability description that may go a little bit longer to explain</p>
 			</div>
-			<div id="enemy4-div">
+			<div class="enemyDiv" id="enemy4-div">
 				<img id="enemy4-img" src="images/enemies/bandit4.png">
 				<p id="enemy4-health">10</p>
 				<p id="enemy4-protection">10</p>
 				<p id="enemy4-ability1-name">Ability Name</p>
 				<p id="enemy4-ability1-desc">ability description that may go a little bit longer to explain</p>
 			</div>
-			<div id="enemy5-div">
+			<div class="enemyDiv" id="enemy5-div">
 				<img id="enemy5-img" src="images/enemies/bandit5.png">
 				<p id="enemy5-health">10</p>
 				<p id="enemy5-protection">10</p>
 				<p id="enemy5-ability1-name">Ability Name</p>
 				<p id="enemy5-ability1-desc">ability description that may go a little bit longer to explain</p>
 			</div>
-			<div id="enemy6-div">
+			<div class="enemyDiv" id="enemy6-div">
 				<img id="enemy6-img" src="images/enemies/bandit6.png">
 				<p id="enemy6-health">10</p>
 				<p id="enemy6-protection">10</p>
 				<p id="enemy6-ability1-name">Ability Name</p>
 				<p id="enemy6-ability1-desc">ability description that may go a little bit longer to explain</p>
 			</div>
-			<div id="enemy7-div">
+			<div class="enemyDiv" id="enemy7-div">
 				<img id="enemy7-img" src="images/enemies/banditLeader.png">
 				<p id="enemy7-health">10</p>
 				<p id="enemy7-protection">10</p>
@@ -212,7 +214,7 @@
 			</div>
 
 			<!-- character divs -->
-			<div id="char1-div">
+			<div class="charDiv" id="char1-div">
 				<img id="char1-img" src="images/leader-characters/tyrelLeader.png">
 				<p id="char1-health">10</p>
 				<p id="char1-protection">10</p>
@@ -225,7 +227,7 @@
 				<p id="char1-ability2-cost">Ability Cost</p>
 				<p id="char1-ability2-uses">Ability Uses</p>
 			</div>
-			<div id="char2-div">
+			<div class="charDiv" id="char2-div">
 				<img id="char2-img" src="images/base-characters/arisBase.png">
 				<p id="char2-health">10</p>
 				<p id="char2-protection">10</p>
@@ -238,7 +240,7 @@
 				<p id="char2-ability2-cost">Ability Cost</p>
 				<p id="char2-ability2-uses">Ability Uses</p>
 			</div>
-			<div id="char3-div">
+			<div class="charDiv" id="char3-div">
 				<img id="char3-img" src="images/base-characters/braynieBase.png">
 				<p id="char3-health">10</p>
 				<p id="char3-protection">10</p>
@@ -251,7 +253,7 @@
 				<p id="char3-ability2-cost">Ability Cost</p>
 				<p id="char3-ability2-uses">Ability Uses</p>
 			</div>
-			<div id="char4-div">
+			<div class="charDiv" id="char4-div">
 				<img id="char4-img" src="images/base-characters/cadenzaBase.png">
 				<p id="char4-health">10</p>
 				<p id="char4-protection">10</p>
@@ -264,7 +266,7 @@
 				<p id="char4-ability2-cost">Ability Cost</p>
 				<p id="char4-ability2-uses">Ability Uses</p>
 			</div>
-			<div id="char5-div">
+			<div class="charDiv" id="char5-div">
 				<img id="char5-img" src="images/base-characters/clutchBase.png">
 				<p id="char5-health">10</p>
 				<p id="char5-protection">10</p>
@@ -277,7 +279,7 @@
 				<p id="char5-ability2-cost">Ability Cost</p>
 				<p id="char5-ability2-uses">Ability Uses</p>
 			</div>
-			<div id="char6-div">
+			<div class="charDiv" id="char6-div">
 				<img id="char6-img" src="images/base-characters/corazonBase.png">
 				<p id="char6-health">10</p>
 				<p id="char6-protection">10</p>
@@ -290,7 +292,7 @@
 				<p id="char6-ability2-cost">Ability Cost</p>
 				<p id="char6-ability2-uses">Ability Uses</p>
 			</div>
-			<div id="char7-div">
+			<div class="charDiv" id="char7-div">
 				<img id="char7-img" src="images/base-characters/jonatorBase.png">
 				<p id="char7-health">10</p>
 				<p id="char7-protection">10</p>
@@ -308,3 +310,5 @@
 	</body>
 	<script src="app.js" charset="UTF-8"></script>
 </html>
+
+<!-- target character's name so you can display it on the battle screen -->
