@@ -554,6 +554,7 @@ function randomBetween(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 let difficulty = 1;
+let enemyCount = null;
 
 const difficulties = {
     1: { minEnemies: 1, maxEnemies: 3, reward: 200 },
@@ -585,6 +586,7 @@ function randomEnemy(difficulty) {
         })
         .catch(err => console.log(err));
     }
+    enemyCount = numEnemies;
 }
 
 //not normal to create tables per user (for larger use applications)
@@ -670,7 +672,7 @@ function updateBattleVariables() {
 async function initializeBattle() {
     await findBaseCharacterCards();
 
-    maxEnergy = 4 + deckCards.length;
+    maxEnergy = 3 + deckCards.length;
     deckCount = deckCards.length;
 
     updateBattleVariables();
@@ -708,29 +710,43 @@ function playDrawnCard() {
 
 //Clicking on the deck
 document.getElementById("deck-img").addEventListener("click", function() {
-    findNextOpenCharDiv();
-    if (energyCount >= 2 && deckCount > 0 && nextOpenCharDiv !== null) {
-        // Logic to draw a card from the deck
-        playDrawnCard();
+    if (waiting === true) {
+        return;
+    } else {
+        findNextOpenCharDiv();
+        if (energyCount >= 2 && deckCount > 0 && nextOpenCharDiv !== null) {
+            // Logic to draw a card from the deck
+            playDrawnCard();
 
-        energyCount -= 2; //subtract 2 from current value of energyCount
-        document.getElementById("energy-count").textContent = energyCount;
-        deckCount -= 1;
+            energyCount -= 2; //subtract 2 from current value of energyCount
+            document.getElementById("energy-count").textContent = energyCount;
+            deckCount -= 1;
 
-        showDeck();
+            showDeck();
 
-    } else if (energyCount <2) {
-        alert("Not enough energy (2) to draw another card");
-    } else if (deckCount <1) {
-        alert("No more cards in the deck");
-    } else if (nextOpenCharDiv > 6) {
-        alert("No more battle space for another character");
+        } else if (energyCount <2) {
+            alert("Not enough energy (2) to draw another card");
+        } else if (deckCount <1) {
+            alert("No more cards in the deck");
+        } else if (nextOpenCharDiv > 6) {
+            alert("No more battle space for another character");
+        }
+        // console.log("Deck Click! ----------------");
+        // console.log(`energyCount: ${energyCount}`);
+        // console.log(`deckCount: ${deckCount}`);
+        // console.log(`nextOpenDiv: ${nextOpenCharDiv}`);
     }
-    // console.log("Deck Click! ----------------");
-    // console.log(`energyCount: ${energyCount}`);
-    // console.log(`deckCount: ${deckCount}`);
-    // console.log(`nextOpenDiv: ${nextOpenCharDiv}`);
 });
+
+let waiting = false;
+
+function waitUntilFinished(status) {
+    waiting = status;
+
+    if (waiting === true) {
+        return;
+    }
+}
 
 let charClickSelected = false;
 let charClickedDiv = null;
@@ -760,13 +776,26 @@ function resetCharSelection() { //also resets ability selection and enemy target
     enemyClickedDiv = null;
     enemyClickedDivNumber = null;
 
-    for (let i = 1; i <= 7; i++) {
+    for (let i = 1; i <= 7; i++) { // resets character borders and ability selections
         const charDiv = document.getElementById(`char${i}-div`);
         if (charDiv) {
             charDiv.style.border = "";
             document.getElementById(`char${i}-ability1-name`).style.backgroundColor = "";
             document.getElementById(`char${i}-ability2-name`).style.backgroundColor = "";
         }
+    }
+    for (let i = 1; i <= 7; i++) { // resets enemy borders
+        const enemyDiv = document.getElementById(`enemy${i}-div`);
+        if (enemyDiv) {
+            enemyDiv.style.border = "";
+        }
+    }
+}
+
+//determine ability type
+function setAbilityType() {
+    if (charAbilitySelectedName === "Slash") {
+        charAbilitySelectedType = "attack";
     }
 }
 
@@ -777,11 +806,9 @@ function applyCharAbilityToChar() {
 
 // character ability applied to an enemy
 function applyCharAbilityToEnemy() {
-    const abilityCost = parseInt(document.getElementById(`char${charClickedDivNumber}-ability${charAbilitySelectedNumber}-cost`).textContent);
-    const abilityUses = parseInt(document.getElementById(`char${charClickedDivNumber}-ability${charAbilitySelectedNumber}-uses`).textContent);
+    let abilityCost = parseInt(document.getElementById(`char${charClickedDivNumber}-ability${charAbilitySelectedNumber}-cost`).textContent);
+    let abilityUses = parseInt(document.getElementById(`char${charClickedDivNumber}-ability${charAbilitySelectedNumber}-uses`).textContent);
     if (charAbilitySelectedName === "Slash" && abilityCost <= energyCount) {
-        // set selected ability type
-        charAbilitySelectedType = "attack";
         // deal 5 damage to selected enemy
         const enemyHealthElem = document.getElementById(`enemy${enemyClickedDivNumber}-health`);
         let enemyHealth = parseInt(enemyHealthElem.textContent);
@@ -789,25 +816,48 @@ function applyCharAbilityToEnemy() {
         enemyHealthElem.textContent = enemyHealth;
         // take away ability cost from energy
         energyCount -= abilityCost;
+        document.getElementById("energy-count").textContent = energyCount;
         // take one away from ability uses
-        abilityUses -= 1;
-        document.getElementById(`char${charClickedDivNumber}-ability${charAbilitySelectedNumber}-uses`).textContent = abilityUses;
-
+        if (charAbilitySelectedNumber === 2) {
+            abilityUses -= 1;
+            document.getElementById(`char${charClickedDivNumber}-ability${charAbilitySelectedNumber}-uses`).textContent = abilityUses;
+        }
     }
 }
 
-// when using an ability on an enemy it should trigger resetCharSelection
+// when using an ability on an enemy it should trigger resetCharSelection XXXXXXXXXXXXXX
+// still not taking energy cost from energy count XXXXXXXXXX
+// created waitUntilFinished function XXXXXXXXXXXXXXXXXXXX
 // fill out checkForDeadEnemies
+// add in timings for divs disappearing, game flow
 // create a function for clicking end turn button
 
 // enemyturn cycle
 
 
 
-
+// when you get back from the bathroom, apply checkForDeadEnemies in the right places - enemyclick
 
 function checkForDeadEnemies() {
-    // if enemy health is <= 0 hide the div, and decrease enemyCount
+    for (let i = 1; i <= 7; i++) {
+        const enemyDiv = document.getElementById(`enemy${i}-div`);
+        if (enemyDiv) {
+            const enemyHealth = parseInt(document.getElementById(`enemy${i}-health`).textContent);
+            // Only decrement if the enemy is alive (visible) and now dead
+            if (enemyHealth <= 0 && enemyDiv.style.display !== "none") {
+                enemyDiv.style.display = "none";
+                enemyCount -= 1;
+            }
+        }
+    }
+}
+
+function checkForVictory() {
+    if (enemyCount === 0) {
+        // victory page
+        alert("you won this battle");
+        console.log("You won this battle");
+    }
 }
 
 //click any character handling
@@ -815,34 +865,39 @@ for (let i = 1; i <= 7; i++) {
     const charDiv = document.getElementById(`char${i}-div`);
     if (charDiv) {
         charDiv.addEventListener('click', function() {
-            //set div number
-            charClickedDivNumber = i;
+            if (waiting === true) {
+                return;
+            } else {
+                //set div number
+                charClickedDivNumber = i;
 
-            //determine if click is to select or to apply
-            if (charClickSelected === true) {
-                // determine if HELP ability selected
-                if (charAbilitySelectedType === "help") {
-                    applyCharAbilityToChar();
-                } else if (charClickSelected === true && charAbilitySelected === false) {
-                    //switch characters to use
-                    resetCharSelection();
+                //determine if click is to select or to apply
+                if (charClickSelected === true) {
+                    // determine if HELP ability selected
+                    if (charAbilitySelectedType === "help") {
+                        applyCharAbilityToChar();
+                        resetCharSelection();
+                    } else if (charClickSelected === true && charAbilitySelected === false) {
+                        //switch characters to use
+                        resetCharSelection();
+                        charDiv.style.border = "2px solid cyan";
+                        charClickSelected = true;
+                        charClickedDiv = charDiv;
+                        charClickedDivNumber = i;
+                    } else if (charClickSelected === true && charAbilitySelectedType !== "help") {
+                        //
+                        alert("Ability not applicable to this character");
+                        resetCharSelection();
+                    } else {
+                        resetCharSelection();
+                        charDiv.style.border = "2px solid cyan";
+                    }
+                } else {
+                    //click a character to use
                     charDiv.style.border = "2px solid cyan";
                     charClickSelected = true;
                     charClickedDiv = charDiv;
-                    charClickedDivNumber = i;
-                } else if (charClickSelected === true && charAbilitySelectedType !== "help") {
-                    //
-                    alert("Ability not applicable to this character");
-                    resetCharSelection();
-                } else {
-                    resetCharSelection();
-                    charDiv.style.border = "2px solid cyan";
                 }
-            } else {
-                //click a character to use
-                charDiv.style.border = "2px solid cyan";
-                charClickSelected = true;
-                charClickedDiv = charDiv;
             }
         });
     }
@@ -850,29 +905,43 @@ for (let i = 1; i <= 7; i++) {
 
 //press 1 or 2 listener after selecting a char to use
 document.addEventListener('keydown', function(event) {
-    if (charClickSelected === true) {
-        
-        if (event.key === '1') {
-            charAbilitySelected = true;
-            charAbilitySelectedNumber = 1;
-            charAbilitySelectedName = document.getElementById(`char${charClickedDivNumber}-ability1-name`).textContent;
-            document.getElementById(`char${charClickedDivNumber}-ability1-name`).style.backgroundColor = "yellow";
-            document.getElementById(`char${charClickedDivNumber}-ability2-name`).style.backgroundColor = "";
-        } else if (event.key === '2') {
-            charAbilitySelected = true;
-            charAbilitySelectedNumber = 2;
-            charAbilitySelectedName = document.getElementById(`char${charClickedDivNumber}-ability2-name`).textContent;
-            document.getElementById(`char${charClickedDivNumber}-ability2-name`).style.backgroundColor = "yellow";
-            document.getElementById(`char${charClickedDivNumber}-ability1-name`).style.backgroundColor = "";
+    if (waiting === true) {
+        return;
+    } else {
+        if (charClickSelected === true) {
+            if (event.key === '1') {
+                charAbilitySelected = true;
+                charAbilitySelectedNumber = 1;
+                charAbilitySelectedName = document.getElementById(`char${charClickedDivNumber}-ability1-name`).textContent;
+                setAbilityType();
+
+                document.getElementById(`char${charClickedDivNumber}-ability1-name`).style.backgroundColor = "yellow";
+                document.getElementById(`char${charClickedDivNumber}-ability2-name`).style.backgroundColor = "";
+
+                console.log(`selected ability: ${charAbilitySelectedName}`);
+            } else if (event.key === '2') {
+                charAbilitySelected = true;
+                charAbilitySelectedNumber = 2;
+                charAbilitySelectedName = document.getElementById(`char${charClickedDivNumber}-ability2-name`).textContent;
+                setAbilityType();
+
+                document.getElementById(`char${charClickedDivNumber}-ability2-name`).style.backgroundColor = "yellow";
+                document.getElementById(`char${charClickedDivNumber}-ability1-name`).style.backgroundColor = "";
+
+                console.log(`selected ability: ${charAbilitySelectedName}`);
+            }
         }
-        console.log(`selected ability: ${charAbilitySelectedName}`);
     }
 });
 
 //press escape listener after selecting a char to use
 document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
-        resetCharSelection();
+    if (waiting === true) {
+        return;
+    } else {
+        if (event.key === 'Escape') {
+            resetCharSelection();
+        }
     }
 });
 
@@ -881,37 +950,58 @@ for (let i = 1; i <= 7; i++) {
     const enemyDiv = document.getElementById(`enemy${i}-div`);
     if (enemyDiv) {
         enemyDiv.addEventListener('click', function() {
-            //set clicked enemyDiv & Number
-            enemyClickedDivNumber = i;
+            if (waiting === true) {
+                return;
+            } else {
+                //set clicked enemyDiv & Number
+                enemyClickedDivNumber = i;
 
 
-            if (charClickSelected === true && charAbilitySelected === true) {
-                // check if player has enough energy for ability
-                const charAbilityCost = document.getElementById(`char${charClickedDivNumber}-ability${charAbilitySelectedNumber}-cost`).textContent;
-                if (energyCount < charAbilityCost) {
-                    alert("Not enough energy for this ability");
-                    resetCharSelection();
-                } else if (charAbilitySelectedType === "help") { // check if ability type is help
-                    alert("Ability not applicable to this enemy");
-                    resetCharSelection();
-                } else { // apply ability
-                    enemyClickedDiv = enemyDiv;
-                    applyCharAbilityToEnemy();
-                    enemyClickedDiv.style.border = "2px solid orange";
-                    document.getElementById("energy-count").textContent = energyCount;
-                    setTimeout(() => {
-                        enemyClickedDiv.style.border = "";
-                    }, 2000);
+                if (charClickSelected === true && charAbilitySelected === true) {
+                    // check if player has enough energy for ability
+                    let charAbilityCost = parseInt(document.getElementById(`char${charClickedDivNumber}-ability${charAbilitySelectedNumber}-cost`).textContent, 10);
+                    if (energyCount < charAbilityCost) { // if char has enough energy
+                        alert("Not enough energy for this ability");
+                        resetCharSelection();
+                    } else if (charAbilitySelectedType === "help") { // check if ability type is help
+                        alert("Ability not applicable to this enemy");
+                        resetCharSelection();
+                    } else { // apply ability
 
-                    checkForDeadEnemies();
+                        enemyClickedDiv = enemyDiv;
+                        applyCharAbilityToEnemy();
+                        enemyClickedDiv.style.border = "2px solid orange";
+                        waitUntilFinished(true);
+                        setTimeout(() => {
 
-                    resetCharSelection();
+                            enemyClickedDiv.style.border = "";
+                            
+                            checkForDeadEnemies();
+
+                            checkForVictory();
+
+                            resetCharSelection();
+
+                            waitUntilFinished(false);
+                        }, 1000);
+                    }
+                    
                 }
-                
             }
+            
         });
     }
 }
+
+document.getElementById("end-turn-button").addEventListener('click', function() {
+    if (waiting === true) {
+        return;
+    } else {
+        resetCharSelection();
+        energyCount = maxEnergy;
+        document.getElementById("energy-count").textContent = energyCount;
+    }
+});
 
 //bandit battle buttons
 const banditCliffButton = document.getElementById("bandit-cliff-button");
@@ -1033,4 +1123,4 @@ banditCliffButton.addEventListener('click', function() {
 //change code for leader and fcard selection so you can't have the same leader and fcard
 //code traders to not offer leader's base card
 
-//Log in page should display previous players in the deadspace on the right (progress, etc.)
+//Log in page should display previous players in the deadspace on the right (progress, etc.
