@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const { Pool } = require('pg'); //postgres
 
-
 require('dotenv').config();
 
 const app = express();
@@ -58,21 +57,22 @@ app.post('/api/players', async (req, res) => {
         ability2_name VARCHAR(30),
         ability2_desc VARCHAR(100),
         ability2_cost INT,
-        ability2_uses INT
+        ability2_uses INT,
+        initial_protection INT
       )
     `);
 
     // Copy leader row
     await pool.query(`
-      INSERT INTO ${cardsTable} (name, type, heirloom_id, image_id, health_max, ability1_name, ability1_desc, ability1_cost, ability1_uses, ability2_name, ability2_desc, ability2_cost, ability2_uses)
-      SELECT name, type, heirloom_id, image_id, health_max, ability1_name, ability1_desc, ability1_cost, ability1_uses, ability2_name, ability2_desc, ability2_cost, ability2_uses
+      INSERT INTO ${cardsTable} (name, type, heirloom_id, image_id, health_max, ability1_name, ability1_desc, ability1_cost, ability1_uses, ability2_name, ability2_desc, ability2_cost, ability2_uses, initial_protection)
+      SELECT name, type, heirloom_id, image_id, health_max, ability1_name, ability1_desc, ability1_cost, ability1_uses, ability2_name, ability2_desc, ability2_cost, ability2_uses, initial_protection
       FROM characters_leader WHERE image_id = $1
     `, [leader_image_id]);
 
     // Copy base row
     await pool.query(`
-      INSERT INTO ${cardsTable} (name, type, heirloom_id, image_id, health_max, ability1_name, ability1_desc, ability1_cost, ability1_uses, ability2_name, ability2_desc, ability2_cost, ability2_uses)
-      SELECT name, type, heirloom_id, image_id, health_max, ability1_name, ability1_desc, ability1_cost, ability1_uses, ability2_name, ability2_desc, ability2_cost, ability2_uses
+      INSERT INTO ${cardsTable} (name, type, heirloom_id, image_id, health_max, ability1_name, ability1_desc, ability1_cost, ability1_uses, ability2_name, ability2_desc, ability2_cost, ability2_uses, initial_protection)
+      SELECT name, type, heirloom_id, image_id, health_max, ability1_name, ability1_desc, ability1_cost, ability1_uses, ability2_name, ability2_desc, ability2_cost, ability2_uses, initial_protection
       FROM characters_base WHERE image_id = $1
     `, [base_image_id]);
 
@@ -197,6 +197,22 @@ app.get('/api/:username/cards/base', async (req, res) => {
       `SELECT * FROM ${cardsTable} WHERE type = 'base'`
     );
     res.json(result.rows); // returns an array of base cards
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/enemy/:image_id', async (req, res) => {
+  const { image_id } = req.params;
+  try {
+    const result = await pool.query(
+      'SELECT * FROM enemy WHERE image_id = $1',
+      [image_id]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Enemy not found' });
+    }
+    res.json(result.rows[0]);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
