@@ -218,6 +218,20 @@ app.get('/api/enemy/:image_id', async (req, res) => {
   }
 });
 
+app.get('/api/summons/canine', async (req, res) => {
+  try {
+    const result = await pool.query(
+      "SELECT * FROM summons WHERE type = 'canine'"
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'No canine summons found' });
+    }
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
