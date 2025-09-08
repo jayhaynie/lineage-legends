@@ -117,14 +117,26 @@ app.get('/api/players/:username', async (req, res) => {
 app.get('/api/character/:image_id', async (req, res) => {
   const { image_id } = req.params;
   try {
-    const result = await pool.query(
+    // Try characters_base first
+    let result = await pool.query(
       'SELECT * FROM characters_base WHERE image_id = $1',
       [image_id]
     );
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Character not found' });
+    if (result.rows.length > 0) {
+      return res.json(result.rows[0]);
     }
-    res.json(result.rows[0]);
+
+    // If not found, try summons (for max health info)
+    result = await pool.query(
+      'SELECT * FROM summons WHERE image_id = $1',
+      [image_id]
+    );
+    if (result.rows.length > 0) {
+      return res.json(result.rows[0]);
+    }
+
+    // Not found in either table
+    return res.status(404).json({ error: 'Character not found' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
