@@ -232,6 +232,48 @@ app.get('/api/summons/canine', async (req, res) => {
   }
 });
 
+app.get('/api/summons/helper', async (req, res) => {
+  try {
+    const result = await pool.query(
+      "SELECT * FROM summons WHERE type = 'helper'"
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'No helper summons found' });
+    }
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/summons/small-creature', async (req, res) => {
+  try {
+    const result = await pool.query(
+      "SELECT * FROM summons WHERE type = 'smallCreature'"
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'No small creature summons found' });
+    }
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/summons/large-creature', async (req, res) => {
+  try {
+    const result = await pool.query(
+      "SELECT * FROM summons WHERE type = 'largeCreature'"
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'No large creature summons found' });
+    }
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
