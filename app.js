@@ -1514,7 +1514,7 @@ async function applyCharAbilityToChar() {
         // restore 5 health to target character
         const charHealthElem = document.getElementById(`char${charClickedDivNumber}-health`);
         let charHealth = parseInt(charHealthElem.textContent);
-        charHealth += 5;
+        charHealth += 3;
 
         //make sure health doesn't exceed max, color correctly
         const charHealthMax = await getCharMaxHealth();
@@ -2698,7 +2698,7 @@ for (let i = 1; i <= 7; i++) {
                             if (abilityProgress === 1) { // first enemy click
                                 enemyClickedDiv = enemyDiv;
                                 applyCharAbilityToEnemy();
-                                enemyClickedDiv.style.border = "2px solid orange";
+                                enemyClickedDiv.style.border = "2px solid red";
                                 waitUntilFinished(true);
                                 setTimeout(() => {
                                     
@@ -2713,7 +2713,7 @@ for (let i = 1; i <= 7; i++) {
                             } else if (abilityProgress === 2) { //second enemy click
                                 enemyClickedDiv = enemyDiv;
                                 applyCharAbilityToEnemy();
-                                enemyClickedDiv.style.border = "2px solid orange";
+                                enemyClickedDiv.style.border = "2px solid red";
                                 waitUntilFinished(true);
                                 setTimeout(() => {
 
@@ -2736,7 +2736,7 @@ for (let i = 1; i <= 7; i++) {
                         for (let j = 1; j <= 7; j++) {
                             const enemyDiv = document.getElementById(`enemy${j}-div`);
                                 if (enemyDiv.style.display === "block") { // only apply to visible enemies
-                                enemyDiv.style.border = "2px solid orange";
+                                enemyDiv.style.border = "2px solid red";
                                 enemyClickedDiv = enemyDiv;
                                 applyCharAbilityToEnemy();
                                 }
@@ -2755,7 +2755,7 @@ for (let i = 1; i <= 7; i++) {
                         } else if (charAbilitySelectedType === "attack" || charAbilitySelectedType === "ignoreProtection" || charAbilitySelectedType === "zeroProtection" || charAbilitySelectedType === "adaptAbility" || charAbilitySelectedType === "stealProtection") {
                                 enemyClickedDiv = enemyDiv;
                                 applyCharAbilityToEnemy();
-                                enemyClickedDiv.style.border = "2px solid orange";
+                                enemyClickedDiv.style.border = "2px solid red";
                                 waitUntilFinished(true);
                                 setTimeout(() => {
 
@@ -2773,7 +2773,7 @@ for (let i = 1; i <= 7; i++) {
                             enemyClickedDiv = enemyDiv;
                             charClickedApplyToDiv = charClickedDiv;
                             applyCharAbilityToEnemy();
-                            enemyClickedDiv.style.border = "2px solid orange";
+                            enemyClickedDiv.style.border = "2px solid red";
                             waitUntilFinished(true);
                             setTimeout(() => {
 
@@ -2812,6 +2812,8 @@ document.getElementById("end-turn-button").addEventListener('click', function() 
     } else {
         resetCharSelection();
         
+        autoFindVisibleEnemies();
+
         autoEnemyTurnCycle();
     }
 });
@@ -2842,36 +2844,45 @@ banditCliffButton.addEventListener('click', function() {
 
 // Enemy auto turn cycle
 
-
+// find all visible enemies
+function autoFindVisibleEnemies() {
+    for (let i = 1; i <= 7; i++) {
+        const enemyDiv = document.getElementById(`enemy${i}-div`);
+        if (enemyDiv.style.display === "block") {
+            visibleEnemies.push(enemyDiv);
+        }
+    }
+    console.log("visibleEnemies: ", visibleEnemies);
+}
 
 async function autoEnemyTurnCycle() {
-    //player can't click or press keys
     waitUntilFinished(true);
 
-    // find all visible enemies
-    autoFindVisibleEnemies();
-    // choose one and pull it out of the array
+    // Step 1: Choose enemy, find ability, wait 2s
     autoChooseRandomEnemy();
-    // find their ability and amount
     autoFindEnemyAbility();
     await autoFindEnemyAbilityAmount();
-    // determine target type
-    autoDetermineEnemyAbilityType();
-    // choose random target
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    // Step 2: Choose target, apply ability, wait 2s
     autoChooseRandomTarget();
-    // apply ability to target
     await autoApplyEnemyAbility();
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    // Step 3: If ability can be used twice
     if (enemyAbilityProgress === 2) {
         autoChooseRandomTarget();
         await autoApplyEnemyAbility();
-        enemyAbilityProgress = 2;
+        enemyAbilityProgress = null;
+        await new Promise(resolve => setTimeout(resolve, 2000));
     }
-    // check for dead characters
+
+    // Step 4: Do checks and repeat, wait 2s
     autoCheckForDeadCharacters();
-    // check for defeat
     autoCheckForDefeat();
-    // repeat until all enemies have played
+    autoRemoveAllBorders();
     autoCheckForUnplayedEnemies();
+    await new Promise(resolve => setTimeout(resolve, 1000));
 }
 
 let visibleEnemies = [];
@@ -2883,42 +2894,31 @@ let targetCharacter = null;
 let targetEnemy = null;
 let enemyAbilityProgress = null;
 
-function autoFindVisibleEnemies() {
-    for (let i = 1; i <= 7; i++) {
-        const enemyDiv = document.getElementById(`enemy${i}-div`);
-        if (enemyDiv.style.display === "block") {
-            visibleEnemies.push(enemyDiv);
-        }
-    }
-    console.log("visibleEnemies: ", visibleEnemies);
-}
-
 function autoChooseRandomEnemy() { // choose enemy from visibleEnemies and remove from the array
     const randomIndex = Math.floor(Math.random() * visibleEnemies.length);
     attackingEnemy = visibleEnemies[randomIndex];
     visibleEnemies.splice(randomIndex, 1);
 
+    attackingEnemy.style.border = "2px solid orange";
     console.log("attackingEnemy: ", attackingEnemy);
 }
 
 function autoFindEnemyAbility() {
     const enemyNum = attackingEnemy.id.match(/\d+/)[0]; // gets the number from "enemy3-div"
-attackingEnemyAbility = document.getElementById(`enemy${enemyNum}-ability1-name`).textContent;
+    attackingEnemyAbility = document.getElementById(`enemy${enemyNum}-ability1-name`).textContent;
 
     console.log("attackingEnemyAbility: ", attackingEnemyAbility);
 }
 
 async function autoFindEnemyAbilityAmount() {
-    fetch(`http://localhost:3000/api/enemy/ability1/${attackingEnemyAbility}`)
-    .then(res => res.json())
-    .then(data => attackingEnemyAbilityAmount = data.ability1_ammount);
-
-    console.log("attackingEnemyAbilityAmount: ", attackingEnemyAbilityAmount);
+    const res = await fetch(`http://localhost:3000/api/enemy/ability1/${attackingEnemyAbility}`);
+    const data = await res.json();
+    attackingEnemyAbilityAmount = data.ability1_ammount;
 }
 
 function autoChooseRandomTarget() { // choose character or enemy target
     autoDetermineEnemyAbilityType();
-    if (attackingEnemyAbilityType === "targetCharacter") {
+    if (attackingEnemyAbilityType === "targetCharacter" || attackingEnemyAbilityType === "targetCharacterTwice") {
         let visibleTargets = [];
         for (let i = 1; i <= 7; i++) {
             const charDiv = document.getElementById(`char${i}-div`);
@@ -2928,6 +2928,7 @@ function autoChooseRandomTarget() { // choose character or enemy target
         }
         const randomIndex = Math.floor(Math.random() * visibleTargets.length);
         targetCharacter = visibleTargets[randomIndex];
+        targetCharacter.style.border = "2px solid red";
     } else if (attackingEnemyAbilityType === "targetEnemy") {
         let visibleTargets = [];
         for (let i = 1; i <= 7; i++) {
@@ -2938,6 +2939,7 @@ function autoChooseRandomTarget() { // choose character or enemy target
         }
         const randomIndex = Math.floor(Math.random() * visibleTargets.length);
         targetEnemy = visibleTargets[randomIndex];
+        targetEnemy.style.border = "2px solid limegreen";
     }
     console.log("targetCharacter: ", targetCharacter);
     console.log("targetEnemy: ", targetEnemy);
@@ -2954,13 +2956,15 @@ function autoDetermineEnemyAbilityType() {
         attackingEnemyAbilityType = "targetEnemy";
     }
 
+    console.log("attackingEnemyAbilityAmount: ", attackingEnemyAbilityAmount);
     console.log("attackingEnemyAbilityType: ", attackingEnemyAbilityType);
 }
 
 async function autoApplyEnemyAbility() {
     if (attackingEnemyAbility === "Cut" || attackingEnemyAbility === "Stab") {
-        const targetCharHealthElem = document.getElementById(`${targetCharacter.id}-health`);
-        const targetCharProtectionElem = document.getElementById(`${targetCharacter.id}-protection`);
+        const charDivNum = targetCharacter.id.match(/\d+/)[0]; 
+        const targetCharHealthElem = document.getElementById(`char${charDivNum}-health`);
+        const targetCharProtectionElem = document.getElementById(`char${charDivNum}-protection`);
         let targetCharHealth = parseInt(targetCharHealthElem.textContent);
         let targetCharProtection = parseInt(targetCharProtectionElem.textContent);
 
@@ -2986,7 +2990,8 @@ async function autoApplyEnemyAbility() {
     }
 
     if (attackingEnemyAbility === "Heal") {
-        const targetEnemyHealthElem = document.getElementById(`${targetEnemy.id}-health`);
+        const enemyDivNum = targetEnemy.id.match(/\d+/)[0]; 
+        const targetEnemyHealthElem = document.getElementById(`enemy${enemyDivNum}-health`);
         let targetEnemyHealth = parseInt(targetEnemyHealthElem.textContent);
         targetEnemyHealth += attackingEnemyAbilityAmount;
 
@@ -3004,7 +3009,8 @@ async function autoApplyEnemyAbility() {
     }
 
     if (attackingEnemyAbility === "Defend") {
-        const targetEnemyProtectionElem = document.getElementById(`${targetEnemy.id}-protection`);
+        const enemyDivNum = targetEnemy.id.match(/\d+/)[0]; 
+        const targetEnemyProtectionElem = document.getElementById(`enemy${enemyDivNum}-protection`);
         let targetEnemyProtection = parseInt(targetEnemyProtectionElem.textContent);
         targetEnemyProtection += attackingEnemyAbilityAmount;
         targetEnemyProtectionElem.textContent = targetEnemyProtection;
@@ -3013,8 +3019,9 @@ async function autoApplyEnemyAbility() {
     }
 
     if (attackingEnemyAbility === "Swinging Slash" || attackingEnemyAbility === "Crush") {
-        const targetCharHealthElem = document.getElementById(`${targetCharacter.id}-health`);
-        const targetCharProtectionElem = document.getElementById(`${targetCharacter.id}-protection`);
+        const charDivNum = targetCharacter.id.match(/\d+/)[0]; 
+        const targetCharHealthElem = document.getElementById(`char${charDivNum}-health`);
+        const targetCharProtectionElem = document.getElementById(`char${charDivNum}-protection`);
         let targetCharHealth = parseInt(targetCharHealthElem.textContent);
         let targetCharProtection = parseInt(targetCharProtectionElem.textContent);
 
@@ -3089,6 +3096,19 @@ function autoCheckForDefeat() {
     if (aliveCharCount === 0) {
         waitUntilFinished(false);
         alert("You lost this battle");
+
+        autoRemoveAllBorders();
+        visibleEnemies = [];
+        attackingEnemy = null;
+        attackingEnemyAbility = null;
+        attackingEnemyAbilityAmount = 0;
+        attackingEnemyAbilityType = null;
+        targetCharacter = null;
+        targetEnemy = null;
+        enemyAbilityProgress = null;
+
+        return;
+
         // show defeat page
     }
 
@@ -3102,6 +3122,15 @@ function autoCheckForUnplayedEnemies() {
     } else {
         autoEnemyTurnCycle();
     }
+}
 
-    console.log("visibleEnemies remaining: ", visibleEnemies.length);
+function autoRemoveAllBorders() {
+    for (let i = 1; i <= 7; i++) {
+        const charDiv = document.getElementById(`char${i}-div`);
+        charDiv.style.border = "none";
+    }
+    for (let i = 1; i <= 7; i++) {
+        const enemyDiv = document.getElementById(`enemy${i}-div`);
+        enemyDiv.style.border = "none";
+    }
 }
