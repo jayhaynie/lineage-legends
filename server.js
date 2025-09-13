@@ -286,6 +286,22 @@ app.get('/api/summons/large-creature', async (req, res) => {
   }
 });
 
+app.get('/api/enemy/ability1/:ability1_name', async (req, res) => {
+  const { ability1_name } = req.params;
+  try {
+    const result = await pool.query(
+      'SELECT ability1_ammount FROM enemy WHERE ability1_name = $1',
+      [ability1_name]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'No enemy found with that ability1_name' });
+    }
+    res.json({ ability1_ammount: result.rows[0].ability1_ammount });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

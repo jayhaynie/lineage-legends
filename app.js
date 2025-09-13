@@ -2455,14 +2455,6 @@ async function applyCharAbilityToEnemy() {
 }
 
 
-// enemyturn cycle
-// - waitUntilFinished logic
-// - get all alive enemies
-// - use div and ability name to apply enemy ability function
-// - check for dead characters, hide divs
-// - cycle through rest of enemies abilities
-// - check for defeat
-// - pass back to player turn
 
 
 
@@ -2813,13 +2805,14 @@ for (let i = 1; i <= 7; i++) {
     }
 }
 
+// end turn button
 document.getElementById("end-turn-button").addEventListener('click', function() {
     if (waiting === true) {
         return;
     } else {
         resetCharSelection();
-        energyCount = maxEnergy;
-        document.getElementById("energy-count").textContent = energyCount;
+        
+        autoEnemyTurnCycle();
     }
 });
 
@@ -2846,114 +2839,269 @@ banditCliffButton.addEventListener('click', function() {
     initializeBattle();
 });
 
-// Theory work with dean below
 
-/**
- * COMBAT LOOP
- * Player Turn
- * - Draw cards
- * - cast abilities
-    * - choose character
-    * - choose ability
-    * - apply ability
- * - click end turn
- * 
- * Enemy Turn
- */
-
-// let combatOver = false;
-// let combatLoopStep = 0;
-// let selectedCaster = null;
-// let selectedAbility = null;
-// const combatLoopSteps = [
-//     "step0",
-//     "castAbilities",
-//     ""
-// ];
-
-// while (combatOver !== true) {
-//     if (combatLoopStep === 0) {
-//         combatLoopStep0();
-//     }
-//     if (combatLoopStep === 1) {
-//         combatLoopStep_castAbilities();
-//     }
-//     if (combatLoopStep === 2) {
-//         combatLoopStep2();
-//     }
-    
-// }
-
-// function combatLoopStep0() {
-//     combatLoopStep = 1;
-// }
-// function combatLoopStep_castAbilities() {
-//     //
-//     combatLoopStep = 2;
-// }
-// function combatLoopStep2() {
-//     combatOver = true;
-//     combatLoopStep = 0;
-// }
-
-
-// function drawCards(numberOfCards) {
-//     //execute draw 1 card 4 times
-// }
-// function drawCardsPlayer() {
-//     drawCards(1);
-// }
-// function drawCardsComputer() {
-//     drawCards(0);
-// }
-
-// function fakeClickHandler() {
-//     //triggered when card clicked
-//     if (selectedAbility !== null && combatLoopSteps[combatLoopStep] === "castAbilities" && selectedCaster !== null) {
-//         //allow to select who it effects (abilityTarget function)
-//     } else
-//     if (combatLoopSteps[combatLoopStep] === "castAbilities") {
-//         selectedCaster = divId;
-//     }
-
-// }
-// function fakeKeydownHandler() {
-//     //triggered when 1 or 2 are pressed
-//     if (combatLoopSteps[combatLoopStep] === "castAbilities" && selectedCaster !== null) {
-//         //if the if is met then - select 1st or 2nd ability
-//         // use divId to select that div's abilityname and type (enemy or character)
-//         // use abilityname to reference ability function for apply ability step
-//         selectedAbility = "how to get Id";
-//     }
-// }
+// Enemy auto turn cycle
 
 
 
+async function autoEnemyTurnCycle() {
+    //player can't click or press keys
+    waitUntilFinished(true);
 
+    // find all visible enemies
+    autoFindVisibleEnemies();
+    // choose one and pull it out of the array
+    autoChooseRandomEnemy();
+    // find their ability and amount
+    autoFindEnemyAbility();
+    await autoFindEnemyAbilityAmount();
+    // determine target type
+    autoDetermineEnemyAbilityType();
+    // choose random target
+    autoChooseRandomTarget();
+    // apply ability to target
+    await autoApplyEnemyAbility();
+    if (enemyAbilityProgress === 2) {
+        autoChooseRandomTarget();
+        await autoApplyEnemyAbility();
+        enemyAbilityProgress = 2;
+    }
+    // check for dead characters
+    autoCheckForDeadCharacters();
+    // check for defeat
+    autoCheckForDefeat();
+    // repeat until all enemies have played
+    autoCheckForUnplayedEnemies();
+}
 
+let visibleEnemies = [];
+let attackingEnemy = null;
+let attackingEnemyAbility = null;
+let attackingEnemyAbilityAmount = 0;
+let attackingEnemyAbilityType = null;
+let targetCharacter = null;
+let targetEnemy = null;
+let enemyAbilityProgress = null;
 
+function autoFindVisibleEnemies() {
+    for (let i = 1; i <= 7; i++) {
+        const enemyDiv = document.getElementById(`enemy${i}-div`);
+        if (enemyDiv.style.display === "block") {
+            visibleEnemies.push(enemyDiv);
+        }
+    }
+    console.log("visibleEnemies: ", visibleEnemies);
+}
 
+function autoChooseRandomEnemy() { // choose enemy from visibleEnemies and remove from the array
+    const randomIndex = Math.floor(Math.random() * visibleEnemies.length);
+    attackingEnemy = visibleEnemies[randomIndex];
+    visibleEnemies.splice(randomIndex, 1);
 
+    console.log("attackingEnemy: ", attackingEnemy);
+}
 
+function autoFindEnemyAbility() {
+    const enemyNum = attackingEnemy.id.match(/\d+/)[0]; // gets the number from "enemy3-div"
+attackingEnemyAbility = document.getElementById(`enemy${enemyNum}-ability1-name`).textContent;
 
-// - make a help button that shows an example of how to battle
+    console.log("attackingEnemyAbility: ", attackingEnemyAbility);
+}
 
-//make and designate music for each: bandit, ghoul, legion, arcane, pirate - also menu, trade, map 
-//code functions to have the currentmusic fade out and the new music fade in
-//change code for leader and fcard selection so you can't have the same leader and fcard
-//code traders to not offer leader's base card
+async function autoFindEnemyAbilityAmount() {
+    fetch(`http://localhost:3000/api/enemy/ability1/${attackingEnemyAbility}`)
+    .then(res => res.json())
+    .then(data => attackingEnemyAbilityAmount = data.ability1_ammount);
 
-//Log in page should display previous players in the deadspace on the right (progress, etc.
+    console.log("attackingEnemyAbilityAmount: ", attackingEnemyAbilityAmount);
+}
 
+function autoChooseRandomTarget() { // choose character or enemy target
+    autoDetermineEnemyAbilityType();
+    if (attackingEnemyAbilityType === "targetCharacter") {
+        let visibleTargets = [];
+        for (let i = 1; i <= 7; i++) {
+            const charDiv = document.getElementById(`char${i}-div`);
+            if (charDiv.style.display === "block") {
+                visibleTargets.push(charDiv);
+            }
+        }
+        const randomIndex = Math.floor(Math.random() * visibleTargets.length);
+        targetCharacter = visibleTargets[randomIndex];
+    } else if (attackingEnemyAbilityType === "targetEnemy") {
+        let visibleTargets = [];
+        for (let i = 1; i <= 7; i++) {
+            const enemyDiv = document.getElementById(`enemy${i}-div`);
+            if (enemyDiv.style.display === "block") {
+                visibleTargets.push(enemyDiv);
+            }
+        }
+        const randomIndex = Math.floor(Math.random() * visibleTargets.length);
+        targetEnemy = visibleTargets[randomIndex];
+    }
+    console.log("targetCharacter: ", targetCharacter);
+    console.log("targetEnemy: ", targetEnemy);
+}
 
+function autoDetermineEnemyAbilityType() {
+    if (attackingEnemyAbility === "Cut" || attackingEnemyAbility === "Stab") {
+        attackingEnemyAbilityType = "targetCharacter";
+    }
+    if (attackingEnemyAbility === "Swinging Slash" || attackingEnemyAbility === "Crush") {
+        attackingEnemyAbilityType = "targetCharacterTwice";
+    }
+    if (attackingEnemyAbility === "Heal" || attackingEnemyAbility === "Defend") {
+        attackingEnemyAbilityType = "targetEnemy";
+    }
 
+    console.log("attackingEnemyAbilityType: ", attackingEnemyAbilityType);
+}
 
+async function autoApplyEnemyAbility() {
+    if (attackingEnemyAbility === "Cut" || attackingEnemyAbility === "Stab") {
+        const targetCharHealthElem = document.getElementById(`${targetCharacter.id}-health`);
+        const targetCharProtectionElem = document.getElementById(`${targetCharacter.id}-protection`);
+        let targetCharHealth = parseInt(targetCharHealthElem.textContent);
+        let targetCharProtection = parseInt(targetCharProtectionElem.textContent);
 
+        // if character has protection
+        targetCharProtection -= attackingEnemyAbilityAmount;
+        if (targetCharProtection < 0) {
+            let remainder = Math.abs(targetCharProtection);
+            targetCharProtection = 0;
+            targetCharHealth -= remainder;
+        }
+        //make sure health doesn't exceed max, color correctly
+        const charHealthMax = await autoGetCharMaxHealth();
+        if (targetCharHealth >= charHealthMax) {
+            targetCharHealth = charHealthMax;
+            targetCharHealthElem.style.color = "green";
+        } else {
+            targetCharHealthElem.style.color = "orange";
+        }
+        targetCharProtectionElem.textContent = targetCharProtection;
+        targetCharHealthElem.textContent = targetCharHealth;
 
+        console.log(`applied ${attackingEnemyAbility} to ${targetCharacter.id}`);
+    }
 
+    if (attackingEnemyAbility === "Heal") {
+        const targetEnemyHealthElem = document.getElementById(`${targetEnemy.id}-health`);
+        let targetEnemyHealth = parseInt(targetEnemyHealthElem.textContent);
+        targetEnemyHealth += attackingEnemyAbilityAmount;
 
+        //make sure health doesn't exceed max, color correctly
+        const enemyHealthMax = await autoGetEnemyMaxHealth();
+        if (targetEnemyHealth >= enemyHealthMax) {
+            targetEnemyHealth = enemyHealthMax;
+            targetEnemyHealthElem.style.color = "green";
+        } else {
+            targetEnemyHealthElem.style.color = "orange";
+        }
+        targetEnemyHealthElem.textContent = targetEnemyHealth;
 
+        console.log(`applied ${attackingEnemyAbility} to ${targetEnemy.id}`);
+    }
 
+    if (attackingEnemyAbility === "Defend") {
+        const targetEnemyProtectionElem = document.getElementById(`${targetEnemy.id}-protection`);
+        let targetEnemyProtection = parseInt(targetEnemyProtectionElem.textContent);
+        targetEnemyProtection += attackingEnemyAbilityAmount;
+        targetEnemyProtectionElem.textContent = targetEnemyProtection;
 
+        console.log(`applied ${attackingEnemyAbility} to ${targetEnemy.id}`);
+    }
 
+    if (attackingEnemyAbility === "Swinging Slash" || attackingEnemyAbility === "Crush") {
+        const targetCharHealthElem = document.getElementById(`${targetCharacter.id}-health`);
+        const targetCharProtectionElem = document.getElementById(`${targetCharacter.id}-protection`);
+        let targetCharHealth = parseInt(targetCharHealthElem.textContent);
+        let targetCharProtection = parseInt(targetCharProtectionElem.textContent);
 
+        // if character has protection
+        targetCharProtection -= attackingEnemyAbilityAmount;
+        if (targetCharProtection < 0) {
+            let remainder = Math.abs(targetCharProtection);
+            targetCharProtection = 0;
+            targetCharHealth -= remainder;
+        }
+        //make sure health doesn't exceed max, color correctly
+        const charHealthMax = await autoGetCharMaxHealth();
+        if (targetCharHealth >= charHealthMax) {
+            targetCharHealth = charHealthMax;
+            targetCharHealthElem.style.color = "green";
+        } else {
+            targetCharHealthElem.style.color = "orange";
+        }
+        targetCharProtectionElem.textContent = targetCharProtection;
+        targetCharHealthElem.textContent = targetCharHealth;
+
+        // allow ability to be used twice
+        if (enemyAbilityProgress === null) {
+            enemyAbilityProgress = 2;
+        } else if (enemyAbilityProgress === 2) {
+            enemyAbilityProgress = null;
+        }
+
+        console.log(`applied ${attackingEnemyAbility} to ${targetCharacter.id}`);
+    }
+}
+
+async function autoGetCharMaxHealth() {
+    const imgElem = targetCharacter.querySelector('img');
+    let src = imgElem.src.split('/').pop(); 
+    let image_id = src.replace('Base.png', '').replace('Leader.png', '');
+
+    const res = await fetch(`http://localhost:3000/api/character/${image_id}`);
+    const data = await res.json();
+    return data.health_max;
+}
+
+async function autoGetEnemyMaxHealth() {
+    const imgElem = targetEnemy.querySelector('img');
+    let src = imgElem.src.split('/').pop(); 
+    let image_id = src.replace('.png', '');
+
+    const res = await fetch(`http://localhost:3000/api/enemy/${image_id}`);
+    const data = await res.json();
+    return data.health_max;
+}
+
+function autoCheckForDeadCharacters() {
+    for (let i = 1; i <= 7; i++) {
+        const charDiv = document.getElementById(`char${i}-div`);
+        const charHealth = parseInt(document.getElementById(`char${i}-health`).textContent);
+        // Only decrement if the character is alive (visible) and now dead
+        if (charHealth <= 0 && charDiv.style.display === "block") {
+            charDiv.style.display = "none";
+        }
+    }
+}
+
+function autoCheckForDefeat() {
+    let aliveCharCount = 0;
+    for (let i = 1; i <= 7; i++) {
+        const charDiv = document.getElementById(`char${i}-div`);
+        if (charDiv.style.display === "block") {
+            aliveCharCount++;
+        }
+    }
+    if (aliveCharCount === 0) {
+        waitUntilFinished(false);
+        alert("You lost this battle");
+        // show defeat page
+    }
+
+    console.log("aliveCharCount: ", aliveCharCount);
+}
+
+function autoCheckForUnplayedEnemies() {
+    if (visibleEnemies.length === 0) {
+        waitUntilFinished(false);
+        updateBattleVariables();
+    } else {
+        autoEnemyTurnCycle();
+    }
+
+    console.log("visibleEnemies remaining: ", visibleEnemies.length);
+}
