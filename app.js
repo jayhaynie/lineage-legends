@@ -14,10 +14,10 @@ const logButton = document.getElementById("log-button");
 const menuMusic = document.getElementById("menu-music");
 const combatMusic = document.getElementById("combat-music");
 const musicIcon = document.getElementById("music-icon");
-const musicOptions = document.getElementById("music-options");
+const settingsIcon = document.getElementById("settings-icon");
+const settingsOptions = document.getElementById("settings-options");
 const muteMusicButton = document.getElementById("mute-music-button");
 const musicVolumeSlider = document.getElementById("music-volume-slider");
-const closeMusicOptions = document.getElementById("close-music-options");
 
 //change background, hide old button, show headers and new buttons
 titleButton.addEventListener('click', function() {
@@ -30,27 +30,65 @@ titleButton.addEventListener('click', function() {
 
     // start playing music
     // menuMusic.play();
-    // musicIcon.style.display = "block";
+    settingsIcon.style.display = "block";
 });
 
-// Music stuff
-musicIcon.addEventListener('click', () => {
-    musicOptions.style.display = "block";
-});
-closeMusicOptions.addEventListener('click', () => {
-    musicOptions.style.display = "none";
+// Settings icon click
+let optionsShowing = false;
+settingsIcon.addEventListener('click', function() {
+    if (optionsShowing === false) {
+        settingsOptions.style.display = "block";
+        optionsShowing = true;
+    } else {
+        settingsOptions.style.display = "none";
+        optionsShowing = false;
+        
+        document.getElementById("help-page-div").style.display = "none";
+        helpShowing = false;
+    }
 });
 
-// Mute/unmute music
-muteMusicButton.addEventListener('click', () => {
-    menuMusic.muted = !menuMusic.muted;
-    muteMusicButton.textContent = menuMusic.muted ? "Unmute" : "Mute";
-
-    musicIcon.src = menuMusic.muted ? "images/white-note-mute.png" : "images/white-note.png";
+// help icon click
+let helpShowing = false;
+document.getElementById("help-icon").addEventListener('click', function() {
+    if (helpShowing === false) {
+    document.getElementById("help-page-div").style.display = "block";
+    document.getElementById("help-page-img").src = `images/help-page-${helpPageId}.png`;
+    helpShowing = true;
+    } else {
+        document.getElementById("help-page-div").style.display = "none";
+        helpShowing = false;
+    }
 });
 
-// Change volume
-musicVolumeSlider.addEventListener('input', () => {
+// help page click
+let helpPageId = "char";
+document.getElementById("help-page-img").addEventListener('click', function() {
+    if (helpPageId === "char") {
+        helpPageId = "sail";
+        document.getElementById("help-page-img").src = `images/help-page-${helpPageId}.png`;
+    } else if (helpPageId === "sail") {
+        helpPageId = "how";
+        document.getElementById("help-page-img").src = `images/help-page-${helpPageId}.png`;
+    } else if (helpPageId === "how") {
+        helpPageId = "char";
+        document.getElementById("help-page-img").src = `images/help-page-${helpPageId}.png`;
+    }
+});
+
+// music icon click
+musicIcon.addEventListener('click', function() {
+    if (menuMusic.muted === false) {
+        menuMusic.muted = true;
+        musicIcon.src = "images/white-note-mute.png";
+    } else {
+        menuMusic.muted = false;
+        musicIcon.src = "images/white-note.png";
+    }
+});
+
+// volume slider
+musicVolumeSlider.addEventListener('input', function() {
     menuMusic.volume = musicVolumeSlider.value;
 });
 
@@ -3134,3 +3172,5 @@ function autoRemoveAllBorders() {
         enemyDiv.style.border = "none";
     }
 }
+
+// currently setting up a settings icon in the top right that allows to mute, change colume and click the info icon for game instructions
