@@ -302,6 +302,40 @@ app.get('/api/enemy/ability1/:ability1_name', async (req, res) => {
   }
 });
 
+app.post('/api/players/:username/bond', async (req, res) => {
+  const { username } = req.params;
+  const { amount } = req.body; // amount to add to bond
+  try {
+    // Increment bond by the given amount
+    const result = await pool.query(
+      'UPDATE players SET bond = bond + $1 WHERE username = $2 RETURNING bond',
+      [amount, username]
+    );
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: 'Player not found' });
+    }
+    res.json({ bond: result.rows[0].bond });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/enemy_leader/:location', async (req, res) => {
+  const { location } = req.params;
+  try {
+    const result = await pool.query(
+      'SELECT * FROM enemy_leader WHERE type = $1',
+      [location]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'No enemy leader found for this location' });
+    }
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

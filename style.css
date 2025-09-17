@@ -26,8 +26,8 @@ body {
 #settings-icon {
     display: none;
     position: absolute;
-    top: 5%;
-    right: 2%;
+    top: 0%;
+    right: 0%;
     height: 7%;
     width: 4%;
     z-index: 101;
@@ -35,8 +35,8 @@ body {
 #settings-options {
     display: none;
     position: absolute;
-    top: 6%;
-    right: 7%;
+    top: 1%;
+    right: 5%;
     width: 15%;
     height: 5%;
     background:#222;
@@ -70,6 +70,7 @@ body {
     display: none;
     width: 100%;
     height: 100%;
+    z-index: 98;
 }
 #help-page-backing {
     position: absolute;
@@ -980,6 +981,20 @@ body {
     font-size: 1.5vw;
     font-weight: bold;
 }
+#player-turn-img {
+display: none;
+position: absolute;
+top: 50%;
+left: 35%;
+height: 10%;
+}
+#enemy-turn-img {
+display: none;
+position: absolute;
+top: 40%;
+left: 35%;
+height: 10%;
+}
 
 /* enemy divs */
 #enemy1-div {
@@ -1030,6 +1045,50 @@ body {
     margin: 0;
     padding: 0;
     top: 67%;
+    left: 15%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    padding-right: 15%;
+}
+#enemy1-ability2-name {
+    position: absolute;
+    display: none;
+    margin: 0;
+    padding: 0;
+    top: 70%;
+    left: 15%;
+    font-size: 1vw;
+    color: purple;
+    font-weight: bold;
+}
+#enemy1-ability2-desc {
+    position: absolute;
+    display: none;
+    margin: 0;
+    padding: 0;
+    top: 77%;
+    left: 15%;
+    font-size: 0.6vw;
+    font-weight: bold;
+    padding-right: 15%;
+}
+#enemy1-ability3-name {
+    position: absolute;
+    display: none;
+    margin: 0;
+    padding: 0;
+    top: 80%;
+    left: 15%;
+    font-size: 1vw;
+    color: goldenrod;
+    font-weight: bold;
+}
+#enemy1-ability3-desc {
+    position: absolute;
+    display: none;
+    margin: 0;
+    padding: 0;
+    top: 87%;
     left: 15%;
     font-size: 0.6vw;
     font-weight: bold;
@@ -1421,7 +1480,7 @@ body {
     top: 75%;
     left: 15%;
     font-size: 0.9vw;
-    color: blue;
+    color: purple;
     font-weight: bold;
 }
 #char1-ability2-desc {
@@ -1527,7 +1586,7 @@ body {
     top: 75%;
     left: 15%;
     font-size: 0.9vw;
-    color: blue;
+    color: purple;
     font-weight: bold;
 }
 #char2-ability2-desc {
@@ -1633,7 +1692,7 @@ body {
     top: 75%;
     left: 15%;
     font-size: 0.9vw;
-    color: blue;
+    color: purple;
     font-weight: bold;
 }
 #char3-ability2-desc {
@@ -1739,7 +1798,7 @@ body {
     top: 75%;
     left: 15%;
     font-size: 0.9vw;
-    color: blue;
+    color: purple;
     font-weight: bold;
 }
 #char4-ability2-desc {
@@ -1845,7 +1904,7 @@ body {
     top: 75%;
     left: 15%;
     font-size: 0.9vw;
-    color: blue;
+    color: purple;
     font-weight: bold;
 }
 #char5-ability2-desc {
@@ -1951,7 +2010,7 @@ body {
     top: 75%;
     left: 15%;
     font-size: 0.9vw;
-    color: blue;
+    color: purple;
     font-weight: bold;
 }
 #char6-ability2-desc {
@@ -2057,7 +2116,7 @@ body {
     top: 75%;
     left: 15%;
     font-size: 0.9vw;
-    color: blue;
+    color: purple;
     font-weight: bold;
 }
 #char7-ability2-desc {
@@ -2101,4 +2160,78 @@ body {
     font-size: 0.8vw;
     font-weight: bold;
     color: green;
+}
+
+/* VICTORY DEFEAT PAGES */
+#victory-page-div {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+}
+#victory-page-backing {
+    position: absolute;
+    top: 3%;
+    left: 15%;
+    width: 70%;
+    height: 94%;
+}
+#victory-page-img {
+    position: absolute;
+    top: 10%;
+    left: 25%;
+    width: 50%;
+    height: 80%;
+    border-radius:10px;
+}
+#bond-reward {
+    position: absolute;
+    top: 37.5%;
+    right: 42.5%;
+    font-size: 200%;
+    color: white;
+    font-weight: bold;
+    /* border: solid 2px red; */
+}
+#victory-button {
+    position: absolute;
+    top: 50%;
+    left: 44%;
+    font-size: 170%;
+    color: green;
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+#defeat-page-div {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+}
+#defeat-page-backing {
+    position: absolute;
+    top: 3%;
+    left: 15%;
+    width: 70%;
+    height: 94%;
+}
+#defeat-page-img {
+    position: absolute;
+    top: 10%;
+    left: 25%;
+    width: 50%;
+    height: 80%;
+    border-radius:10px;
+}
+#defeat-button {
+    position: absolute;
+    top: 35%;
+    left: 44%;
+    font-size: 170%;
+    color: red;
+    font-weight: bold;
+    border-radius: 10px;
 }
