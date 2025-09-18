@@ -29,7 +29,7 @@ titleButton.addEventListener('click', function() {
     logButton.style.display = "block";
 
     // start playing music
-    menuMusic.play();
+    // menuMusic.play();
     // combatMusic.play();
     settingsIcon.style.display = "block";
 });
@@ -766,13 +766,26 @@ async function initializeBattle() {
     await findHelperSummonCards();
     await findSmallCreatureSummonCards();
     await findLargeCreatureSummonCards();
+    await findEnemySummonCards();
 
     maxEnergy = 3 + deckCards.length;
     deckCount = deckCards.length;
 
+    for (let i = 1; i <= 7; i++) {
+        document.getElementById(`char${i}-ability2-name`).style.display = "block";
+        document.getElementById(`char${i}-ability2-desc`).style.display = "block";
+        document.getElementById(`char${i}-ability2-cost`).style.display = "block";
+        document.getElementById(`char${i}-ability2-uses`).style.display = "block";
+    }
+
     updateBattleVariables();
 
     showDeck();
+
+    randomEnemy(difficulty);
+
+    playLeader(currentUsername);
+
 
     document.getElementById("enemy-turn-img").style.display = "none";
     document.getElementById("player-turn-img").style.display = "block";
@@ -1096,9 +1109,15 @@ async function getEnemyMaxHealth() {
     let src = imgElem.src.split('/').pop(); 
     let image_id = src.replace('.png', '');
 
-    const res = await fetch(`http://localhost:3000/api/enemy/${image_id}`);
-    const data = await res.json();
-    return data.health_max;
+    if (leaderBattle === true && enemyClickedDivNumber === 1) {
+        const res = await fetch(`http://localhost:3000/api/enemy_leader/health/${image_id}`);
+        const data = await res.json();
+        return data.health_max;
+    } else {
+        const res = await fetch(`http://localhost:3000/api/enemy/${image_id}`);
+        const data = await res.json();
+        return data.health_max;
+    }
 }
 
 
@@ -1110,7 +1129,7 @@ function setAbilityType() {
         charAbilitySelectedType = "attack";
     }
     // attackTwo abilities
-    if (charAbilitySelectedName === "Double Gate" || charAbilitySelectedName === "Rapid Fire" || charAbilitySelectedName === "Bash and Slash" || charAbilitySelectedName === "Swinging Slash" || charAbilitySelectedName === "Crush" || charAbilitySelectedName === "Yowl" || charAbilitySelectedName === "Tail Whip" || charAbilitySelectedName === "Razor Talons") {
+    if (charAbilitySelectedName === "Double Gate" || charAbilitySelectedName === "Rapid Fire" || charAbilitySelectedName === "Bash and Slash" || charAbilitySelectedName === "Swinging Slash" || charAbilitySelectedName === "Crush" || charAbilitySelectedName === "Yowl" || charAbilitySelectedName === "Tail Whip" || charAbilitySelectedName === "Razor Talons" || charAbilitySelectedName === "Blade Volley") {
         charAbilitySelectedType = "attackTwo";
     }
     // attackAll
@@ -2546,6 +2565,38 @@ async function applyCharAbilityToEnemy() {
             document.getElementById("energy-count").textContent = energyCount;
         }
     }
+    // banditLeader Blade Volley
+    if (charAbilitySelectedName === "Blade Volley") {
+        // deal 7 damage to two enemies
+        const enemyHealthElem = document.getElementById(`enemy${enemyClickedDivNumber}-health`);
+        const enemyProtectionElem = document.getElementById(`enemy${enemyClickedDivNumber}-protection`);
+        let enemyHealth = parseInt(enemyHealthElem.textContent);
+        let enemyProtection = parseInt(enemyProtectionElem.textContent);
+        // if enemy has protection
+        enemyProtection -= 7;
+        if (enemyProtection < 0) {
+            let remainder = Math.abs(enemyProtection);
+            enemyProtection = 0;
+            enemyHealth -= remainder;
+        }
+
+        //make sure health doesn't exceed max, color correctly
+        const enemyHealthMax = await getEnemyMaxHealth();
+        if (enemyHealth >= enemyHealthMax) {
+            enemyHealth = enemyHealthMax;
+            enemyHealthElem.style.color = "green";
+        } else {
+            enemyHealthElem.style.color = "orange";
+        }
+
+        enemyProtectionElem.textContent = enemyProtection;
+        enemyHealthElem.textContent = enemyHealth;
+        // take away ability cost from energy if attackNumber is 2
+        if (abilityProgress === 2) {
+            energyCount -= abilityCost;
+            document.getElementById("energy-count").textContent = energyCount;
+        }
+    }
 }
 
 
@@ -2970,6 +3021,66 @@ banditCliffButton.addEventListener('click', function() {
 
     initializeBattle();
 });
+banditCampButton.addEventListener('click', function() {
+    document.body.style.backgroundImage = `url('images/battlegrounds/ground_${currentlyAt}.png')`;
+    banditButtonsDiv.style.display = "none";
+
+    battleDivs.style.display = "block";
+    leaderBattle = false;
+    difficulty = 2;
+
+    initializeBattle();
+});
+banditRiversideButton.addEventListener('click', function() {
+    document.body.style.backgroundImage = `url('images/battlegrounds/ground_${currentlyAt}.png')`;
+    banditButtonsDiv.style.display = "none";
+
+    battleDivs.style.display = "block";
+    leaderBattle = false;
+    difficulty = 3;
+
+    initializeBattle();
+});
+banditGroveButton.addEventListener('click', function() {
+    document.body.style.backgroundImage = `url('images/battlegrounds/ground_${currentlyAt}.png')`;
+    banditButtonsDiv.style.display = "none";
+
+    battleDivs.style.display = "block";
+    leaderBattle = false;
+    difficulty = 4;
+
+    initializeBattle();
+});
+banditCrossingButton.addEventListener('click', function() {
+    document.body.style.backgroundImage = `url('images/battlegrounds/ground_${currentlyAt}.png')`;
+    banditButtonsDiv.style.display = "none";
+
+    battleDivs.style.display = "block";
+    leaderBattle = false;
+    difficulty = 5;
+
+    initializeBattle();
+});
+banditUpstreamButton.addEventListener('click', function() {
+    document.body.style.backgroundImage = `url('images/battlegrounds/ground_${currentlyAt}.png')`;
+    banditButtonsDiv.style.display = "none";
+
+    battleDivs.style.display = "block";
+    leaderBattle = false;
+    difficulty = 5;
+
+    initializeBattle();
+});
+banditThicketButton.addEventListener('click', function() {
+    document.body.style.backgroundImage = `url('images/battlegrounds/ground_${currentlyAt}.png')`;
+    banditButtonsDiv.style.display = "none";
+
+    battleDivs.style.display = "block";
+    leaderBattle = false;
+    difficulty = 5;
+
+    initializeBattle();
+});
 banditFortButton.addEventListener('click', function() {
     document.body.style.backgroundImage = `url('images/battlegrounds/ground_${currentlyAt}.png')`;
     banditButtonsDiv.style.display = "none";
@@ -2977,9 +3088,6 @@ banditFortButton.addEventListener('click', function() {
     battleDivs.style.display = "block";
     leaderBattle = true;
     difficulty = 6;
-    randomEnemy(difficulty);
-
-    playLeader(currentUsername); // Use the username of the logged-in player
 
     initializeBattle();
 });
@@ -3048,16 +3156,32 @@ function autoChooseRandomEnemy() { // choose enemy from visibleEnemies and remov
 }
 
 function autoFindEnemyAbility() {
-    const enemyNum = attackingEnemy.id.match(/\d+/)[0]; // gets the number from "enemy3-div"
-    attackingEnemyAbility = document.getElementById(`enemy${enemyNum}-ability1-name`).textContent;
+    if (leaderBattle === true && attackingEnemy.id === "enemy1-div") {
+        autoChooseLeaderAbility();
+        attackingEnemyAbility = document.getElementById(`enemy1-ability${leaderAbilityNumber}-name`).textContent;
 
+        let attackingEnemyAbilityElem = document.getElementById(`enemy1-ability${leaderAbilityNumber}-name`);
+        attackingEnemyAbilityElem.style.backgroundColor = "yellow";
+    } else {
+        const enemyNum = attackingEnemy.id.match(/\d+/)[0]; // gets the number from "enemy3-div"
+        attackingEnemyAbility = document.getElementById(`enemy${enemyNum}-ability1-name`).textContent;  
+
+        let attackingEnemyAbilityElem = document.getElementById(`enemy${enemyNum}-ability1-name`);
+        attackingEnemyAbilityElem.style.backgroundColor = "yellow";
+    }
     console.log("attackingEnemyAbility: ", attackingEnemyAbility);
 }
 
 async function autoFindEnemyAbilityAmount() {
-    const res = await fetch(`http://localhost:3000/api/enemy/ability1/${attackingEnemyAbility}`);
+    if (leaderBattle === true && attackingEnemy.id === "enemy1-div") {
+        const res = await fetch(`http://localhost:3000/api/enemy_leader/${currentlyAt}/ability/${leaderAbilityNumber}`);
     const data = await res.json();
-    attackingEnemyAbilityAmount = data.ability1_ammount;
+    attackingEnemyAbilityAmount = data.ammount;
+    } else {
+        const res = await fetch(`http://localhost:3000/api/enemy/ability1/${attackingEnemyAbility}`);
+        const data = await res.json();
+        attackingEnemyAbilityAmount = data.ability1_ammount;
+    }
 }
 
 function autoChooseRandomTarget() { // choose character or enemy target
@@ -3095,6 +3219,20 @@ function autoChooseRandomTarget() { // choose character or enemy target
 
             console.log("bestEnemyTarget: ", bestEnemyTarget);
         }
+    } else if (attackingEnemyAbilityType === "targetEnemyAll") {
+        let visibleTargets = [];
+        for (let i = 1; i <= 7; i++) {
+            const enemyDiv = document.getElementById(`enemy${i}-div`);
+            if (enemyDiv.style.display === "block") {
+                visibleTargets.push(enemyDiv);
+            }
+        }
+        targetEnemy = visibleTargets; // array of all visible enemies
+        for (let j = 0; j < targetEnemy.length; j++) {
+            targetEnemy[j].style.border = "2px solid limegreen";
+        }
+    } else if (attackingEnemyAbilityType === "summonEnemy") {
+        targetEnemy = null; // no target needed
     }
     console.log("targetCharacter: ", targetCharacter);
     console.log("targetEnemy: ", targetEnemy);
@@ -3122,13 +3260,18 @@ function autoDetermineEnemyAbilityType() {
     if (attackingEnemyAbility === "Cut" || attackingEnemyAbility === "Stab") {
         attackingEnemyAbilityType = "targetCharacter";
     }
-    if (attackingEnemyAbility === "Swinging Slash" || attackingEnemyAbility === "Crush") {
+    if (attackingEnemyAbility === "Swinging Slash" || attackingEnemyAbility === "Crush" || attackingEnemyAbility === "Blade Volley") {
         attackingEnemyAbilityType = "targetCharacterTwice";
     }
     if (attackingEnemyAbility === "Heal" || attackingEnemyAbility === "Defend") {
         attackingEnemyAbilityType = "targetEnemy";
     }
-
+    if (attackingEnemyAbility === "Armor Troops") {
+        attackingEnemyAbilityType = "targetEnemyAll";
+    }
+    if (attackingEnemyAbility === "Demand") {
+        attackingEnemyAbilityType = "summonEnemy";
+    }
     console.log("attackingEnemyAbilityAmount: ", attackingEnemyAbilityAmount);
     console.log("attackingEnemyAbilityType: ", attackingEnemyAbilityType);
 }
@@ -3191,8 +3334,22 @@ async function autoApplyEnemyAbility() {
 
         console.log(`applied ${attackingEnemyAbility} to ${targetEnemy.id}`);
     }
+    // target all enemies to protect
+    if (attackingEnemyAbility === "Armor Troops") {
+        for (let i = 1; i <= 7; i++) {
+            const enemyDiv = document.getElementById(`enemy${i}-div`);
+            if (enemyDiv.style.display === "block") {
+                const targetEnemyProtectionElem = document.getElementById(`enemy${i}-protection`);
+                let targetEnemyProtection = parseInt(targetEnemyProtectionElem.textContent);
+                targetEnemyProtection += attackingEnemyAbilityAmount;
+                targetEnemyProtectionElem.textContent = targetEnemyProtection;
+
+                console.log(`applied ${attackingEnemyAbility} to ${targetEnemy.id}`);
+            }
+        }
+    }
     //target a character twice
-    if (attackingEnemyAbility === "Swinging Slash" || attackingEnemyAbility === "Crush") {
+    if (attackingEnemyAbility === "Swinging Slash" || attackingEnemyAbility === "Crush" || attackingEnemyAbility === "Blade Volley") {
         const charDivNum = targetCharacter.id.match(/\d+/)[0]; 
         const targetCharHealthElem = document.getElementById(`char${charDivNum}-health`);
         const targetCharProtectionElem = document.getElementById(`char${charDivNum}-protection`);
@@ -3226,6 +3383,36 @@ async function autoApplyEnemyAbility() {
 
         console.log(`applied ${attackingEnemyAbility} to ${targetCharacter.id}`);
     }
+    // summon enemy
+    if (attackingEnemyAbility === "Demand") {
+        findNextOpenEnemyDiv();
+        summonEnemyCard();
+
+        console.log(`applied ${attackingEnemyAbility}`);
+    }
+}
+
+let enemySummonCards = [];
+
+async function findEnemySummonCards() {
+    const res = await fetch(`http://localhost:3000/api/enemies/type/${currentlyAt}`);
+    const data = await res.json();
+    enemySummonCards = data;
+}
+
+function summonEnemyCard() {
+    const randomEnemy = Math.floor(Math.random() * enemySummonCards.length);
+    const drawnEnemy = enemySummonCards[randomEnemy];
+
+    document.getElementById(`enemy${nextOpenEnemyDiv}-div`).style.display = "block";
+    document.getElementById(`enemy${nextOpenEnemyDiv}-img`).src = `images/enemies/${drawnEnemy.image_id}.png`;
+    document.getElementById(`enemy${nextOpenEnemyDiv}-health`).textContent = drawnEnemy.health_max;
+    document.getElementById(`enemy${nextOpenEnemyDiv}-health`).style.color = "green";
+    document.getElementById(`enemy${nextOpenEnemyDiv}-protection`).textContent = drawnEnemy.initial_protection;
+    document.getElementById(`enemy${nextOpenEnemyDiv}-ability1-name`).textContent = drawnEnemy.ability1_name;
+    document.getElementById(`enemy${nextOpenEnemyDiv}-ability1-desc`).textContent = drawnEnemy.ability1_desc;
+
+    document.getElementById(`enemy${nextOpenEnemyDiv}-div`).style.border = "2px solid limegreen";
 }
 
 async function autoGetCharMaxHealth() {
@@ -3305,7 +3492,7 @@ function autoCheckForUnplayedEnemies() {
     }
 }
 
-function autoRemoveAllBorders() {
+function autoRemoveAllBorders() { // and highlights
     for (let i = 1; i <= 7; i++) {
         const charDiv = document.getElementById(`char${i}-div`);
         charDiv.style.border = "none";
@@ -3313,7 +3500,57 @@ function autoRemoveAllBorders() {
     for (let i = 1; i <= 7; i++) {
         const enemyDiv = document.getElementById(`enemy${i}-div`);
         enemyDiv.style.border = "none";
+
+        document.getElementById(`enemy${i}-ability1-name`).style.backgroundColor = "";
+        if (i === 1) {
+            document.getElementById(`enemy${i}-ability2-name`).style.backgroundColor = "";
+            document.getElementById(`enemy${i}-ability3-name`).style.backgroundColor = "";
+        }
     }
+}
+
+let leaderAbilityNumber = 0;
+
+function autoChooseLeaderAbility() {
+    let abilityNumberArray = [];
+    if (currentlyAt === "arcane") {
+        abilityNumberArray = [3, 2, 2, 2, 1, 1, 1, 1, 1, 1];
+    } else {
+        calculateShowingEnemies();
+        if (showingEnemies.length < 7) {
+            abilityNumberArray = [3, 2, 2, 2, 1, 1, 1, 1, 1, 1];
+            // abilityNumberArray = [3, 3, 3, 3, 3, 3, 3, 3, 3, 3];
+        } else {
+            abilityNumberArray = [2, 2, 2, 1, 1, 1, 1, 1, 1, 1];
+        }
+    }
+    const randomIndex = Math.floor(Math.random() * abilityNumberArray.length);
+    leaderAbilityNumber = abilityNumberArray[randomIndex];
+}
+
+function calculateShowingEnemies() {
+    showingEnemies = [];
+    for (let i = 1; i <= 7; i++) {
+        const enemyDiv = document.getElementById(`enemy${i}-div`);
+        if (enemyDiv && window.getComputedStyle(enemyDiv).display === "block") {
+            showingEnemies.push(i);
+        }
+    }
+}
+
+let nextOpenEnemyDiv = null;
+let openEnemyDivs = [];
+
+//find next open enemy div
+function findNextOpenEnemyDiv() {
+    openEnemyDivs = [];
+    for (let i = 1; i <= 7; i++) {
+        const enemyDiv = document.getElementById(`enemy${i}-div`);
+        if (enemyDiv && window.getComputedStyle(enemyDiv).display === "none") {
+            openEnemyDivs.push(i);
+        }
+    }
+    nextOpenEnemyDiv = Math.min(...openEnemyDivs);
 }
 
 // victory / defeat buttons

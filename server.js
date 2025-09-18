@@ -302,6 +302,22 @@ app.get('/api/enemy/ability1/:ability1_name', async (req, res) => {
   }
 });
 
+app.get('/api/enemy_leader/:location/ability/:number', async (req, res) => {
+  const { location, number } = req.params;
+  try {
+    const result = await pool.query(
+      `SELECT ability${number}_ammount FROM enemy_leader WHERE type = $1`,
+      [location]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'No enemy leader found for this location' });
+    }
+    res.json({ ammount: result.rows[0][`ability${number}_ammount`] });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.post('/api/players/:username/bond', async (req, res) => {
   const { username } = req.params;
   const { amount } = req.body; // amount to add to bond
@@ -331,6 +347,22 @@ app.get('/api/enemy_leader/:location', async (req, res) => {
       return res.status(404).json({ error: 'No enemy leader found for this location' });
     }
     res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/enemy_leader/health/:image_id', async (req, res) => {
+  const { image_id } = req.params;
+  try {
+    const result = await pool.query(
+      'SELECT health_max FROM enemy_leader WHERE image_id = $1',
+      [image_id]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'No enemy leader found with that image_id' });
+    }
+    res.json({ health_max: result.rows[0].health_max });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
