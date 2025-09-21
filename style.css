@@ -848,11 +848,11 @@ body {
     font-size: 30px;
     font-weight: bold;
 }
-#ghoul-houses2-button {
+#ghoul-trader-button {
     position: absolute;
     left: 20%;
     top: 65%;
-    color: red;
+    color: blue;
     font-size: 30px;
     font-weight: bold;
 }

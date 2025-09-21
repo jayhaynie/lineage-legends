@@ -35,7 +35,7 @@ app.post('/api/players', async (req, res) => {
     const result = await pool.query(
     `INSERT INTO players (username, password, arcane_track, bandit_track, ghoul_track, legion_track, pirate_track, bond, wisdom)
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`,
-    [username, password, 0, 0, 0, 0, 0, 0, 0]
+    [username, password, 1, 1, 1, 1, 1, 1, 1]
     );
     // Sanitize table names (only allow alphanumeric and underscore)
     const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
@@ -363,6 +363,30 @@ app.get('/api/enemy_leader/health/:image_id', async (req, res) => {
       return res.status(404).json({ error: 'No enemy leader found with that image_id' });
     }
     res.json({ health_max: result.rows[0].health_max });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/players/:username/faction/all', async (req, res) => {
+  const { username } = req.params;
+  const { bandit, ghoul, arcane, legion, pirate } = req.body;
+  try {
+    const result = await pool.query(
+      `UPDATE players SET 
+        bandit_track = $1,
+        ghoul_track = $2,
+        arcane_track = $3,
+        legion_track = $4,
+        pirate_track = $5
+      WHERE username = $6
+      RETURNING bandit_track, ghoul_track, arcane_track, legion_track, pirate_track`,
+      [bandit, ghoul, arcane, legion, pirate, username]
+    );
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: 'Player not found' });
+    }
+    res.json(result.rows[0]);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
