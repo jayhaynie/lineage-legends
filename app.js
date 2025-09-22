@@ -194,53 +194,58 @@ submitButton.addEventListener('click', function() {
     const baseImageId = baseImageIds[baseImageIdsIndex];
 
     if (entryMethod.newAccount === 1) {
-    splitShopCharacters();
-
-    fetch('http://localhost:3000/api/players', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            username: submitUsername,
-            password: submitPassword,
-            characterList: characterList,      
-            leaderImageId: leaderImageId,      
-            baseImageId: baseImageId,
-            shop1List: shop1List,
-            shop2List: shop2List,
-            shop3List: shop3List,           
-            shop4List: shop4List
-        })
-    })
-    .then(async res => {
-        if (res.status === 409) {
-            const data = await res.json();
-            alert(data.error); // Or show a message in your UI
+        if (leaderImageId === baseImageId) {
+            alert("Please choose 2 different characters");
+            return;
         } else {
-            return res.json();
+            splitShopCharacters();
+
+            fetch('http://localhost:3000/api/players', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    username: submitUsername,
+                    password: submitPassword,
+                    characterList: characterList,      
+                    leaderImageId: leaderImageId,      
+                    baseImageId: baseImageId,
+                    shop1List: shop1List,
+                    shop2List: shop2List,
+                    shop3List: shop3List,           
+                    shop4List: shop4List
+                })
+            })
+            .then(async res => {
+                if (res.status === 409) {
+                    const data = await res.json();
+                    alert(data.error); // Or show a message in your UI
+                } else {
+                    return res.json();
+                }
+            })
+            .then(data => {
+                if (data) {
+                    currentUsername = submitUsername;
+                    // Proceed with account creation success
+
+                    document.body.style.backgroundImage = "url('images/background1.png')";
+                    selectFcardDiv.style.display = "none";
+                    selectLeaderDiv.style.display = "none";
+                    createHeaderTwo.style.display = "none";
+                    inputUsername.style.display = "none";
+                    inputPassword.style.display = "none";
+                    switchToLog.style.display = "none";
+                    submitButton.style.display = "none";
+
+                    dialogueDiv.style.display = "block";
+                    dialogueSpeakerImage.style.display = "block";
+                    dialogueSpeaker.textContent = "???";
+                    dialogueText.textContent = `Thank you for showing up ${leaderName}, we could really use your help.`;
+
+                    dialogueProgress = "1.1";
+                }
+            });
         }
-    })
-    .then(data => {
-        if (data) {
-            currentUsername = submitUsername;
-            // Proceed with account creation success
-
-            document.body.style.backgroundImage = "url('images/background1.png')";
-            selectFcardDiv.style.display = "none";
-            selectLeaderDiv.style.display = "none";
-            createHeaderTwo.style.display = "none";
-            inputUsername.style.display = "none";
-            inputPassword.style.display = "none";
-            switchToLog.style.display = "none";
-            submitButton.style.display = "none";
-
-            dialogueDiv.style.display = "block";
-            dialogueSpeakerImage.style.display = "block";
-            dialogueSpeaker.textContent = "???";
-            dialogueText.textContent = `Thank you for showing up ${leaderName}, we could really use your help.`;
-
-            dialogueProgress = "1.1";
-        }
-    });
     }
     
     if (entryMethod.logIn === 1) {
