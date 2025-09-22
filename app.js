@@ -194,10 +194,22 @@ submitButton.addEventListener('click', function() {
     const baseImageId = baseImageIds[baseImageIdsIndex];
 
     if (entryMethod.newAccount === 1) {
+    splitShopCharacters();
+
     fetch('http://localhost:3000/api/players', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: submitUsername, password: submitPassword, leader_image_id: leaderImageId, base_image_id: baseImageId })
+        body: JSON.stringify({
+            username: submitUsername,
+            password: submitPassword,
+            characterList: characterList,      
+            leaderImageId: leaderImageId,      
+            baseImageId: baseImageId,
+            shop1List: shop1List,
+            shop2List: shop2List,
+            shop3List: shop3List,           
+            shop4List: shop4List
+        })
     })
     .then(async res => {
         if (res.status === 409) {
@@ -376,6 +388,38 @@ const goldRightArrow = document.getElementById("gold-right-arrow");
 const silverLeftArrow = document.getElementById("silver-left-arrow");
 const silverRightArrow = document.getElementById("silver-right-arrow");
 
+let characterList = [];
+let shop1List = []; // home
+let shop2List = []; // ghoul
+let shop3List = []; // legion
+let shop4List = []; // arcane
+
+function splitShopCharacters() { // remove leader and fcard, split rest into 4 shops randomly
+    let pullFromList = characterList.slice();
+    pullFromList = pullFromList.filter(id => id !== leaderImageIds[leaderImageIdsIndex] && id !== baseImageIds[baseImageIdsIndex]);
+
+    for (let i = 0; i < 4; i++) {
+        const randomIndex = Math.floor(Math.random() * pullFromList.length);
+        shop1List.push(pullFromList[randomIndex]);
+        pullFromList.splice(randomIndex, 1);
+    }
+    for (let i = 0; i < 4; i++) {
+        const randomIndex = Math.floor(Math.random() * pullFromList.length);
+        shop2List.push(pullFromList[randomIndex]);
+        pullFromList.splice(randomIndex, 1);
+    }
+    for (let i = 0; i < 4; i++) {
+        const randomIndex = Math.floor(Math.random() * pullFromList.length);
+        shop3List.push(pullFromList[randomIndex]);
+        pullFromList.splice(randomIndex, 1);
+    }
+    for (let i = 0; i < 4; i++) {
+        const randomIndex = Math.floor(Math.random() * pullFromList.length);
+        shop4List.push(pullFromList[randomIndex]);
+        pullFromList.splice(randomIndex, 1);
+    }
+}
+
 // Fetch all character names on page load
 fetch('http://localhost:3000/api/characters')
   .then(res => res.json())
@@ -385,7 +429,8 @@ fetch('http://localhost:3000/api/characters')
         const randomIndex = Math.floor(Math.random() * baseImageIds.length);
         loadFcard(baseImageIds[randomIndex]);
         baseImageIdsIndex = randomIndex; // <-- Set index
-        selectedBaseImageId = baseImageIds[randomIndex]; // <-- Set selected image ID
+        // list of all names
+        characterList = names;
     }
   });
 

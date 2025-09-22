@@ -24,26 +24,27 @@ const pool = new Pool({
 
 // Create a new user
 app.post('/api/players', async (req, res) => {
-  const { username, password, leader_image_id, base_image_id } = req.body;
+  const { username, password, characterList, leaderImageId, baseImageId, shop1List, shop2List, shop3List, shop4List } = req.body;
   try {
     // Check if username exists
     const exists = await pool.query('SELECT 1 FROM players WHERE username = $1', [username]);
     if (exists.rows.length > 0) {
       return res.status(409).json({ error: 'Username already exists, please log in or choose another username' });
     }
+
     // Insert new user
     const result = await pool.query(
-    `INSERT INTO players (username, password, arcane_track, bandit_track, ghoul_track, legion_track, pirate_track, bond, wisdom)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`,
-    [username, password, 1, 1, 1, 1, 1, 1, 1]
+      `INSERT INTO players (username, password, arcane_track, bandit_track, ghoul_track, legion_track, pirate_track, bond, wisdom)
+      VALUES ($1, $2, 1, 1, 1, 1, 1, 1, 1) RETURNING *`,
+      [username, password]
     );
-    // Sanitize table names (only allow alphanumeric and underscore)
+
+    // Sanitize table names
     const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
     const cardsTable = `${safeUsername}_cards`;
 
-
     // Create cards table
-     await pool.query(`
+    await pool.query(`
       CREATE TABLE IF NOT EXISTS ${cardsTable} (
         name VARCHAR(30),
         type VARCHAR(30),
@@ -62,34 +63,52 @@ app.post('/api/players', async (req, res) => {
       )
     `);
 
-    // Copy leader row
+    // Insert all characters in characterList
     await pool.query(`
       INSERT INTO ${cardsTable} (name, type, heirloom_id, image_id, health_max, ability1_name, ability1_desc, ability1_cost, ability1_uses, ability2_name, ability2_desc, ability2_cost, ability2_uses, initial_protection)
-      SELECT name, type, heirloom_id, image_id, health_max, ability1_name, ability1_desc, ability1_cost, ability1_uses, ability2_name, ability2_desc, ability2_cost, ability2_uses, initial_protection
-      FROM characters_leader WHERE image_id = $1
-    `, [leader_image_id]);
+      SELECT name, 'shop', heirloom_id, image_id, health_max, ability1_name, ability1_desc, ability1_cost, ability1_uses, ability2_name, ability2_desc, ability2_cost, ability2_uses, initial_protection
+      FROM characters_base
+      WHERE image_id = ANY($1)
+    `, [characterList]);
 
-    // Copy base row
+    // update types to shops
     await pool.query(`
-      INSERT INTO ${cardsTable} (name, type, heirloom_id, image_id, health_max, ability1_name, ability1_desc, ability1_cost, ability1_uses, ability2_name, ability2_desc, ability2_cost, ability2_uses, initial_protection)
-      SELECT name, type, heirloom_id, image_id, health_max, ability1_name, ability1_desc, ability1_cost, ability1_uses, ability2_name, ability2_desc, ability2_cost, ability2_uses, initial_protection
-      FROM characters_base WHERE image_id = $1
-    `, [base_image_id]);
+      UPDATE ${cardsTable}
+      SET type = 'shop1'
+      WHERE image_id = ANY($1)
+    `, [shop1List]);
 
-    // Update type column for leader card
+    await pool.query(`
+      UPDATE ${cardsTable}
+      SET type = 'shop2'
+      WHERE image_id = ANY($1)
+    `, [shop2List]);
+
+    await pool.query(`
+      UPDATE ${cardsTable}
+      SET type = 'shop3'
+      WHERE image_id = ANY($1)
+    `, [shop3List]);
+
+    await pool.query(`
+      UPDATE ${cardsTable}
+      SET type = 'shop4'
+      WHERE image_id = ANY($1)
+    `, [shop4List]);
+
+    // Set type = 'leader' for leaderImageId
     await pool.query(`
       UPDATE ${cardsTable}
       SET type = 'leader'
       WHERE image_id = $1
-    `, [leader_image_id]);
+    `, [leaderImageId]);
 
-    // Update type column for base card
+    // Set type = 'base' for baseImageId
     await pool.query(`
       UPDATE ${cardsTable}
       SET type = 'base'
       WHERE image_id = $1
-    `, [base_image_id]);
-
+    `, [baseImageId]);
 
     res.status(201).json(result.rows[0]);
   } catch (err) {
