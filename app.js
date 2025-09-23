@@ -4142,3 +4142,37 @@ document.getElementById("defeat-button").addEventListener('click', function() {
     homeButtonsDiv.style.display = "block";
 });
 
+//trader buttons and logic etc
+const totalBondDiv = document.getElementById("total-bond-div");
+const traderCharacterListDiv = document.getElementById("trader-characters-div");
+const traderDiv = document.getElementById(`${currentlyAt}-trader-div`);
+const traderButton = document.getElementById(`${currentlyAt}-trader-button`);
+const currentButtonsDiv = document.getElementById(`${currentlyAt}-buttons-div`);
+const exitTraderButton = document.getElementById("exit-trader-button");
+
+traderButton.addEventListener('click', function() {
+    document.body.style.backgroundImage = `url('images/traders/trader-${currentlyAt}-shop.png')`;
+    totalBondDiv.style.display = "block";
+    traderCharacterListDiv.style.display = "block";
+    exitTraderButton.style.display = "block";
+    traderDiv.style.display = "block";
+    currentButtonsDiv.style.display = "none";
+});
+
+exitTraderButton.addEventListener('click', function() {
+    document.body.style.backgroundImage = `url('images/maps/map_${currentlyAt}.png')`;
+    totalBondDiv.style.display = "none";
+    traderCharacterListDiv.style.display = "none";
+    exitTraderButton.style.display = "none";
+    traderDiv.style.display = "none";
+    currentButtonsDiv.style.display = "block";
+
+    console.log("Exited trader");
+});
+
+// was testing that the buttons were clickable
+// for (let i = 1; i <= 18; i++) {
+//     document.getElementById(`trader-character${i}`).addEventListener('click', function() {
+//         console.log(`Clicked trader-character${i} button`);
+//     });
+// }

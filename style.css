@@ -5,6 +5,7 @@ html, body {
 }
 body {
     background-image: url('images/title-background.png');
+    /* background-image: url('images/traders/trader-arcane-shop.png'); */
     background-size: cover;      
     background-repeat: no-repeat; 
     background-position: center;
@@ -541,7 +542,7 @@ body {
     font-size: 30px;
     font-weight: bold;
 }
-#home-trade-button {
+#home-trader-button {
     position: absolute;
     left: 60%;
     top: 55%;
@@ -572,7 +573,7 @@ body {
     font-size: 30px;
     font-weight: bold;
 }
-#arcane-trade-button {
+#arcane-trader-button {
     position: absolute;
     left: 70%;
     top: 20%;
@@ -651,7 +652,7 @@ body {
     font-size: 30px;
     font-weight: bold;
 }
-#legion-trade-button {
+#legion-trader-button {
     position: absolute;
     left: 80%;
     top: 55%;
@@ -2241,4 +2242,350 @@ height: 10%;
     color: red;
     font-weight: bold;
     border-radius: 10px;
+}
+/* TRADERS */
+/* HOME */
+#home-trader-div {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    z-index: 97;
+}
+#home-armor-div {
+    position: absolute;
+    top: 52%;
+    left: 35.75%;
+    height: 13%;
+    /* border: solid 2px red; */
+}
+#home-gold-div {
+    position: absolute;
+    top: 55%;
+    left: 52.5%;
+    height: 13%;
+    /* border: solid 2px red; */
+}
+#home-green-div {
+    position: absolute;
+    top: 43%;
+    left: 64.5%;
+    height: 13%;
+    /* border: solid 2px red; */
+}
+#home-red-div {
+    position: absolute;
+    top: 56%;
+    left: 64.5%;
+    height: 13%;
+    /* border: solid 2px red; */
+}
+#home-card1-div {
+    position: absolute;
+    top: 80%;
+    left: 3%;
+    width: 4%;
+    /* border: solid 2px red; */
+}
+#home-card2-div {
+    position: absolute;
+    top: 55%;
+    left: 10.75%;
+    width: 4%;
+    /* border: solid 2px red; */
+}
+#home-card3-div {
+    position: absolute;
+    top: 47%;
+    left: 18.5%;
+    width: 4%;
+    /* border: solid 2px red; */
+}
+#home-card4-div {
+    position: absolute;
+    top: 40.5%;
+    left: 44.75%;
+    width: 4%;
+    /* border: solid 2px red; */
+}
+/* GHOUL */
+#ghoul-trader-div {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    z-index: 97;
+}
+#ghoul-armor-div {
+    position: absolute;
+    top: 63.5%;
+    left: 0.75%;
+    height: 13%;
+    /* border: solid 2px red; */
+}
+#ghoul-gold-div {
+    position: absolute;
+    top: 41.5%;
+    left: 0.25%;
+    height: 13%;
+    /* border: solid 2px red; */
+}
+#ghoul-green-div {
+    position: absolute;
+    top: 31%;
+    left: 7%;
+    height: 13%;
+    /* border: solid 2px red; */
+}
+#ghoul-red-div {
+    position: absolute;
+    top: 50%;
+    left: 7%;
+    height: 13%;
+    /* border: solid 2px red; */
+}
+#ghoul-card1-div {
+    position: absolute;
+    top: 29%;
+    left: 34.75%;
+    width: 4%;
+    /* border: solid 2px red; */
+}
+#ghoul-card2-div {
+    position: absolute;
+    top: 60%;
+    left: 36.5%;
+    width: 4%;
+    /* border: solid 2px red; */
+}
+#ghoul-card3-div {
+    position: absolute;
+    top: 42.5%;
+    left: 46%;
+    width: 4%;
+    /* border: solid 2px red; */
+}
+#ghoul-card4-div {
+    position: absolute;
+    top: 61.25%;
+    left: 55.25%;
+    width: 4%;
+    /* border: solid 2px red; */
+}
+/* LEGION */
+#legion-trader-div {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    z-index: 97;
+}
+#legion-armor-div {
+    position: absolute;
+    top: 67.25%;
+    left: 2%;
+    height: 13%;
+    /* border: solid 2px red; */
+}
+#legion-gold-div {
+    position: absolute;
+    top: 67.25%;
+    left: 10.25%;
+    height: 13%;
+    /* border: solid 2px red; */
+}
+#legion-green-div {
+    position: absolute;
+    top: 17%;
+    left: 49%;
+    height: 13%;
+    /* border: solid 2px red; */
+}
+#legion-red-div {
+    position: absolute;
+    top: 32.5%;
+    left: 49%;
+    height: 13%;
+    /* border: solid 2px red; */
+}
+#legion-card1-div {
+    position: absolute;
+    top: 42.25%;
+    left: 30%;
+    width: 4%;
+    /* border: solid 2px red; */
+}
+#legion-card2-div {
+    position: absolute;
+    top: 56%;
+    left: 32.75%;
+    width: 4%;
+    /* border: solid 2px red; */
+}
+#legion-card3-div {
+    position: absolute;
+    top: 38%;
+    left: 38%;
+    width: 4%;
+    /* border: solid 2px red; */
+}
+#legion-card4-div {
+    position: absolute;
+    top: 48.25%;
+    left: 45%;
+    width: 4%;
+    /* border: solid 2px red; */
+}
+/* ARCANE */
+#arcane-trader-div {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    z-index: 97;
+}
+#arcane-armor-div {
+    position: absolute;
+    top: 67.25%;
+    left: 2.25%;
+    height: 13%;
+    /* border: solid 2px red; */
+}
+#arcane-gold-div {
+    position: absolute;
+    top: 71.5%;
+    left: 10.5%;
+    height: 13%;
+    /* border: solid 2px red; */
+}
+#arcane-green-div {
+    position: absolute;
+    top: 39.5%;
+    left: 46%;
+    height: 13%;
+    /* border: solid 2px red; */
+}
+#arcane-red-div {
+    position: absolute;
+    top: 58.25%;
+    left: 47.75%;
+    height: 13%;
+    /* border: solid 2px red; */
+}
+#arcane-card1-div {
+    position: absolute;
+    top: 37.5%;
+    left: 29.5%;
+    width: 4%;
+    /* border: solid 2px red; */
+}
+#arcane-card2-div {
+    position: absolute;
+    top: 61%;
+    left: 32%;
+    width: 4%;
+    /* border: solid 2px red; */
+}
+#arcane-card3-div {
+    position: absolute;
+    top: 39%;
+    left: 39%;
+    width: 4%;
+    /* border: solid 2px red; */
+}
+#arcane-card4-div {
+    position: absolute;
+    top: 60%;
+    left: 41.5%;
+    width: 4%;
+    /* border: solid 2px red; */
+}
+/* SHARED */
+#total-bond-div {
+    position: absolute;
+    display: none;
+    width: 30%;
+    height: 10%;
+    z-index: 97;
+}
+#total-bond-img {
+    position: absolute;
+    top: 2%;
+    left: 5%;
+    height: 80%;
+}
+#total-bond-text {
+    position: absolute;
+    top: 15%;
+    left: 17%;
+    font-size: 40px;
+    color: white;
+    font-weight: bold;
+    margin-top: 0%;
+}
+#exit-trader-button {
+    position: absolute;
+    display: none;
+    bottom: 1%;
+    right: 1.5%;
+    font-size: 30px;
+    color: grey;
+    font-weight: bold;
+    border-radius: 10px;
+    z-index: 99;
+}
+#trader-characters-div {
+    position: absolute;
+    display: none;
+    bottom: 7%;
+    right: 1.5%;
+    width: 12%;
+    /* border: solid 2px red; */
+    z-index: 98;
+}
+.character-list-button {
+    font-size: 30px;
+    color: white;
+    font-weight: bold;
+    margin: 1%;
+    width: 100%;
+    background-color: #00025C;
+    border-radius: 5px;
+}
+#trader-character1 {
+    background-color: #5C4300;
+}
+.trader-upgrade-img {
+    height: 100%;
+}
+.trader-upgrade-cost-img {
+    position: absolute;
+    top: 86.5%;
+    left: 25%;
+    height: 20%;
+}
+.trader-upgrade-cost-text {
+    position: absolute;
+    top: 70%;
+    left: 45%;
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+}
+.trader-card-img {
+    width: 100%;
+}
+.trader-card-cost-img {
+    position: absolute;
+    top: 63%;
+    left: 7%;
+    width: 25%;
+}
+.trader-card-cost-text {
+    position: absolute;
+    top: 50%;
+    left: 34%;
+    font-size: 17px;
+    color: white;
+    font-weight: bold;
 }
