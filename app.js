@@ -72,6 +72,9 @@ document.getElementById("help-page-img").addEventListener('click', function() {
         helpPageId = "how";
         document.getElementById("help-page-img").src = `images/help-page-${helpPageId}.png`;
     } else if (helpPageId === "how") {
+        helpPageId = "shop";
+        document.getElementById("help-page-img").src = `images/help-page-${helpPageId}.png`;
+    } else if (helpPageId === "shop") {
         helpPageId = "char";
         document.getElementById("help-page-img").src = `images/help-page-${helpPageId}.png`;
     }
@@ -4120,7 +4123,7 @@ document.getElementById("victory-button").addEventListener('click', function() {
     }
 
     // add earned bond to players db table
-    fetch(`http://localhost:3000/api/players/${currentUsername}/bond`, {
+    fetch(`http://localhost:3000/api/players/${currentUsername}/plusBond`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount: difficulties[difficulty].reward }) 
@@ -4145,18 +4148,19 @@ document.getElementById("defeat-button").addEventListener('click', function() {
 //trader buttons and logic etc
 const totalBondDiv = document.getElementById("total-bond-div");
 const traderCharacterListDiv = document.getElementById("trader-characters-div");
-const traderDiv = document.getElementById(`${currentlyAt}-trader-div`);
-const traderButton = document.getElementById(`${currentlyAt}-trader-button`);
-const currentButtonsDiv = document.getElementById(`${currentlyAt}-buttons-div`);
 const exitTraderButton = document.getElementById("exit-trader-button");
 
-traderButton.addEventListener('click', function() {
-    document.body.style.backgroundImage = `url('images/traders/trader-${currentlyAt}-shop.png')`;
-    totalBondDiv.style.display = "block";
-    traderCharacterListDiv.style.display = "block";
-    exitTraderButton.style.display = "block";
-    traderDiv.style.display = "block";
-    currentButtonsDiv.style.display = "none";
+document.getElementById("home-trader-button").addEventListener('click', function() {
+    initializeTrader();
+});
+document.getElementById("ghoul-trader-button").addEventListener('click', function() {
+    initializeTrader();
+});
+document.getElementById("legion-trader-button").addEventListener('click', function() {
+    initializeTrader();
+});
+document.getElementById("arcane-trader-button").addEventListener('click', function() {
+    initializeTrader();
 });
 
 exitTraderButton.addEventListener('click', function() {
@@ -4164,15 +4168,95 @@ exitTraderButton.addEventListener('click', function() {
     totalBondDiv.style.display = "none";
     traderCharacterListDiv.style.display = "none";
     exitTraderButton.style.display = "none";
-    traderDiv.style.display = "none";
-    currentButtonsDiv.style.display = "block";
+    document.getElementById(`${currentlyAt}-trader-div`).style.display = "none";
+    document.getElementById(`${currentlyAt}-buttons-div`).style.display = "block";
 
     console.log("Exited trader");
 });
 
-// was testing that the buttons were clickable
-// for (let i = 1; i <= 18; i++) {
-//     document.getElementById(`trader-character${i}`).addEventListener('click', function() {
-//         console.log(`Clicked trader-character${i} button`);
-//     });
-// }
+async function initializeTrader() {
+    document.body.style.backgroundImage = `url('images/traders/trader-${currentlyAt}-shop.png')`;
+    totalBondDiv.style.display = "block";
+    traderCharacterListDiv.style.display = "block";
+    exitTraderButton.style.display = "block";
+    document.getElementById(`${currentlyAt}-trader-div`).style.display = "block";
+    document.getElementById(`${currentlyAt}-buttons-div`).style.display = "none";
+
+    await initializeTotalBond();
+    await listLeaderCharacter();
+    await listBaseCharacters();
+    await showCharacterCards();
+}
+
+async function initializeTotalBond() { // show total bond on trader initialize
+    const res = await fetch(`http://localhost:3000/api/players/${currentUsername}`);
+    const data = await res.json();
+    document.getElementById("total-bond-text").textContent = data.bond;
+}
+
+async function bondPurchase() { // subtract cost from bond in the database
+    const cost = 100; // example cost
+    const res = await fetch(`http://localhost:3000/api/players/${currentUsername}/minusBond`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: cost })
+    });
+    const data = await res.json();
+    document.getElementById("total-bond-text").textContent = data.bond;
+}
+
+async function listLeaderCharacter() {
+    const res = await fetch(`http://localhost:3000/api/${currentUsername}/cards/leader`);
+    const data = await res.json();
+    document.getElementById("trader-character1").textContent = data.name;
+    document.getElementById("trader-character1").style.display = "block";
+}
+
+async function listBaseCharacters() {
+    const res = await fetch(`http://localhost:3000/api/${currentUsername}/cards/base`);
+    const data = await res.json();
+    for (let i = 0; i < data.length; i++) {
+        document.getElementById(`trader-character${i + 2}`).textContent = data[i].name;
+        document.getElementById(`trader-character${i + 2}`).style.display = "block";
+        
+    }
+}
+
+async function showCharacterCards() {
+    let shopNumber = 0;
+    if (currentlyAt === "home") {
+        shopNumber = 1;
+    } else if (currentlyAt === "ghoul") {
+        shopNumber = 2;
+    } else if (currentlyAt === "legion") {
+        shopNumber = 3;
+    } else if (currentlyAt === "arcane") {
+        shopNumber = 4;
+    }
+
+    const res = await fetch(`http://localhost:3000/api/${currentUsername}/cards/shop/${shopNumber}`);
+    const shopCards = await res.json();
+
+    for (let i = 0; i < shopCards.length; i++) {
+        document.getElementById(`${currentlyAt}-card${i + 1}-img`).src = `images/base-characters/${shopCards[i].image_id}Base.png`;
+    }
+}
+
+// click on trader-card-img query selector class
+const traderCardImages = document.querySelectorAll('.trader-card-img');
+traderCardImages.forEach(card => {
+    card.addEventListener('click', async function() {
+
+    })
+});
+
+// click on trader-upgrade-img query selector class
+const traderUpgradeImages = document.querySelectorAll('.trader-upgrade-img');
+traderUpgradeImages.forEach(upgrade => {
+    upgrade.addEventListener('click', async function() {
+
+    })
+});
+
+
+// next to develop a way to determine what upgrade was chosen (pull out "arcane-" and "1-img" )

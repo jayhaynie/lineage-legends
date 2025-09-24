@@ -35,7 +35,7 @@ app.post('/api/players', async (req, res) => {
     // Insert new user
     const result = await pool.query(
       `INSERT INTO players (username, password, arcane_track, bandit_track, ghoul_track, legion_track, pirate_track, bond, wisdom)
-      VALUES ($1, $2, 1, 1, 1, 1, 1, 1, 1) RETURNING *`,
+      VALUES ($1, $2, 1, 1, 1, 1, 1, 0, 0) RETURNING *`,
       [username, password]
     );
 
@@ -337,13 +337,31 @@ app.get('/api/enemy_leader/:location/ability/:number', async (req, res) => {
   }
 });
 
-app.post('/api/players/:username/bond', async (req, res) => {
+app.post('/api/players/:username/plusBond', async (req, res) => {
   const { username } = req.params;
   const { amount } = req.body; // amount to add to bond
   try {
     // Increment bond by the given amount
     const result = await pool.query(
       'UPDATE players SET bond = bond + $1 WHERE username = $2 RETURNING bond',
+      [amount, username]
+    );
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: 'Player not found' });
+    }
+    res.json({ bond: result.rows[0].bond });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/players/:username/minusBond', async (req, res) => {
+  const { username } = req.params;
+  const { amount } = req.body; // amount to subtract from bond
+  try {
+    // Decrement bond by the given amount
+    const result = await pool.query(
+      'UPDATE players SET bond = bond - $1 WHERE username = $2 RETURNING bond',
       [amount, username]
     );
     if (result.rowCount === 0) {
@@ -406,6 +424,23 @@ app.post('/api/players/:username/faction/all', async (req, res) => {
       return res.status(404).json({ error: 'Player not found' });
     }
     res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/:username/cards/shop/:shopNumber', async (req, res) => {
+  const { username, shopNumber } = req.params;
+  // Sanitize table name
+  const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
+  const cardsTable = `${safeUsername}_cards`;
+  const shopType = `shop${shopNumber}`;
+  try {
+    const result = await pool.query(
+      `SELECT * FROM ${cardsTable} WHERE type = $1`,
+      [shopType]
+    );
+    res.json(result.rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
