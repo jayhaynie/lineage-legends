@@ -4194,17 +4194,6 @@ async function initializeTotalBond() { // show total bond on trader initialize
     document.getElementById("total-bond-text").textContent = data.bond;
 }
 
-async function bondPurchase() { // subtract cost from bond in the database
-    const cost = 100; // example cost
-    const res = await fetch(`http://localhost:3000/api/players/${currentUsername}/minusBond`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: cost })
-    });
-    const data = await res.json();
-    document.getElementById("total-bond-text").textContent = data.bond;
-}
-
 async function listLeaderCharacter() {
     const res = await fetch(`http://localhost:3000/api/${currentUsername}/cards/leader`);
     const data = await res.json();
@@ -4242,21 +4231,276 @@ async function showCharacterCards() {
     }
 }
 
+let upgradeType = null;
+let upgradeCost = null;
+let upgradeClicked = false;
+let needToChooseAbility = false;
+let abilityChosen = null;
+
+
+
 // click on trader-card-img query selector class
 const traderCardImages = document.querySelectorAll('.trader-card-img');
 traderCardImages.forEach(card => {
     card.addEventListener('click', async function() {
-
+        // how to buy a card
     })
 });
+
+async function populatebuyCard() {
+
+}
 
 // click on trader-upgrade-img query selector class
 const traderUpgradeImages = document.querySelectorAll('.trader-upgrade-img');
 traderUpgradeImages.forEach(upgrade => {
     upgrade.addEventListener('click', async function() {
+        if (upgrade.style.border === "2px solid darkcyan" && upgradeClicked === true) {
+            resetShop();
+        } else {
+            resetShop();
+            if (upgrade.src.endsWith("armor-upgrade-icon.png")) {
+                upgradeClicked = true;
+                upgradeType = "armor";
+                upgradeCost = document.getElementById(`${currentlyAt}-armor-cost-text`).textContent;
 
+                upgrade.style.border = "2px solid darkcyan";
+            }
+            if (upgrade.src.endsWith("ab-proper-upgrade-icon.png")) {
+                upgradeClicked = true;
+                upgradeType = "gold";
+                upgradeCost = document.getElementById(`${currentlyAt}-gold-cost-text`).textContent;
+
+                upgrade.style.border = "2px solid darkcyan";
+            }
+            if (upgrade.src.endsWith("ab-uses-upgrade-icon.png")) {;
+                upgradeClicked = true;
+                upgradeType = "green";
+                upgradeCost = document.getElementById(`${currentlyAt}-green-cost-text`).textContent;
+
+                upgrade.style.border = "2px solid darkcyan";
+            }
+            if (upgrade.src.endsWith("ab-cost-upgrade-icon.png")) {
+                upgradeClicked = true;
+                needToChooseAbility = true;
+                upgradeType = "red";
+                upgradeCost = document.getElementById(`${currentlyAt}-red-cost-text`).textContent;
+
+                upgrade.style.border = "2px solid darkcyan";
+            } 
+
+
+
+            if (upgradeCost > parseInt(document.getElementById("total-bond-text").textContent)) {
+                alert("Not enough bond for this upgrade");
+                resetShop();
+            }
+            console.log("Clicked upgrade", upgradeClicked);
+            console.log("upgradeType: ", upgradeType);
+            console.log("upgradeCost: ", upgradeCost);
+        }
     })
 });
 
+function resetShop() {
+    upgradeClicked = false;
+    upgradeType = null;
+    upgradeCost = null;
+    needToChooseAbility = false;
+    abilityChosen = null;
 
-// next to develop a way to determine what upgrade was chosen (pull out "arcane-" and "1-img" )
+    traderCardImages.forEach(card => {
+        card.style.border = "none";
+    });
+    traderUpgradeImages.forEach(upgrade => {
+        upgrade.style.border = "none";
+    });
+
+    document.getElementById("before-upgrade-ability1-name").style.backgroundColor = "";
+    document.getElementById("before-upgrade-ability2-name").style.backgroundColor = "";
+    document.getElementById("after-upgrade-ability2-name").style.color = "purple";
+}
+
+// click on character in list to apply upgrade to
+const traderCharacterList = document.querySelectorAll('.character-list-button');
+let characterListButtonClickedName = null;
+let characterListButtonClickedLeader = false;
+
+traderCharacterList.forEach(character => {
+    character.addEventListener('click', async function() {
+        if (upgradeClicked === false) {
+            alert("Select an upgrade first");
+            return;
+        }
+        if (character.id === "trader-character1") {
+            characterListButtonClickedLeader = true;
+        } else {
+            characterListButtonClickedLeader = false;
+        }
+        if (upgradeClicked === true) {
+            characterListButtonClickedName = character.textContent;
+            console.log("characterListButtonClickedName: ", characterListButtonClickedName);
+            document.getElementById("confirm-purchase-div").style.display = "block";
+            await populateConfirmPurchasePage();
+            await updateConfirmPurchasePage();
+            document.getElementById("confirm-purchase-text").textContent = `UPGRADE FOR ${upgradeCost} BOND?`;
+        }
+    });
+});
+
+// confirm purchase no button click
+document.getElementById("confirm-purchase-no-button").addEventListener("click", function() {
+    document.getElementById("confirm-purchase-div").style.display = "none";
+    resetShop();
+});
+
+// confirm purchase yes button click
+document.getElementById("confirm-purchase-yes-button").addEventListener("click", async function() {
+    await pushPurchaseToDB();
+    document.getElementById("confirm-purchase-div").style.display = "none";
+    await bondPurchase();
+
+    resetShop();
+});
+
+async function populateConfirmPurchasePage() {
+    const res = await fetch(`http://localhost:3000/api/${currentUsername}/cards/name/${encodeURIComponent(characterListButtonClickedName)}`);
+    const characterData = await res.json();
+    
+    if (characterListButtonClickedLeader === true) {
+        document.getElementById("before-upgrade-img").src = `images/leader-characters/${characterData.image_id}Leader.png`;
+        document.getElementById("after-upgrade-img").src = `images/leader-characters/${characterData.image_id}Leader.png`;
+
+        document.getElementById("confirm-purchase-img").src = "images/confirm-purchase-page-leader.png";
+    } else {
+        document.getElementById("before-upgrade-img").src = `images/base-characters/${characterData.image_id}Base.png`;
+        document.getElementById("after-upgrade-img").src = `images/base-characters/${characterData.image_id}Base.png`;
+
+        document.getElementById("confirm-purchase-img").src = "images/confirm-purchase-page.png";
+    }
+    document.getElementById("before-upgrade-health").textContent = characterData.health_max;
+    document.getElementById("before-upgrade-protection").textContent = characterData.initial_protection;
+    document.getElementById("before-upgrade-ability1-name").textContent = characterData.ability1_name;
+    document.getElementById("before-upgrade-ability1-desc").textContent = characterData.ability1_desc;
+    document.getElementById("before-upgrade-ability1-cost").textContent = characterData.ability1_cost;
+    document.getElementById("before-upgrade-ability2-name").textContent = characterData.ability2_name;
+    document.getElementById("before-upgrade-ability2-desc").textContent = characterData.ability2_desc;
+    document.getElementById("before-upgrade-ability2-cost").textContent = characterData.ability2_cost;
+    document.getElementById("before-upgrade-ability2-uses").textContent = characterData.ability2_uses;
+
+    document.getElementById("after-upgrade-health").textContent = characterData.health_max;
+    document.getElementById("after-upgrade-protection").textContent = characterData.initial_protection;
+    document.getElementById("after-upgrade-ability1-name").textContent = characterData.ability1_name;
+    document.getElementById("after-upgrade-ability1-desc").textContent = characterData.ability1_desc;
+    document.getElementById("after-upgrade-ability1-cost").textContent = characterData.ability1_cost;
+    document.getElementById("after-upgrade-ability2-name").textContent = characterData.ability2_name;
+    document.getElementById("after-upgrade-ability2-desc").textContent = characterData.ability2_desc;
+    document.getElementById("after-upgrade-ability2-cost").textContent = characterData.ability2_cost;
+    document.getElementById("after-upgrade-ability2-uses").textContent = characterData.ability2_uses;
+
+    if (needToChooseAbility === true) {
+        document.getElementById("choose-ability-text").style.display = "block";
+    } else {
+        document.getElementById("choose-ability-text").style.display = "none";
+    }
+}
+
+async function updateConfirmPurchasePage() {
+    if (upgradeType === "armor") {
+        let beforeArmor = parseInt(document.getElementById("before-upgrade-protection").textContent);
+        beforeArmor += 5;
+        document.getElementById("after-upgrade-protection").textContent = beforeArmor;
+    }
+    if (upgradeType === "gold") {
+        updateAbility2();
+    }
+    if (upgradeType === "green") {
+        let beforeAbility2Uses = parseInt(document.getElementById("before-upgrade-ability2-uses").textContent);
+        if (beforeAbility2Uses === 5) {
+            alert("Ability 2 uses cannot exceed 5");
+            return;
+        } else {
+            beforeAbility2Uses += 1;
+            document.getElementById("after-upgrade-ability2-uses").textContent = beforeAbility2Uses;
+        }
+    }
+    if (upgradeType === "red") {
+        if (abilityChosen === 1) {
+            let beforeAbility1Cost = parseInt(document.getElementById("before-upgrade-ability1-cost").textContent);
+            if (beforeAbility1Cost === 1) {
+                alert("Ability costs cannot be less than 1");
+                return;
+            } else {
+                beforeAbility1Cost -= 1;
+                document.getElementById("after-upgrade-ability1-cost").textContent = beforeAbility1Cost;
+            }
+        }
+        if (abilityChosen === 2) {
+            let beforeAbility2Cost = parseInt(document.getElementById("before-upgrade-ability2-cost").textContent);
+            if (beforeAbility2Cost === 1) {
+                alert("Ability costs cannot be less than 1");
+                return;
+            } else {
+                beforeAbility2Cost -= 1;
+                document.getElementById("after-upgrade-ability2-cost").textContent = beforeAbility2Cost;
+            }
+        }
+    }
+}
+
+// keydown listener for upgrade div
+document.addEventListener("keydown", async function(event) {
+    // Only run if confirm-purchase-div is visible
+    if (document.getElementById("confirm-purchase-div").style.display === "block" && needToChooseAbility === true) {
+        if (event.key === "1") {
+            abilityChosen = 1;
+            document.getElementById("before-upgrade-ability1-name").style.backgroundColor = "yellow";
+            document.getElementById("before-upgrade-ability2-name").style.backgroundColor = "";
+            await populateConfirmPurchasePage();
+            await updateConfirmPurchasePage();
+        } else if (event.key === "2") {
+            abilityChosen = 2;
+            document.getElementById("before-upgrade-ability2-name").style.backgroundColor = "yellow";
+            document.getElementById("before-upgrade-ability1-name").style.backgroundColor = "";
+            await populateConfirmPurchasePage();
+            await updateConfirmPurchasePage();
+        }
+    }
+});
+
+function updateAbility2() {
+    if (characterListButtonClickedName === "Maggie") {
+        document.getElementById("after-upgrade-ability2-name").style.color = "goldenrod";
+        document.getElementById("after-upgrade-ability2-name").textContent = "Call Large Creature";
+        document.getElementById("after-upgrade-ability2-desc").textContent = "Summon a random large creature";
+    }
+}
+
+async function pushPurchaseToDB() {
+    const body = {
+        name: characterListButtonClickedName,
+        protection: parseInt(document.getElementById("after-upgrade-protection").textContent),
+        ability1_cost: parseInt(document.getElementById("after-upgrade-ability1-cost").textContent),
+        ability2_name: document.getElementById("after-upgrade-ability2-name").textContent,
+        ability2_desc: document.getElementById("after-upgrade-ability2-desc").textContent,
+        ability2_cost: parseInt(document.getElementById("after-upgrade-ability2-cost").textContent),
+        ability2_uses: parseInt(document.getElementById("after-upgrade-ability2-uses").textContent)
+    };
+
+    await fetch(`http://localhost:3000/api/${currentUsername}/cards/update`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+    });
+}
+
+async function bondPurchase() { // subtract cost from bond in the database
+    await fetch(`http://localhost:3000/api/players/${currentUsername}/minusBond`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: parseInt(upgradeCost, 10) })
+    });
+    await initializeTotalBond();
+}

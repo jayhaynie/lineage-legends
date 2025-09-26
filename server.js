@@ -446,6 +446,58 @@ app.get('/api/:username/cards/shop/:shopNumber', async (req, res) => {
   }
 });
 
+app.get('/api/:username/cards/name/:cardName', async (req, res) => {
+  const { username, cardName } = req.params;
+  // Sanitize table name
+  const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
+  const cardsTable = `${safeUsername}_cards`;
+  try {
+    const result = await pool.query(
+      `SELECT * FROM ${cardsTable} WHERE name = $1`,
+      [cardName]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Card not found' });
+    }
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/:username/cards/update', async (req, res) => {
+  const { username } = req.params;
+  const {
+    name, // the card's name (used to identify the row)
+    protection, // 
+    ability1_cost,
+    ability2_name,
+    ability2_desc,
+    ability2_cost,
+    ability2_uses
+  } = req.body;
+
+  // Sanitize table name
+  const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
+  const cardsTable = `${safeUsername}_cards`;
+
+  try {
+    const result = await pool.query(
+      `UPDATE ${cardsTable}
+       SET initial_protection = $1, ability1_cost = $2, ability2_name = $3, ability2_desc = $4, ability2_cost = $5, ability2_uses = $6
+       WHERE name = $7
+       RETURNING *`,
+      [protection, ability1_cost, ability2_name, ability2_desc, ability2_cost, ability2_uses, name]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Card not found' });
+    }
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
