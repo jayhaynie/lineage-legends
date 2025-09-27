@@ -498,6 +498,47 @@ app.post('/api/:username/cards/update', async (req, res) => {
   }
 });
 
+app.get('/api/:username/cards/image/:imageId', async (req, res) => {
+  const { username, imageId } = req.params;
+  // Sanitize table name
+  const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
+  const cardsTable = `${safeUsername}_cards`;
+  try {
+    const result = await pool.query(
+      `SELECT * FROM ${cardsTable} WHERE image_id = $1`,
+      [imageId]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Card not found' });
+    }
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/:username/cards/setBase', async (req, res) => {
+  const { username } = req.params;
+  const { image_id } = req.body;
+
+  // Sanitize table name
+  const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
+  const cardsTable = `${safeUsername}_cards`;
+
+  try {
+    const result = await pool.query(
+      `UPDATE ${cardsTable} SET type = 'base' WHERE image_id = $1 RETURNING *`,
+      [image_id]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Card not found' });
+    }
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

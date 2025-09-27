@@ -4226,8 +4226,12 @@ async function showCharacterCards() {
     const res = await fetch(`http://localhost:3000/api/${currentUsername}/cards/shop/${shopNumber}`);
     const shopCards = await res.json();
 
-    for (let i = 0; i < shopCards.length; i++) {
-        document.getElementById(`${currentlyAt}-card${i + 1}-img`).src = `images/base-characters/${shopCards[i].image_id}Base.png`;
+    for (let i = 0; i < 4; i++) {
+        if (shopCards[i] === undefined) {
+            document.getElementById(`${currentlyAt}-card${i + 1}-div`).style.display = "none";
+        } else {
+            document.getElementById(`${currentlyAt}-card${i + 1}-img`).src = `images/base-characters/${shopCards[i].image_id}Base.png`;
+        }
     }
 }
 
@@ -4237,18 +4241,69 @@ let upgradeClicked = false;
 let needToChooseAbility = false;
 let abilityChosen = null;
 
-
+let clickedCardImageId = null;
+let clickedCardElemId = null;
+let clickedCardNumber = null;
+let clickedCardCost = null;
 
 // click on trader-card-img query selector class
 const traderCardImages = document.querySelectorAll('.trader-card-img');
 traderCardImages.forEach(card => {
     card.addEventListener('click', async function() {
-        // how to buy a card
+
+        // pull out image id from card src
+        clickedCardImageId = card.src.split('/').pop().split('.')[0].replace("Base", "");
+        clickedCardElemId = card.id;
+        clickedCardNumber = clickedCardElemId.match(/\d+/)[0];
+        clickedCardCost = document.getElementById(`${currentlyAt}-card${clickedCardNumber}-cost-text`).textContent;
+        if (clickedCardCost > parseInt(document.getElementById("total-bond-text").textContent)) {
+            alert("Not enough bond to buy this card");
+            return;
+        } else {
+            document.getElementById("buy-card-div").style.display = "block";
+            await populatebuyCard();
+        }
     })
 });
 
 async function populatebuyCard() {
+    const res = await fetch(`http://localhost:3000/api/${currentUsername}/cards/image/${clickedCardImageId}`);
+    const cardData = await res.json();
+    document.getElementById("buy-card-character-img").src = `images/base-characters/${cardData.image_id}Base.png`;
+    document.getElementById("buy-card-character-protection").textContent = cardData.initial_protection;
+    document.getElementById("buy-card-character-health").textContent = cardData.health_max;
+    document.getElementById("buy-card-character-ability1-name").textContent = cardData.ability1_name;
+    document.getElementById("buy-card-character-ability1-desc").textContent = cardData.ability1_desc;
+    document.getElementById("buy-card-character-ability1-cost").textContent = cardData.ability1_cost;
+    document.getElementById("buy-card-character-ability2-name").textContent = cardData.ability2_name;
+    document.getElementById("buy-card-character-ability2-desc").textContent = cardData.ability2_desc;
+    document.getElementById("buy-card-character-ability2-cost").textContent = cardData.ability2_cost;
+    document.getElementById("buy-card-character-ability2-uses").textContent = cardData.ability2_uses;
 
+    document.getElementById("buy-card-text").textContent = `BUY CARD FOR ${clickedCardCost} BOND?`;
+}
+
+// buy card no button click
+document.getElementById("buy-card-no-button").addEventListener("click", function() {
+    document.getElementById("buy-card-div").style.display = "none";
+    resetShop();
+});
+
+// buy card yes button click
+document.getElementById("buy-card-yes-button").addEventListener("click", async function() {
+    await pushTypeChangeToDB();
+    document.getElementById("buy-card-div").style.display = "none";
+    await bondPurchase(clickedCardCost);
+    resetShop();
+    await initializeTrader();
+});
+
+async function pushTypeChangeToDB() {
+    await fetch(`http://localhost:3000/api/${currentUsername}/cards/setBase`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ image_id: clickedCardImageId })
+    });
 }
 
 // click on trader-upgrade-img query selector class
@@ -4309,6 +4364,11 @@ function resetShop() {
     needToChooseAbility = false;
     abilityChosen = null;
 
+    clickedCardImageId = null;
+    clickedCardElemId = null;
+    clickedCardNumber = null;
+    clickedCardCost = null;
+
     traderCardImages.forEach(card => {
         card.style.border = "none";
     });
@@ -4358,7 +4418,7 @@ document.getElementById("confirm-purchase-no-button").addEventListener("click", 
 document.getElementById("confirm-purchase-yes-button").addEventListener("click", async function() {
     await pushPurchaseToDB();
     document.getElementById("confirm-purchase-div").style.display = "none";
-    await bondPurchase();
+    await bondPurchase(upgradeCost);
 
     resetShop();
 });
@@ -4496,11 +4556,11 @@ async function pushPurchaseToDB() {
     });
 }
 
-async function bondPurchase() { // subtract cost from bond in the database
+async function bondPurchase(cost) { // subtract cost from bond in the database
     await fetch(`http://localhost:3000/api/players/${currentUsername}/minusBond`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: parseInt(upgradeCost, 10) })
+        body: JSON.stringify({ amount: parseInt(cost, 10) })
     });
     await initializeTotalBond();
 }
