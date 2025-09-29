@@ -5,7 +5,7 @@ html, body {
 }
 body {
     background-image: url('images/title-background.png');
-    /* background-image: url('images/traders/trader-arcane-shop.png'); */
+    /* background-image: url('images/traders/alden-armory.png'); */
     background-size: cover;      
     background-repeat: no-repeat; 
     background-position: center;
@@ -542,7 +542,7 @@ body {
     font-size: 30px;
     font-weight: bold;
 }
-#home-trader-button {
+#home-traders-button {
     position: absolute;
     left: 60%;
     top: 55%;
@@ -2642,7 +2642,15 @@ position: absolute;
 }
 
 
-
+#choose-ability-text {
+    position: absolute;
+    display: block;
+    top: 2%;
+    left: 33%;
+    font-size: 200%;
+    color: white;
+    font-weight: bold;
+}
 #before-upgrade-div {
     position: absolute;
     left: 26.25%;
@@ -2979,12 +2987,267 @@ position: absolute;
     font-weight: bold;
     border-radius: 10px;
 }
-#choose-ability-text {
+/* BRIBE TRADER */
+#bribe-trader-button {
     position: absolute;
-    display: block;
-    top: 2%;
-    left: 33%;
-    font-size: 200%;
+    display: none;
+    bottom: 5%;
+    left: 45%;
+    font-size: 30px;
+    color: grey;
+    font-weight: bold;
+    border-radius: 10px;
+    z-index: 99;
+}
+#bribe-trader-div {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    z-index: 101;
+}
+#bribe-trader-backing {
+    position: absolute;
+    top: 3%;
+    left: 15%;
+    width: 70%;
+    height: 94%;
+}
+#bribe-trader-img {
+    position: absolute;
+    top: 7%;
+    left: 22%;
+    width: 56%;
+    height: 86%;
+    border-radius: 10px;
+}
+#bribe-trader-text {
+    position: absolute;
+    top: 67%;
+    left: 31.5%;
+    font-size: 300%;
     color: white;
     font-weight: bold;
+}
+#bribe-trader-yes-button {
+    position: absolute;
+    left: 57%;
+    top: 83%;
+    color: green;
+    font-size: 40px;
+    font-weight: bold;
+    border-radius: 10px;
+}
+#bribe-trader-no-button {
+    position: absolute;
+    left: 35%;
+    top: 83%;
+    color: red;
+    font-size: 40px;
+    font-weight: bold;
+    border-radius: 10px;
+}
+/* shops at alden's island */
+#alden-traders-div {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    z-index: 101;
+}
+#alden-traders-backing {
+    position: absolute;
+    top: 3%;
+    left: 15%;
+    width: 70%;
+    height: 94%;
+}
+#alden-traders-img {
+    position: absolute;
+    top: 7%;
+    left: 22%;
+    width: 56%;
+    height: 86%;
+    border-radius: 10px;
+}
+#traders-home {
+    position: absolute;
+    left: 30%;
+    top: 40%;
+    color: green;
+    font-size: 40px;
+    font-weight: bold;
+    border-radius: 10px;
+}
+#traders-ghoul {
+    position: absolute;
+    left: 28.5%;
+    top: 83%;
+    color: darkviolet;
+    font-size: 40px;
+    font-weight: bold;
+    border-radius: 10px;
+}
+#traders-legion {
+    position: absolute;
+    left: 54%;
+    top: 40%;
+    color: orangered;
+    font-size: 40px;
+    font-weight: bold;
+    border-radius: 10px;
+}
+#traders-arcane {
+    position: absolute;
+    left: 54%;
+    top: 83%;
+    color: magenta;
+    font-size: 40px;
+    font-weight: bold;
+    border-radius: 10px;
+}
+/* Alden Armory */
+#alden-armory-div {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    z-index: 101;
+}
+#alden-armory-exit-button {
+    position: absolute;
+    display: block;
+    bottom: 1%;
+    right: 1.5%;
+    font-size: 30px;
+    color: grey;
+    font-weight: bold;
+    border-radius: 10px;
+    z-index: 99;
+}
+#alden-armory-etherbow {
+    position: absolute;
+    display: none;
+    width: 7.5%;
+    top: 18%;
+    left: 6.5%;
+}
+#alden-armory-elvenmetronome {
+    position: absolute;
+    display: none;
+    width: 5.5%;
+    top: 64%;
+    left: 2.5%;
+}
+#alden-armory-batterybelt {
+    position: absolute;
+    display: none;
+    width: 8%;
+    top: 72%;
+    left: 11%;
+}
+#alden-armory-riverrock {
+    position: absolute;
+    display: none;
+    width: 4.75%;
+    top: 66%;
+    left: 21%;
+}
+#alden-armory-staffofjustice {
+    position: absolute;
+    display: none;
+    width: 5%;
+    top: 18%;
+    left: 22.5%;
+}
+#alden-armory-summonerlight {
+    position: absolute;
+    display: none;
+    width: 4.5%;
+    top: 51%;
+    left: 30%;
+}
+#alden-armory-bluebotlink {
+    position: absolute;
+    display: none;
+    width: 4.5%;
+    top: 55%;
+    left: 36.5%;
+}
+#alden-armory-trenchcoat {
+    position: absolute;
+    display: none;
+    width: 6%;
+    top: 45%;
+    left: 42%;
+}
+#alden-armory-redbotlink {
+    position: absolute;
+    display: none;
+    width: 4.5%;
+    top: 55.5%;
+    left: 48.5%;
+}
+#alden-armory-righteouswings {
+    position: absolute;
+    display: none;
+    width: 20%;
+    top: 7%;
+    left: 41%;
+}
+#alden-armory-mjolnirarmor {
+    position: absolute;
+    display: none;
+    width: 6.5%;
+    top: 38%;
+    left: 53%;
+}
+#alden-armory-yellowbotlink {
+    position: absolute;
+    display: none;
+    width: 4.5%;
+    top: 55.5%;
+    left: 60%;
+}
+#alden-armory-shieldoflight {
+    position: absolute;
+    display: none;
+    width: 7.5%;
+    top: 47%;
+    left: 65.5%;
+}
+#alden-armory-stethoscope {
+    position: absolute;
+    display: none;
+    width: 8.5%;
+    top: 67%;
+    left: 72%;
+}
+#alden-armory-techglasses {
+    position: absolute;
+    display: none;
+    width: 6%;
+    top: 70%;
+    left: 83%;
+}
+#alden-armory-flaminglasersword {
+    position: absolute;
+    display: none;
+    width: 7.5%;
+    top: 19%;
+    left: 82%;
+}
+#alden-armory-wolfwhistle {
+    position: absolute;
+    display: none;
+    width: 3.5%;
+    top: 70%;
+    left: 94.5%;
+}
+#alden-armory-potency {
+    position: absolute;
+    display: none;
+    width: 2.75%;
+    top: 54%;
+    left: 96.5%;
 }

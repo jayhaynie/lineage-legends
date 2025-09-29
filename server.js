@@ -34,8 +34,8 @@ app.post('/api/players', async (req, res) => {
 
     // Insert new user
     const result = await pool.query(
-      `INSERT INTO players (username, password, arcane_track, bandit_track, ghoul_track, legion_track, pirate_track, bond, wisdom)
-      VALUES ($1, $2, 1, 1, 1, 1, 1, 0, 0) RETURNING *`,
+      `INSERT INTO players (username, password, arcane_track, bandit_track, ghoul_track, legion_track, pirate_track, bond, wisdom, ghoul_bribed, legion_bribed, arcane_bribed, redbotLink, flaminglasersword, yellowbotlink, batterybelt, summonerlight, etherbow, righteouswings, potency, elvenmetronome, riverrock, stethoscope, techglasses, shieldoflight, mjolnirarmor, wolfwhistle, trenchcoat, bluebotlink, staffofjustice)
+      VALUES ($1, $2, 1, 1, 1, 1, 1, 0, 0, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false) RETURNING *`,
       [username, password]
     );
 
@@ -256,6 +256,20 @@ app.get('/api/summons/canine', async (req, res) => {
     );
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'No canine summons found' });
+    }
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/summons/strong-canine', async (req, res) => {
+  try {
+    const result = await pool.query(
+      "SELECT * FROM summons WHERE type = 'canineStrong'"
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'No strong canine summons found' });
     }
     res.json(result.rows);
   } catch (err) {
@@ -534,6 +548,69 @@ app.post('/api/:username/cards/setBase', async (req, res) => {
       return res.status(404).json({ error: 'Card not found' });
     }
     res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/players/:username/bribedTraders', async (req, res) => {
+  const { username } = req.params;
+  const { ghoulTraderBribed, legionTraderBribed, arcaneTraderBribed } = req.body;
+
+  try {
+    const result = await pool.query(
+      `UPDATE players
+       SET ghoul_bribed = $1,
+           legion_bribed = $2,
+           arcane_bribed = $3
+       WHERE username = $4
+       RETURNING *`,
+      [ghoulTraderBribed, legionTraderBribed, arcaneTraderBribed, username]
+    );
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/players/:username/bribedTraders', async (req, res) => {
+  const { username } = req.params;
+  try {
+    const result = await pool.query(
+      `SELECT ghoul_bribed, legion_bribed, arcane_bribed FROM players WHERE username = $1`,
+      [username]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Player not found' });
+    }
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/players/:username/trueColumns', async (req, res) => {
+  const { username } = req.params;
+  // List the columns you want to check
+  const columnsToCheck = ['redbotlink', 'flaminglasersword', 'yellowbotlink', 'batterybelt', 'summonerlight', 'etherbow', 'righteouswings', 'potency', 'elvenmetronome', 'riverrock', 'stethoscope', 'techglasses', 'shieldoflight', 'mjolnirarmor', 'wolfwhistle', 'trenchcoat', 'bluebotlink', 'staffofjustice']; 
+
+  try {
+    const result = await pool.query(
+      `SELECT ${columnsToCheck.join(', ')} FROM players WHERE username = $1`,
+      [username]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Player not found' });
+    }
+    const row = result.rows[0];
+    // Collect column names where value is true
+    const trueColumns = [];
+    for (const col of columnsToCheck) {
+      if (row[col] === true || row[col] === 'true' || row[col] === 1) {
+        trueColumns.push(col);
+      }
+    }
+    res.json({ trueColumns });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
