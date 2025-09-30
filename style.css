@@ -3251,3 +3251,251 @@ position: absolute;
     top: 54%;
     left: 96.5%;
 }
+/* armory confirm page */
+#armory-confirm-div {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    z-index: 101;
+}
+#armory-confirm-backing {
+    position: absolute;
+    top: 3%;
+    left: 15%;
+    width: 70%;
+    height: 94%;
+}
+#armory-confirm-img {
+position: absolute;
+    top: 10%;
+    left: 25%;
+    width: 50%;
+    height: 80%;
+    border-radius:10px;
+    /* border: solid 4px blue; */
+}
+#armory-confirm-text {
+    position: absolute;
+    top: 67%;
+    left: 31%;
+    font-size: 300%;
+    color: white;
+    font-weight: bold;
+}
+#armory-confirm-yes-button {
+    position: absolute;
+    left: 57%;
+    top: 83%;
+    color: green;
+    font-size: 40px;
+    font-weight: bold;
+    border-radius: 10px;
+}
+#armory-confirm-no-button {
+    position: absolute;
+    left: 35%;
+    top: 83%;
+    color: red;
+    font-size: 40px;
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+#armory-confirm-before-div {
+    position: absolute;
+    left: 26.25%;
+    top: 13%;
+    /* border: solid 4px purple; */
+    width: 19%;
+}
+#armory-confirm-before-img {
+    width: 100%;
+}
+#armory-confirm-before-health {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 5%;
+    left: 12%;
+    font-size: 250%;
+    color: forestgreen;
+    font-weight: bold;
+}
+#armory-confirm-before-protection {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 5%;
+    left: 78%;
+    font-size: 250%;
+    color: white;
+    font-weight: bold;
+}
+#armory-confirm-before-ability1-name {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 60%;
+    left: 10%;
+    font-size: 170%;
+    color: blue;
+    font-weight: bold;
+}
+#armory-confirm-before-ability1-desc {
+    position: absolute;
+    margin: 0 13% 0 0;
+    padding: 0;
+    top: 66%;
+    left: 13%;
+    font-size: 130%;
+    font-weight: bold;
+}
+#armory-confirm-before-ability1-cost {
+    position: absolute;
+    top: 63%;
+    left: 7%;
+    font-size: 150%;
+    font-weight: bold;
+    color: red;
+}
+#armory-confirm-before-ability1-uses {
+    position: absolute;
+    top: 68%;
+    right: 7%;
+    width: 8%;
+}
+#armory-confirm-before-ability2-name {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 76%;
+    left: 10%;
+    font-size: 170%;
+    color: purple;
+    font-weight: bold;
+}
+#armory-confirm-before-ability2-desc {
+    position: absolute;
+    margin: 0 13% 0 0;
+    padding: 0;
+    top: 81.5%;
+    left: 13%;
+    font-size: 130%;
+    font-weight: bold;
+}
+#armory-confirm-before-ability2-cost {
+    position: absolute;
+    top: 78%;
+    left: 7%;
+    font-size: 150%;
+    font-weight: bold;
+    color: red;
+}
+#armory-confirm-before-ability2-uses {
+    position: absolute;
+    top: 78%;
+    right: 7%;
+    font-size: 150%;
+    font-weight: bold;
+    color: limegreen;
+}
+
+#armory-confirm-after-div {
+    position: absolute;
+    left: 55%;
+    top: 13%;
+    /* border: solid 4px purple; */
+    width: 19%;
+}
+#armory-confirm-after-img {
+    width: 100%;
+}
+#armory-confirm-after-health {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 5%;
+    left: 12%;
+    font-size: 250%;
+    color: forestgreen;
+    font-weight: bold;
+}
+#armory-confirm-after-protection {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 5%;
+    left: 78%;
+    font-size: 250%;
+    color: white;
+    font-weight: bold;
+}
+#armory-confirm-after-ability1-name {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 60%;
+    left: 10%;
+    font-size: 170%;
+    color: blue;
+    font-weight: bold;
+}
+#armory-confirm-after-ability1-desc {
+    position: absolute;
+    margin: 0 13% 0 0;
+    padding: 0;
+    top: 66%;
+    left: 13%;
+    font-size: 130%;
+    font-weight: bold;
+}
+#armory-confirm-after-ability1-cost {
+    position: absolute;
+    top: 63%;
+    left: 7%;
+    font-size: 150%;
+    font-weight: bold;
+    color: red;
+}
+#armory-confirm-after-ability1-uses {
+    position: absolute;
+    top: 68%;
+    right: 7%;
+    width: 8%;
+}
+#armory-confirm-after-ability2-name {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 76%;
+    left: 10%;
+    font-size: 170%;
+    color: purple;
+    font-weight: bold;
+}
+#armory-confirm-after-ability2-desc {
+    position: absolute;
+    margin: 0 13% 0 0;
+    padding: 0;
+    top: 81.5%;
+    left: 13%;
+    font-size: 130%;
+    font-weight: bold;
+}
+#armory-confirm-after-ability2-cost {
+    position: absolute;
+    top: 78%;
+    left: 7%;
+    font-size: 150%;
+    font-weight: bold;
+    color: red;
+}
+#armory-confirm-after-ability2-uses {
+    position: absolute;
+    top: 78%;
+    right: 7%;
+    font-size: 150%;
+    font-weight: bold;
+    color: limegreen;
+}

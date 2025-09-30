@@ -976,7 +976,7 @@ async function checkAbilityStatus(cardData) {
         ab2Upgraded = false;
     }
 
-    if (cardData.ability1_name === "Triple Gate" || cardData.ability1_name === "Searing Blade" || cardData.ability1_name === "High Caliber" || cardData.ability1_name === "Amp Up" || cardData.ability1_name === "Wave of Light" || cardData.ability1_name === "Blur of Arrows" || cardData.ability1_name === "Holy Blades" || cardData.ability1_name === "Potion Volley" || cardData.ability1_name === "Music Rave" || cardData.ability1_name === "Blood Bending" || cardData.ability1_name === "I.C.U." || cardData.ability1_name === "Upload Virus" || cardData.ability1_name === "Elven Strength" || cardData.ability1_name === "Spartan Accuracy" || cardData.ability1_name === "Howl of the Alpha" || cardData.ability1_name === "Predictor" || cardData.ability1_name === "Relocation" || cardData.ability1_name === "Monekey See Better") {
+    if (cardData.ability1_name === "Triple Gate" || cardData.ability1_name === "Searing Blade" || cardData.ability1_name === "High Caliber" || cardData.ability1_name === "Amp Up" || cardData.ability1_name === "Wave of Light" || cardData.ability1_name === "Blur of Arrows" || cardData.ability1_name === "Holy Blades" || cardData.ability1_name === "Potion Volley" || cardData.ability1_name === "Jam Out" || cardData.ability1_name === "Blood Bending" || cardData.ability1_name === "I.C.U." || cardData.ability1_name === "Upload Virus" || cardData.ability1_name === "Elven Strength" || cardData.ability1_name === "Spartan Accuracy" || cardData.ability1_name === "Howl of the Alpha" || cardData.ability1_name === "Predictor" || cardData.ability1_name === "Relocation" || cardData.ability1_name === "Monekey See Better") {
         ab1Upgraded = true;
     } else {
         ab1Upgraded = false;
@@ -1380,11 +1380,11 @@ async function getEnemyMaxHealth() {
 //determine ability type
 function setAbilityType() {
     // attack abilities
-    if (charAbilitySelectedName === "Slash" || charAbilitySelectedName === "Flame Strike" || charAbilitySelectedName === "Precision Shot" || charAbilitySelectedName === "Acid Vial" || charAbilitySelectedName === "J.ustice O.r N.othing" || charAbilitySelectedName === "Hunt" || charAbilitySelectedName === "Tackle" || charAbilitySelectedName === "Scratch" || charAbilitySelectedName === "Howl" || charAbilitySelectedName === "Bark" || charAbilitySelectedName === "Hunt Command" || charAbilitySelectedName === "Tackle Command" || charAbilitySelectedName === "Scratch Command" || charAbilitySelectedName === "Howl Command" || charAbilitySelectedName === "Bark Command" || charAbilitySelectedName === "Cut" || charAbilitySelectedName === "Stab" || charAbilitySelectedName === "Claw" || charAbilitySelectedName === "Gut") {
+    if (charAbilitySelectedName === "Slash" || charAbilitySelectedName === "Blood Bending" || charAbilitySelectedName === "Triple Gate" || charAbilitySelectedName === "Searing Blade" || charAbilitySelectedName === "High Caliber" || charAbilitySelectedName === "Acid Vial" || charAbilitySelectedName === "J.ustice O.r N.othing" || charAbilitySelectedName === "Hunt" || charAbilitySelectedName === "Tackle" || charAbilitySelectedName === "Scratch" || charAbilitySelectedName === "Howl" || charAbilitySelectedName === "Bark" || charAbilitySelectedName === "Hunt Command" || charAbilitySelectedName === "Tackle Command" || charAbilitySelectedName === "Scratch Command" || charAbilitySelectedName === "Howl Command" || charAbilitySelectedName === "Bark Command" || charAbilitySelectedName === "Cut" || charAbilitySelectedName === "Stab" || charAbilitySelectedName === "Claw" || charAbilitySelectedName === "Gut") {
         charAbilitySelectedType = "attack";
     }
     // attackTwo abilities
-    if (charAbilitySelectedName === "Double Gate" || charAbilitySelectedName === "Rapid Fire" || charAbilitySelectedName === "Bash and Slash" || charAbilitySelectedName === "Swinging Slash" || charAbilitySelectedName === "Crush" || charAbilitySelectedName === "Yowl" || charAbilitySelectedName === "Tail Whip" || charAbilitySelectedName === "Razor Talons" || charAbilitySelectedName === "Blade Volley" || charAbilitySelectedName === "Quick Fire" || charAbilitySelectedName === "Wide Slash") {
+    if (charAbilitySelectedName === "Double Gate" || charAbilitySelectedName === "Rapid Fire" || charAbilitySelectedName === "Blur of Arrows" || charAbilitySelectedName === "Bash and Slash" || charAbilitySelectedName === "Elven Strength" || charAbilitySelectedName === "Spartan Accuracy" || charAbilitySelectedName === "Swinging Slash" || charAbilitySelectedName === "Crush" || charAbilitySelectedName === "Yowl" || charAbilitySelectedName === "Tail Whip" || charAbilitySelectedName === "Razor Talons" || charAbilitySelectedName === "Blade Volley" || charAbilitySelectedName === "Quick Fire" || charAbilitySelectedName === "Potion Volley" || charAbilitySelectedName === "Wide Slash") {
         charAbilitySelectedType = "attackTwo";
     }
     // attackAll
@@ -1392,7 +1392,7 @@ function setAbilityType() {
         charAbilitySelectedType = "attackAll";
     }
     // Heal abilities
-    if (charAbilitySelectedName === "Healthy Brew" || charAbilitySelectedName === "Richer Recipe" || charAbilitySelectedName === "Magic Tune" || charAbilitySelectedName === "Light of Heaven" || charAbilitySelectedName === "Guardian Archangel" || charAbilitySelectedName === "Spirit Water" || charAbilitySelectedName === "Surgery" || charAbilitySelectedName === "Extra Hugs" || charAbilitySelectedName === "Smiley" || charAbilitySelectedName === "Force Heal" || charAbilitySelectedName === "Heal" || charAbilitySelectedName === "Listen") {
+    if (charAbilitySelectedName === "Healthy Brew" || charAbilitySelectedName === "Richer Recipe" || charAbilitySelectedName === "Relocation" || charAbilitySelectedName === "Magic Tune" || charAbilitySelectedName === "Light of Heaven" || charAbilitySelectedName === "Guardian Archangel" || charAbilitySelectedName === "Spirit Water" || charAbilitySelectedName === "Surgery" || charAbilitySelectedName === "I.C.U." || charAbilitySelectedName === "Extra Hugs" || charAbilitySelectedName === "Smiley" || charAbilitySelectedName === "Force Heal" || charAbilitySelectedName === "Heal" || charAbilitySelectedName === "Listen") {
         charAbilitySelectedType = "heal";
     }
     // healTwo
@@ -1400,7 +1400,7 @@ function setAbilityType() {
         charAbilitySelectedType = "healTwo";
     }
     //healAll
-    if (charAbilitySelectedName === "Emergency Medicine" || charAbilitySelectedName === "Light of Creation" || charAbilitySelectedName === "Cutie" || charAbilitySelectedName === "So Nice") {
+    if (charAbilitySelectedName === "Emergency Medicine" || charAbilitySelectedName === "Light of Creation" || charAbilitySelectedName === "Wave of Light" || charAbilitySelectedName === "Jam Out" || charAbilitySelectedName === "Cutie" || charAbilitySelectedName === "So Nice") {
         charAbilitySelectedType = "healAll";
     }
     // protect
@@ -1408,11 +1408,11 @@ function setAbilityType() {
         charAbilitySelectedType = "protect";
     }
     // protectTwo abilities
-    if (charAbilitySelectedName === "Prime Guard" || charAbilitySelectedName === "Defensive Guard" || charAbilitySelectedName === "Shock Shield") {
+    if (charAbilitySelectedName === "Prime Guard" || charAbilitySelectedName === "Amp Up" || charAbilitySelectedName === "Predictor" || charAbilitySelectedName === "Defensive Guard" || charAbilitySelectedName === "Shock Shield") {
         charAbilitySelectedType = "protectTwo";
     }
     // protectAll
-    if (charAbilitySelectedName === "Searing Truth" || charAbilitySelectedName === "Extra Morphine" || charAbilitySelectedName === "Blaze of Truth" || charAbilitySelectedName === "Howl of the Pack" || charAbilitySelectedName === "Phalanx" || charAbilitySelectedName === "Agile Defense" || charAbilitySelectedName === "Sing" || charAbilitySelectedName === "Saber Edge") {
+    if (charAbilitySelectedName === "Searing Truth" || charAbilitySelectedName === "Extra Morphine" || charAbilitySelectedName === "Blaze of Truth" || charAbilitySelectedName === "Howl of the Pack" || charAbilitySelectedName === "Howl of the Alpha" || charAbilitySelectedName === "Phalanx" || charAbilitySelectedName === "Agile Defense" || charAbilitySelectedName === "Sing" || charAbilitySelectedName === "Saber Edge") {
         charAbilitySelectedType = "protectAll";
     }
     // ignoreProtection
@@ -1420,7 +1420,7 @@ function setAbilityType() {
         charAbilitySelectedType = "ignoreProtection";
     }
     // zeroProtection
-    if (charAbilitySelectedName === "EMP" || charAbilitySelectedName === "AI Virus"|| charAbilitySelectedName === "Cortana") {
+    if (charAbilitySelectedName === "EMP" || charAbilitySelectedName === "AI Virus" || charAbilitySelectedName === "Upload Virus" || charAbilitySelectedName === "Cortana") {
         charAbilitySelectedType = "zeroProtection";
     }
     // summon 
@@ -1428,7 +1428,7 @@ function setAbilityType() {
         charAbilitySelectedType = "summon";
     }
     // stealHealth
-    if (charAbilitySelectedName === "Fix Time" || charAbilitySelectedName === "Favorable Timeline" || charAbilitySelectedName === "Counter") {
+    if (charAbilitySelectedName === "Fix Time" || charAbilitySelectedName === "Favorable Timeline" || charAbilitySelectedName === "Holy Blades" || charAbilitySelectedName === "Counter") {
         charAbilitySelectedType = "stealHealth";
     }
     // stealProtection
@@ -1440,7 +1440,7 @@ function setAbilityType() {
         charAbilitySelectedType = "addEnergy";
     }
     // adaptAbility
-    if (charAbilitySelectedName === "Monkey See") {
+    if (charAbilitySelectedName === "Monkey See" || charAbilitySelectedName === "Monkey See Better") {
         charAbilitySelectedType = "adaptAbility";
     }
 }
@@ -1467,6 +1467,30 @@ async function applyCharAbilityToChar() {
         }
 
         charHealthElem.textContent = charHealth;
+        // take away ability cost from energy
+        energyCount -= abilityCost;
+        document.getElementById("energy-count").textContent = energyCount;
+    }
+    // cadenza Jam Out ab1
+    if (charAbilitySelectedName === "Jam Out") {
+        // restore 5 health to all allies
+        for (let i = 1; i <= 7; i++) {
+            const charHealthElem = document.getElementById(`char${i}-health`);
+            let charHealth = parseInt(charHealthElem.textContent);
+            charHealth += 5;
+
+            //make sure health doesn't exceed max, color correctly
+            charClickedApplyToDiv = document.getElementById(`char${i}-div`);
+            const charHealthMax = await getCharMaxHealth();
+            if (charHealth >= charHealthMax) {
+                charHealth = charHealthMax;
+                charHealthElem.style.color = "green";
+            } else {
+                charHealthElem.style.color = "orange";
+            }
+
+            charHealthElem.textContent = charHealth;
+        }
         // take away ability cost from energy
         energyCount -= abilityCost;
         document.getElementById("energy-count").textContent = energyCount;
@@ -1599,6 +1623,19 @@ async function applyCharAbilityToChar() {
         energyCount -= abilityCost;
         document.getElementById("energy-count").textContent = energyCount;
     }
+    // wilder Howl of the Alpha ab1
+    if (charAbilitySelectedName === "Howl of the Alpha") {
+        // apply protection to all allies
+        for (let i = 1; i <= 7; i++) {
+            const charProtectionElem = document.getElementById(`char${i}-protection`);
+            let charProtection = parseInt(charProtectionElem.textContent);
+            charProtection += 5;
+            charProtectionElem.textContent = charProtection;
+        }
+        // take away ability cost from energy
+        energyCount -= abilityCost;
+        document.getElementById("energy-count").textContent = energyCount;
+    }
     // observer Foresight ab1
     if (charAbilitySelectedName === "Foresight") {
         // apply protection to target character
@@ -1674,6 +1711,30 @@ async function applyCharAbilityToChar() {
         abilityUses -= 1;
         document.getElementById(`char${charFirstClickedDivNumber}-ability${charAbilitySelectedNumber}-uses`).textContent = abilityUses;
     }
+    // clutch relocation ab1
+    if (charAbilitySelectedName === "Relocation") {
+        // restore 5 health to target character
+        const charHealthElem = document.getElementById(`char${charClickedDivNumber}-health`);
+        let charHealth = parseInt(charHealthElem.textContent);
+        charHealth += 5;
+        const charProtectionElem = document.getElementById(`char${charClickedDivNumber}-protection`);
+        let charProtection = parseInt(charProtectionElem.textContent);
+        charProtection += 5;
+
+        //make sure health doesn't exceed max, color correctly
+        const charHealthMax = await getCharMaxHealth();
+        if (charHealth >= charHealthMax) {
+            charHealth = charHealthMax;
+            charHealthElem.style.color = "green";
+        } else {
+            charHealthElem.style.color = "orange";
+        }
+        charProtectionElem.textContent = charProtection;
+        charHealthElem.textContent = charHealth;
+        // take away ability cost from energy
+        energyCount -= abilityCost;
+        document.getElementById("energy-count").textContent = energyCount;
+    }
     // Liza Spirit Water ab1
     if (charAbilitySelectedName === "Spirit Water") {
         // restore 3 health to target character
@@ -1701,6 +1762,27 @@ async function applyCharAbilityToChar() {
         const charHealthElem = document.getElementById(`char${charClickedDivNumber}-health`);
         let charHealth = parseInt(charHealthElem.textContent);
         charHealth += 5;
+
+        //make sure health doesn't exceed max, color correctly
+        const charHealthMax = await getCharMaxHealth();
+        if (charHealth >= charHealthMax) {
+            charHealth = charHealthMax;
+            charHealthElem.style.color = "green";
+        } else {
+            charHealthElem.style.color = "orange";
+        }
+
+        charHealthElem.textContent = charHealth;
+        // take away ability cost from energy
+        energyCount -= abilityCost;
+        document.getElementById("energy-count").textContent = energyCount;
+    }
+    // aris ICU ab 1
+    if (charAbilitySelectedName === "I.C.U.") {
+        // restore 10 health to target character
+        const charHealthElem = document.getElementById(`char${charClickedDivNumber}-health`);
+        let charHealth = parseInt(charHealthElem.textContent);
+        charHealth += 10;
 
         //make sure health doesn't exceed max, color correctly
         const charHealthMax = await getCharMaxHealth();
@@ -1815,12 +1897,64 @@ async function applyCharAbilityToChar() {
         energyCount -= abilityCost;
         document.getElementById("energy-count").textContent = energyCount;
     }
+    // Maggie Wave of Light ab1
+    if (charAbilitySelectedName === "Wave of Light") {
+        // restore 5 health to all allies
+        for (let i = 1; i <= 7; i++) {
+            const charHealthElem = document.getElementById(`char${i}-health`);
+            let charHealth = parseInt(charHealthElem.textContent);
+            charHealth += 5;
+
+            //make sure health doesn't exceed max, color correctly
+            charClickedApplyToDiv = document.getElementById(`char${i}-div`);
+            const charHealthMax = await getCharMaxHealth();
+            if (charHealth >= charHealthMax) {
+                charHealth = charHealthMax;
+                charHealthElem.style.color = "green";
+            } else {
+                charHealthElem.style.color = "orange";
+            }
+
+            charHealthElem.textContent = charHealth;
+        }
+        // take away ability cost from energy
+        energyCount -= abilityCost;
+        document.getElementById("energy-count").textContent = energyCount;
+    }
     // Jo Nator Shock Shield ab1
     if (charAbilitySelectedName === "Shock Shield") {
         // apply protection to target character
         const charProtectionElem = document.getElementById(`char${charClickedDivNumber}-protection`);
         let charProtection = parseInt(charProtectionElem.textContent);
         charProtection += 2;
+
+        charProtectionElem.textContent = charProtection;
+        // take away ability cost from energy if attackNumber is 2
+        if (abilityProgress === 2) {
+            energyCount -= abilityCost;
+            document.getElementById("energy-count").textContent = energyCount;
+        }
+    }
+    // Jo Nator Amp ab1
+    if (charAbilitySelectedName === "Amp Up") {
+        // apply protection to target character
+        const charProtectionElem = document.getElementById(`char${charClickedDivNumber}-protection`);
+        let charProtection = parseInt(charProtectionElem.textContent);
+        charProtection += 5;
+
+        charProtectionElem.textContent = charProtection;
+        // take away ability cost from energy if attackNumber is 2
+        if (abilityProgress === 2) {
+            energyCount -= abilityCost;
+            document.getElementById("energy-count").textContent = energyCount;
+        }
+    }
+    // Observer Predictor ab1
+    if (charAbilitySelectedName === "Predictor") {
+        // apply protection to target character
+        const charProtectionElem = document.getElementById(`char${charClickedDivNumber}-protection`);
+        let charProtection = parseInt(charProtectionElem.textContent);
+        charProtection += 5;
 
         charProtectionElem.textContent = charProtection;
         // take away ability cost from energy if attackNumber is 2
@@ -2079,6 +2213,44 @@ async function applyCharAbilityToEnemy() {
         energyCount -= abilityCost;
         document.getElementById("energy-count").textContent = energyCount;
     }
+    // Tyrel Holy Blades ab1
+    if (charAbilitySelectedName === "Fix Time") {
+        // deal 10 damage to selected enemy, heal self for 3
+        const enemyHealthElem = document.getElementById(`enemy${enemyClickedDivNumber}-health`);
+        let enemyHealth = parseInt(enemyHealthElem.textContent);
+        enemyHealth -= 10;
+
+        //make sure health doesn't exceed max, color correctly
+        const enemyHealthMax = await getEnemyMaxHealth();
+        if (enemyHealth >= enemyHealthMax) {
+            enemyHealth = enemyHealthMax;
+            enemyHealthElem.style.color = "green";
+        } else {
+            enemyHealthElem.style.color = "orange";
+        }
+        
+        enemyHealthElem.textContent = enemyHealth;
+
+        // heal self
+        const charHealthElem = document.getElementById(`char${charFirstClickedDivNumber}-health`);
+        let charHealth = parseInt(charHealthElem.textContent);
+        charHealth += 3;
+
+        //make sure health doesn't exceed max, color correctly
+        const charHealthMax = await getCharMaxHealth();
+        if (charHealth >= charHealthMax) {
+            charHealth = charHealthMax;
+            charHealthElem.style.color = "green";
+        } else {
+            charHealthElem.style.color = "orange";
+        }
+
+        charHealthElem.textContent = charHealth;
+
+        // take away ability cost from energy
+        energyCount -= abilityCost;
+        document.getElementById("energy-count").textContent = energyCount;
+    }
     // Kellbourne Double Gate ab1
     if (charAbilitySelectedName === "Double Gate") {
         // deal 3 damage to two enemies
@@ -2111,6 +2283,36 @@ async function applyCharAbilityToEnemy() {
             document.getElementById("energy-count").textContent = energyCount;
         }
     }
+    // Kellbourne Triple Gate ab1
+    if (charAbilitySelectedName === "Triple Gate") {
+        // deal 10 damage
+        const enemyHealthElem = document.getElementById(`enemy${enemyClickedDivNumber}-health`);
+        const enemyProtectionElem = document.getElementById(`enemy${enemyClickedDivNumber}-protection`);
+        let enemyHealth = parseInt(enemyHealthElem.textContent);
+        let enemyProtection = parseInt(enemyProtectionElem.textContent);
+        // if enemy has protection
+        enemyProtection -= 3;
+        if (enemyProtection < 0) {
+            let remainder = Math.abs(enemyProtection);
+            enemyProtection = 0;
+            enemyHealth -= remainder;
+        }
+
+        //make sure health doesn't exceed max, color correctly
+        const enemyHealthMax = await getEnemyMaxHealth();
+        if (enemyHealth >= enemyHealthMax) {
+            enemyHealth = enemyHealthMax;
+            enemyHealthElem.style.color = "green";
+        } else {
+            enemyHealthElem.style.color = "orange";
+        }
+
+        enemyProtectionElem.textContent = enemyProtection;
+        enemyHealthElem.textContent = enemyHealth;
+        // take away ability cost from energy
+            energyCount -= abilityCost;
+            document.getElementById("energy-count").textContent = energyCount;
+    }
     // Veritan Flame Strike ab1
     if (charAbilitySelectedName === "Flame Strike") {
         // deal 5 damage to selected enemy
@@ -2141,6 +2343,36 @@ async function applyCharAbilityToEnemy() {
         energyCount -= abilityCost;
         document.getElementById("energy-count").textContent = energyCount;
     }
+    // Veritan Searing Blade ab1
+    if (charAbilitySelectedName === "Searing Blade") {
+        // deal 10 damage to selected enemy
+        const enemyHealthElem = document.getElementById(`enemy${enemyClickedDivNumber}-health`);
+        const enemyProtectionElem = document.getElementById(`enemy${enemyClickedDivNumber}-protection`);
+        let enemyHealth = parseInt(enemyHealthElem.textContent);
+        let enemyProtection = parseInt(enemyProtectionElem.textContent);
+        // if enemy has protection
+        enemyProtection -= 10;
+        if (enemyProtection < 0) {
+            let remainder = Math.abs(enemyProtection);
+            enemyProtection = 0;
+            enemyHealth -= remainder;
+        }
+
+        //make sure health doesn't exceed max, color correctly
+        const enemyHealthMax = await getEnemyMaxHealth();
+        if (enemyHealth >= enemyHealthMax) {
+            enemyHealth = enemyHealthMax;
+            enemyHealthElem.style.color = "green";
+        } else {
+            enemyHealthElem.style.color = "orange";
+        }
+
+        enemyProtectionElem.textContent = enemyProtection;
+        enemyHealthElem.textContent = enemyHealth;
+        // take away ability cost from energy
+        energyCount -= abilityCost;
+        document.getElementById("energy-count").textContent = energyCount;
+    }
     // sayj Precision Shot ab1
     if (charAbilitySelectedName === "Precision Shot") {
         // deal 5 damage to selected enemy
@@ -2150,6 +2382,36 @@ async function applyCharAbilityToEnemy() {
         let enemyProtection = parseInt(enemyProtectionElem.textContent);
         // if enemy has protection
         enemyProtection -= 5;
+        if (enemyProtection < 0) {
+            let remainder = Math.abs(enemyProtection);
+            enemyProtection = 0;
+            enemyHealth -= remainder;
+        }
+
+        //make sure health doesn't exceed max, color correctly
+        const enemyHealthMax = await getEnemyMaxHealth();
+        if (enemyHealth >= enemyHealthMax) {
+            enemyHealth = enemyHealthMax;
+            enemyHealthElem.style.color = "green";
+        } else {
+            enemyHealthElem.style.color = "orange";
+        }
+
+        enemyProtectionElem.textContent = enemyProtection;
+        enemyHealthElem.textContent = enemyHealth;
+        // take away ability cost from energy
+        energyCount -= abilityCost;
+        document.getElementById("energy-count").textContent = energyCount;
+    }
+    // sayj High Caliber ab1
+    if (charAbilitySelectedName === "High Caliber") {
+        // deal 10 damage to selected enemy
+        const enemyHealthElem = document.getElementById(`enemy${enemyClickedDivNumber}-health`);
+        const enemyProtectionElem = document.getElementById(`enemy${enemyClickedDivNumber}-protection`);
+        let enemyHealth = parseInt(enemyHealthElem.textContent);
+        let enemyProtection = parseInt(enemyProtectionElem.textContent);
+        // if enemy has protection
+        enemyProtection -= 10;
         if (enemyProtection < 0) {
             let remainder = Math.abs(enemyProtection);
             enemyProtection = 0;
@@ -2254,6 +2516,38 @@ async function applyCharAbilityToEnemy() {
         let enemyProtection = parseInt(enemyProtectionElem.textContent);
         // if enemy has protection
         enemyProtection -= 3;
+        if (enemyProtection < 0) {
+            let remainder = Math.abs(enemyProtection);
+            enemyProtection = 0;
+            enemyHealth -= remainder;
+        }
+
+        //make sure health doesn't exceed max, color correctly
+        const enemyHealthMax = await getEnemyMaxHealth();
+        if (enemyHealth >= enemyHealthMax) {
+            enemyHealth = enemyHealthMax;
+            enemyHealthElem.style.color = "green";
+        } else {
+            enemyHealthElem.style.color = "orange";
+        }
+
+        enemyProtectionElem.textContent = enemyProtection;
+        enemyHealthElem.textContent = enemyHealth;
+        // take away ability cost from energy if attackNumber is 2
+        if (abilityProgress === 2) {
+            energyCount -= abilityCost;
+            document.getElementById("energy-count").textContent = energyCount;
+        }
+    }
+    // Corazon Blur of Arrows ab1
+    if (charAbilitySelectedName === "Blur of Arrows") {
+        // deal 5 damage to two enemies
+        const enemyHealthElem = document.getElementById(`enemy${enemyClickedDivNumber}-health`);
+        const enemyProtectionElem = document.getElementById(`enemy${enemyClickedDivNumber}-protection`);
+        let enemyHealth = parseInt(enemyHealthElem.textContent);
+        let enemyProtection = parseInt(enemyProtectionElem.textContent);
+        // if enemy has protection
+        enemyProtection -= 5;
         if (enemyProtection < 0) {
             let remainder = Math.abs(enemyProtection);
             enemyProtection = 0;
@@ -2461,6 +2755,38 @@ async function applyCharAbilityToEnemy() {
         energyCount -= abilityCost;
         document.getElementById("energy-count").textContent = energyCount;
     }
+    // spect potion volley ab1
+    if (charAbilitySelectedName === "Potion Volley") {
+        // deal 5 damage to two enemies
+        const enemyHealthElem = document.getElementById(`enemy${enemyClickedDivNumber}-health`);
+        const enemyProtectionElem = document.getElementById(`enemy${enemyClickedDivNumber}-protection`);
+        let enemyHealth = parseInt(enemyHealthElem.textContent);
+        let enemyProtection = parseInt(enemyProtectionElem.textContent);
+        // if enemy has protection
+        enemyProtection -= 5;
+        if (enemyProtection < 0) {
+            let remainder = Math.abs(enemyProtection);
+            enemyProtection = 0;
+            enemyHealth -= remainder;
+        }
+
+        //make sure health doesn't exceed max, color correctly
+        const enemyHealthMax = await getEnemyMaxHealth();
+        if (enemyHealth >= enemyHealthMax) {
+            enemyHealth = enemyHealthMax;
+            enemyHealthElem.style.color = "green";
+        } else {
+            enemyHealthElem.style.color = "orange";
+        }
+
+        enemyProtectionElem.textContent = enemyProtection;
+        enemyHealthElem.textContent = enemyHealth;
+        // take away ability cost from energy if attackNumber is 2
+        if (abilityProgress === 2) {
+            energyCount -= abilityCost;
+            document.getElementById("energy-count").textContent = energyCount;
+        }
+    }
     // Cadenza Overdrive ab2
     if (charAbilitySelectedName === "Overdrive") {
         // deal 2 damage to all enemies
@@ -2530,6 +2856,36 @@ async function applyCharAbilityToEnemy() {
         // take away ability uses
         abilityUses -= 1;
         document.getElementById(`char${charFirstClickedDivNumber}-ability${charAbilitySelectedNumber}-uses`).textContent = abilityUses;
+    }
+    // Liza Blood Bending ab1
+    if (charAbilitySelectedName === "Blood Bending") {
+        // deal 10 damage to selected enemy
+        const enemyHealthElem = document.getElementById(`enemy${enemyClickedDivNumber}-health`);
+        const enemyProtectionElem = document.getElementById(`enemy${enemyClickedDivNumber}-protection`);
+        let enemyHealth = parseInt(enemyHealthElem.textContent);
+        let enemyProtection = parseInt(enemyProtectionElem.textContent);
+        // if enemy has protection
+        enemyProtection -= 10;
+        if (enemyProtection < 0) {
+            let remainder = Math.abs(enemyProtection);
+            enemyProtection = 0;
+            enemyHealth -= remainder;
+        }
+
+        //make sure health doesn't exceed max, color correctly
+        const enemyHealthMax = await getEnemyMaxHealth();
+        if (enemyHealth >= enemyHealthMax) {
+            enemyHealth = enemyHealthMax;
+            enemyHealthElem.style.color = "green";
+        } else {
+            enemyHealthElem.style.color = "orange";
+        }
+
+        enemyProtectionElem.textContent = enemyProtection;
+        enemyHealthElem.textContent = enemyHealth;
+        // take away ability cost from energy
+        energyCount -= abilityCost;
+        document.getElementById("energy-count").textContent = energyCount;
     }
     // Liza Flood ab2
     if (charAbilitySelectedName === "Flood") {
@@ -2650,6 +3006,14 @@ async function applyCharAbilityToEnemy() {
         energyCount -= abilityCost;
         document.getElementById("energy-count").textContent = energyCount;
     }
+    // Braynie Monkey See Better ab1
+    if (charAbilitySelectedName === "Monkey See Better") {
+        // adapt ability1 of target enemy
+        const enemyAbilityName = document.getElementById(`enemy${enemyClickedDivNumber}-ability1-name`).textContent;
+        const enemyAbilityDesc = document.getElementById(`enemy${enemyClickedDivNumber}-ability1-desc`).textContent;
+        document.getElementById(`char${charFirstClickedDivNumber}-ability1-name`).textContent = enemyAbilityName;
+        document.getElementById(`char${charFirstClickedDivNumber}-ability1-desc`).textContent = enemyAbilityDesc;
+    }
     // Braynie Monkey Do Better ab2
     if (charAbilitySelectedName === "Monkey Do Better") {
         // steal all protection from an enemy
@@ -2704,6 +3068,70 @@ async function applyCharAbilityToEnemy() {
         let enemyProtection = parseInt(enemyProtectionElem.textContent);
         // if enemy has protection
         enemyProtection -= 3;
+        if (enemyProtection < 0) {
+            let remainder = Math.abs(enemyProtection);
+            enemyProtection = 0;
+            enemyHealth -= remainder;
+        }
+
+        //make sure health doesn't exceed max, color correctly
+        const enemyHealthMax = await getEnemyMaxHealth();
+        if (enemyHealth >= enemyHealthMax) {
+            enemyHealth = enemyHealthMax;
+            enemyHealthElem.style.color = "green";
+        } else {
+            enemyHealthElem.style.color = "orange";
+        }
+
+        enemyProtectionElem.textContent = enemyProtection;
+        enemyHealthElem.textContent = enemyHealth;
+        // take away ability cost from energy if attackNumber is 2
+        if (abilityProgress === 2) {
+            energyCount -= abilityCost;
+            document.getElementById("energy-count").textContent = energyCount;
+        }
+    }
+    // T`Risa Elven Strength ab1
+    if (charAbilitySelectedName === "Elven Strength") {
+        // deal 5 damage twice
+        const enemyHealthElem = document.getElementById(`enemy${enemyClickedDivNumber}-health`);
+        const enemyProtectionElem = document.getElementById(`enemy${enemyClickedDivNumber}-protection`);
+        let enemyHealth = parseInt(enemyHealthElem.textContent);
+        let enemyProtection = parseInt(enemyProtectionElem.textContent);
+        // if enemy has protection
+        enemyProtection -= 5;
+        if (enemyProtection < 0) {
+            let remainder = Math.abs(enemyProtection);
+            enemyProtection = 0;
+            enemyHealth -= remainder;
+        }
+
+        //make sure health doesn't exceed max, color correctly
+        const enemyHealthMax = await getEnemyMaxHealth();
+        if (enemyHealth >= enemyHealthMax) {
+            enemyHealth = enemyHealthMax;
+            enemyHealthElem.style.color = "green";
+        } else {
+            enemyHealthElem.style.color = "orange";
+        }
+
+        enemyProtectionElem.textContent = enemyProtection;
+        enemyHealthElem.textContent = enemyHealth;
+        // take away ability cost from energy if attackNumber is 2
+        if (abilityProgress === 2) {
+            energyCount -= abilityCost;
+            document.getElementById("energy-count").textContent = energyCount;
+        }
+    }
+    // jon spartan accuracy ab1
+    if (charAbilitySelectedName === "Spartan Accuracy") {
+        // deal 5 damage twice
+        const enemyHealthElem = document.getElementById(`enemy${enemyClickedDivNumber}-health`);
+        const enemyProtectionElem = document.getElementById(`enemy${enemyClickedDivNumber}-protection`);
+        let enemyHealth = parseInt(enemyHealthElem.textContent);
+        let enemyProtection = parseInt(enemyProtectionElem.textContent);
+        // if enemy has protection
+        enemyProtection -= 5;
         if (enemyProtection < 0) {
             let remainder = Math.abs(enemyProtection);
             enemyProtection = 0;
@@ -2878,6 +3306,18 @@ async function applyCharAbilityToEnemy() {
         // take away ability uses
         abilityUses -= 1;
         document.getElementById(`char${charFirstClickedDivNumber}-ability${charAbilitySelectedNumber}-uses`).textContent = abilityUses;
+    }
+    // Pasha Upload Virus ab1
+    if (charAbilitySelectedName === "Upload Virus") {
+        // reduce all enemy protection to 0
+        for (let i = 1; i <= 7; i++) {
+            const enemyProtectionElem = document.getElementById(`enemy${i}-protection`);
+            enemyProtectionElem.textContent = 0;
+        }
+
+        // take away ability cost from energy
+        energyCount -= abilityCost;
+        document.getElementById("energy-count").textContent = energyCount;
     }
 
     // wilder canine summon abilities
@@ -5069,6 +5509,7 @@ document.getElementById("confirm-purchase-yes-button").addEventListener("click",
 async function populateConfirmPurchasePage() {
     const res = await fetch(`http://localhost:3000/api/${currentUsername}/cards/name/${encodeURIComponent(characterListButtonClickedName)}`);
     const characterData = await res.json();
+    await checkAbilityStatus(characterData);
     
     if (characterListButtonClickedLeader === true) {
         document.getElementById("before-upgrade-img").src = `images/leader-characters/${characterData.image_id}Leader.png`;
@@ -5080,6 +5521,20 @@ async function populateConfirmPurchasePage() {
         document.getElementById("after-upgrade-img").src = `images/base-characters/${characterData.image_id}Base.png`;
 
         document.getElementById("confirm-purchase-img").src = "images/confirm-purchase-page.png";
+    }
+    if (ab1Upgraded === true) {
+        document.getElementById("before-upgrade-ability1-name").style.color = "goldenrod";
+        document.getElementById("after-upgrade-ability1-name").style.color = "goldenrod";
+    } else {
+        document.getElementById("before-upgrade-ability1-name").style.color = "blue";
+        document.getElementById("after-upgrade-ability1-name").style.color = "blue";
+    }
+    if (ab2Upgraded === true) {
+        document.getElementById("before-upgrade-ability2-name").style.color = "goldenrod";
+        document.getElementById("after-upgrade-ability2-name").style.color = "goldenrod";
+    } else {
+        document.getElementById("before-upgrade-ability2-name").style.color = "purple";
+        document.getElementById("after-upgrade-ability2-name").style.color = "purple";
     }
     document.getElementById("before-upgrade-health").textContent = characterData.health_max;
     document.getElementById("before-upgrade-protection").textContent = characterData.initial_protection;
@@ -5320,4 +5775,194 @@ document.getElementById("alden-armory-exit-button").addEventListener('click', fu
     document.getElementById("alden-armory-div").style.display = "none";
     document.getElementById("home-buttons-div").style.display = "block";
     document.body.style.backgroundImage = `url('images/maps/map_home.png')`;
+}); 
+
+// heirloom clicks
+const heirloomButtons = document.querySelectorAll('.heirloom-img');
+heirloomButtons.forEach(heirloom => {
+    heirloom.addEventListener('click', async function() {
+        const heirloomName = heirloom.id.replace("alden-armory-", "");
+        checkIfCharacterInDeck(heirloomName);
+    });
 });
+
+async function checkIfCharacterInDeck(heirloom) { // and fill out before/after divs
+    const res = await fetch(`http://localhost:3000/api/${currentUsername}/cards/baseOrLeader`);
+    const chars = await res.json();
+
+    let found = false;
+    for (let i = 0; i < chars.length; i++) {
+        if (chars[i].heirloom_id === heirloom) {
+            heirloomId = heirloom;
+            found = true;
+            await checkAbilityStatus(chars[i]);
+            document.getElementById("armory-confirm-div").style.display = "block";
+            if (chars[i].type === "leader") {
+                document.getElementById("armory-confirm-before-img").src = `images/leader-characters/${chars[i].image_id}Leader.png`;
+                document.getElementById("armory-confirm-after-img").src = `images/leader-characters/${chars[i].image_id}Leader.png`;
+
+                document.getElementById("armory-confirm-img").src = "images/confirm-purchase-page-leader.png";
+            } else {
+                document.getElementById("armory-confirm-before-img").src = `images/base-characters/${chars[i].image_id}Base.png`;
+                document.getElementById("armory-confirm-after-img").src = `images/base-characters/${chars[i].image_id}Base.png`;
+
+                document.getElementById("armory-confirm-img").src = "images/confirm-purchase-page.png";
+            }
+            if (ab1Upgraded === true) {
+                document.getElementById("armory-confirm-before-ability1-name").style.color = "goldenrod";
+                document.getElementById("armory-confirm-after-ability1-name").style.color = "goldenrod";
+            } else {
+                document.getElementById("armory-confirm-before-ability1-name").style.color = "blue";
+                document.getElementById("armory-confirm-after-ability1-name").style.color = "blue";
+            }
+            if (ab2Upgraded === true) {
+                document.getElementById("armory-confirm-before-ability2-name").style.color = "goldenrod";
+                document.getElementById("armory-confirm-after-ability2-name").style.color = "goldenrod";
+            } else {
+                document.getElementById("armory-confirm-before-ability2-name").style.color = "purple";
+                document.getElementById("armory-confirm-after-ability2-name").style.color = "purple";
+            }
+
+            document.getElementById("armory-confirm-before-health").textContent = chars[i].health_max;
+            document.getElementById("armory-confirm-before-protection").textContent = chars[i].initial_protection;
+            document.getElementById("armory-confirm-before-ability1-name").textContent = chars[i].ability1_name;
+            document.getElementById("armory-confirm-before-ability1-desc").textContent = chars[i].ability1_desc;
+            document.getElementById("armory-confirm-before-ability1-cost").textContent = chars[i].ability1_cost;
+            document.getElementById("armory-confirm-before-ability2-name").textContent = chars[i].ability2_name;
+            document.getElementById("armory-confirm-before-ability2-desc").textContent = chars[i].ability2_desc;
+            document.getElementById("armory-confirm-before-ability2-cost").textContent = chars[i].ability2_cost;
+            document.getElementById("armory-confirm-before-ability2-uses").textContent = chars[i].ability2_uses;
+
+            document.getElementById("armory-confirm-after-health").textContent = chars[i].health_max;
+            document.getElementById("armory-confirm-after-protection").textContent = chars[i].initial_protection;
+            document.getElementById("armory-confirm-after-ability1-name").textContent = chars[i].ability1_name;
+            document.getElementById("armory-confirm-after-ability1-desc").textContent = chars[i].ability1_desc;
+            document.getElementById("armory-confirm-after-ability1-cost").textContent = chars[i].ability1_cost;
+            document.getElementById("armory-confirm-after-ability2-name").textContent = chars[i].ability2_name;
+            document.getElementById("armory-confirm-after-ability2-desc").textContent = chars[i].ability2_desc;
+            document.getElementById("armory-confirm-after-ability2-cost").textContent = chars[i].ability2_cost;
+            document.getElementById("armory-confirm-after-ability2-uses").textContent = chars[i].ability2_uses;
+
+            updateAbility1(chars[i].name);
+        }
+    }
+    if (!found) {
+        alert("No character in your deck can channel this heirloom.");
+        return;
+    }
+}
+
+document.getElementById("armory-confirm-no-button").addEventListener('click', function() {
+    document.getElementById("armory-confirm-div").style.display = "none";
+});
+
+document.getElementById("armory-confirm-yes-button").addEventListener('click', async function() {
+    await pushChannelHeirloomToDB();
+    document.getElementById("armory-confirm-div").style.display = "none";
+});
+
+let heirloomId = null;
+async function pushChannelHeirloomToDB() {
+    await fetch(`http://localhost:3000/api/${currentUsername}/cards/updateAbility1ByHeirloom`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            heirloom_id: heirloomId,
+            ability1_name: document.getElementById("armory-confirm-after-ability1-name").textContent,
+            ability1_desc: document.getElementById("armory-confirm-after-ability1-desc").textContent
+        })
+    });
+}
+
+function updateAbility1(charName) {
+    if (charName === "Maggie") {
+        document.getElementById("armory-confirm-after-ability1-name").style.color = "goldenrod";
+        document.getElementById("armory-confirm-after-ability1-name").textContent = "Wave of Light";
+        document.getElementById("armory-confirm-after-ability1-desc").textContent = "Heal all allies from 5 damage";
+    }
+    if (charName === "Kellbourne") {
+        document.getElementById("armory-confirm-after-ability1-name").style.color = "goldenrod";
+        document.getElementById("armory-confirm-after-ability1-name").textContent = "Triple Gate";
+        document.getElementById("armory-confirm-after-ability1-desc").textContent = "Deal 10 damage";
+    }
+    if (charName === "Veritan") {
+        document.getElementById("armory-confirm-after-ability1-name").style.color = "goldenrod";
+        document.getElementById("armory-confirm-after-ability1-name").textContent = "Searing Blade";
+        document.getElementById("armory-confirm-after-ability1-desc").textContent = "Deal 10 damage";
+    }
+    if (charName === "SayJ") {
+        document.getElementById("armory-confirm-after-ability1-name").style.color = "goldenrod";
+        document.getElementById("armory-confirm-after-ability1-name").textContent = "High Caliber";
+        document.getElementById("armory-confirm-after-ability1-desc").textContent = "Deal 10 damage";
+    }
+    if (charName === "Jo Nator") {
+        document.getElementById("armory-confirm-after-ability1-name").style.color = "goldenrod";
+        document.getElementById("armory-confirm-after-ability1-name").textContent = "Amp Up";
+        document.getElementById("armory-confirm-after-ability1-desc").textContent = "Shield an ally from 5 damage";
+    }
+    if (charName === "Corazon") {
+        document.getElementById("armory-confirm-after-ability1-name").style.color = "goldenrod";
+        document.getElementById("armory-confirm-after-ability1-name").textContent = "Blur of Arrows";
+        document.getElementById("armory-confirm-after-ability1-desc").textContent = "Fire 2 arrows dealing 5 damage";
+    }
+    if (charName === "Tyrel") {
+        document.getElementById("armory-confirm-after-ability1-name").style.color = "goldenrod";
+        document.getElementById("armory-confirm-after-ability1-name").textContent = "Holy Blades";
+        document.getElementById("armory-confirm-after-ability1-desc").textContent = "Deal 10 damage and heal that much";
+    }
+    if (charName === "S.P.E.C.T.") {
+        document.getElementById("armory-confirm-after-ability1-name").style.color = "goldenrod";
+        document.getElementById("armory-confirm-after-ability1-name").textContent = "Potion Volley";
+        document.getElementById("armory-confirm-after-ability1-desc").textContent = "Deal 5 damage twice";
+    }
+    if (charName === "Cadenza") {
+        document.getElementById("armory-confirm-after-ability1-name").style.color = "goldenrod";
+        document.getElementById("armory-confirm-after-ability1-name").textContent = "Jam Out";
+        document.getElementById("armory-confirm-after-ability1-desc").textContent = "Heal all allies from 5 damage";
+    }
+    if (charName === "Liza") {
+        document.getElementById("armory-confirm-after-ability1-name").style.color = "goldenrod";
+        document.getElementById("armory-confirm-after-ability1-name").textContent = "Blood Bending";
+        document.getElementById("armory-confirm-after-ability1-desc").textContent = "Deal 10 damage";
+    }
+    if (charName === "Dr. Aris") {
+        document.getElementById("armory-confirm-after-ability1-name").style.color = "goldenrod";
+        document.getElementById("armory-confirm-after-ability1-name").textContent = "I.C.U.";
+        document.getElementById("armory-confirm-after-ability1-desc").textContent = "Heal an ally from 10 damage";
+    }
+    if (charName === "Pasha") {
+        document.getElementById("armory-confirm-after-ability1-name").style.color = "goldenrod";
+        document.getElementById("armory-confirm-after-ability1-name").textContent = "Upload Virus";
+        document.getElementById("armory-confirm-after-ability1-desc").textContent = "Remove all protection from all enemies";
+    }
+    if (charName === "T`Risa") {
+        document.getElementById("armory-confirm-after-ability1-name").style.color = "goldenrod";
+        document.getElementById("armory-confirm-after-ability1-name").textContent = "Elven Strength";
+        document.getElementById("armory-confirm-after-ability1-desc").textContent = "Deal 5 damage twice";
+    }
+    if (charName === "J.O.N.") {
+        document.getElementById("armory-confirm-after-ability1-name").style.color = "goldenrod";
+        document.getElementById("armory-confirm-after-ability1-name").textContent = "Spartan Accuracy";
+        document.getElementById("armory-confirm-after-ability1-desc").textContent = "Deal 5 damage twice";
+    }
+    if (charName === "Wilder") {
+        document.getElementById("armory-confirm-after-ability1-name").style.color = "goldenrod";
+        document.getElementById("armory-confirm-after-ability1-name").textContent = "Howl of the Alpha";
+        document.getElementById("armory-confirm-after-ability1-desc").textContent = "Give all allies 5 protection";
+    }
+    if (charName === "Observer") {
+        document.getElementById("armory-confirm-after-ability1-name").style.color = "goldenrod";
+        document.getElementById("armory-confirm-after-ability1-name").textContent = "Predictor";
+        document.getElementById("armory-confirm-after-ability1-desc").textContent = "Give an ally 5 protection twice";
+    }
+    if (charName === "Clutch") {
+        document.getElementById("armory-confirm-after-ability1-name").style.color = "goldenrod";
+        document.getElementById("armory-confirm-after-ability1-name").textContent = "Relocation";
+        document.getElementById("armory-confirm-after-ability1-desc").textContent = "Heal and protect an ally from 5 damage";
+    }
+    if (charName === "Braynie") {
+        document.getElementById("armory-confirm-after-ability1-name").style.color = "goldenrod";
+        document.getElementById("armory-confirm-after-ability1-name").textContent = "MonKey See Better";
+        document.getElementById("armory-confirm-after-ability1-desc").textContent = "Adapt doesn't cost energy";
+    }
+}

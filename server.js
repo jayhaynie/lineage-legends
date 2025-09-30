@@ -616,6 +616,46 @@ app.get('/api/players/:username/trueColumns', async (req, res) => {
   }
 });
 
+app.get('/api/:username/cards/baseOrLeader', async (req, res) => {
+  const { username } = req.params;
+  // Sanitize table name
+  const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
+  const cardsTable = `${safeUsername}_cards`;
+  try {
+    const result = await pool.query(
+      `SELECT * FROM ${cardsTable} WHERE type = 'base' OR type = 'leader'`
+    );
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/:username/cards/updateAbility1ByHeirloom', async (req, res) => {
+  const { username } = req.params;
+  const { heirloom_id, ability1_name, ability1_desc } = req.body;
+
+  // Sanitize table name
+  const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
+  const cardsTable = `${safeUsername}_cards`;
+
+  try {
+    const result = await pool.query(
+      `UPDATE ${cardsTable}
+       SET ability1_name = $1, ability1_desc = $2
+       WHERE heirloom_id = $3
+       RETURNING *`,
+      [ability1_name, ability1_desc, heirloom_id]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Card not found' });
+    }
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
