@@ -24,91 +24,166 @@ const pool = new Pool({
 
 // Create a new user
 app.post('/api/players', async (req, res) => {
-  const { username, password, characterList, leaderImageId, baseImageId, shop1List, shop2List, shop3List, shop4List } = req.body;
+  const { username, password, characterList, leaderImageId, baseImageId, shop1List, shop2List, shop3List, shop4List, bypassKey } = req.body;
   try {
+    if (bypassKey === null) {
     // Check if username exists
-    const exists = await pool.query('SELECT 1 FROM players WHERE username = $1', [username]);
-    if (exists.rows.length > 0) {
-      return res.status(409).json({ error: 'Username already exists, please log in or choose another username' });
+        const exists = await pool.query('SELECT 1 FROM players WHERE username = $1', [username]);
+        if (exists.rows.length > 0) {
+          return res.status(409).json({ error: 'Username already exists, please log in or choose another username' });
+        }
+
+        // Insert new user
+        const result = await pool.query(
+          `INSERT INTO players (username, password, arcane_track, bandit_track, ghoul_track, legion_track, pirate_track, bond, wisdom, ghoul_bribed, legion_bribed, arcane_bribed, redbotLink, flaminglasersword, yellowbotlink, batterybelt, summonerlight, etherbow, righteouswings, potency, elvenmetronome, riverrock, stethoscope, techglasses, shieldoflight, mjolnirarmor, wolfwhistle, trenchcoat, bluebotlink, staffofjustice)
+          VALUES ($1, $2, 1, 1, 1, 1, 1, 0, 0, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false) RETURNING *`,
+          [username, password]
+        );
+
+        // Sanitize table names
+        const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
+        const cardsTable = `${safeUsername}_cards`;
+
+        // Create cards table
+        await pool.query(`
+          CREATE TABLE IF NOT EXISTS ${cardsTable} (
+            name VARCHAR(30),
+            type VARCHAR(30),
+            heirloom_id VARCHAR(30),
+            image_id VARCHAR(30),
+            health_max INT,
+            ability1_name VARCHAR(30),
+            ability1_desc VARCHAR(100),
+            ability1_cost INT,
+            ability1_uses INT,
+            ability2_name VARCHAR(30),
+            ability2_desc VARCHAR(100),
+            ability2_cost INT,
+            ability2_uses INT,
+            initial_protection INT
+          )
+        `);
+
+        // Insert all characters in characterList
+        await pool.query(`
+          INSERT INTO ${cardsTable} (name, type, heirloom_id, image_id, health_max, ability1_name, ability1_desc, ability1_cost, ability1_uses, ability2_name, ability2_desc, ability2_cost, ability2_uses, initial_protection)
+          SELECT name, 'shop', heirloom_id, image_id, health_max, ability1_name, ability1_desc, ability1_cost, ability1_uses, ability2_name, ability2_desc, ability2_cost, ability2_uses, initial_protection
+          FROM characters_base
+          WHERE image_id = ANY($1)
+        `, [characterList]);
+
+        // update types to shops
+        await pool.query(`
+          UPDATE ${cardsTable}
+          SET type = 'shop1'
+          WHERE image_id = ANY($1)
+        `, [shop1List]);
+
+        await pool.query(`
+          UPDATE ${cardsTable}
+          SET type = 'shop2'
+          WHERE image_id = ANY($1)
+        `, [shop2List]);
+
+        await pool.query(`
+          UPDATE ${cardsTable}
+          SET type = 'shop3'
+          WHERE image_id = ANY($1)
+        `, [shop3List]);
+
+        await pool.query(`
+          UPDATE ${cardsTable}
+          SET type = 'shop4'
+          WHERE image_id = ANY($1)
+        `, [shop4List]);
+
+        // Set type = 'leader' for leaderImageId
+        await pool.query(`
+          UPDATE ${cardsTable}
+          SET type = 'leader'
+          WHERE image_id = $1
+        `, [leaderImageId]);
+
+        // Set type = 'base' for baseImageId
+        await pool.query(`
+          UPDATE ${cardsTable}
+          SET type = 'base'
+          WHERE image_id = $1
+        `, [baseImageId]);
+    } else if (bypassKey === true) {
+      // Insert new user without checking for existing username
+      // Sanitize table names
+        const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
+        const cardsTable = `${safeUsername}_cards`;
+
+        // Create cards table
+        await pool.query(`
+          CREATE TABLE IF NOT EXISTS ${cardsTable} (
+            name VARCHAR(30),
+            type VARCHAR(30),
+            heirloom_id VARCHAR(30),
+            image_id VARCHAR(30),
+            health_max INT,
+            ability1_name VARCHAR(30),
+            ability1_desc VARCHAR(100),
+            ability1_cost INT,
+            ability1_uses INT,
+            ability2_name VARCHAR(30),
+            ability2_desc VARCHAR(100),
+            ability2_cost INT,
+            ability2_uses INT,
+            initial_protection INT
+          )
+        `);
+
+        // Insert all characters in characterList
+        await pool.query(`
+          INSERT INTO ${cardsTable} (name, type, heirloom_id, image_id, health_max, ability1_name, ability1_desc, ability1_cost, ability1_uses, ability2_name, ability2_desc, ability2_cost, ability2_uses, initial_protection)
+          SELECT name, 'shop', heirloom_id, image_id, health_max, ability1_name, ability1_desc, ability1_cost, ability1_uses, ability2_name, ability2_desc, ability2_cost, ability2_uses, initial_protection
+          FROM characters_base
+          WHERE image_id = ANY($1)
+        `, [characterList]);
+
+        // update types to shops
+        await pool.query(`
+          UPDATE ${cardsTable}
+          SET type = 'shop1'
+          WHERE image_id = ANY($1)
+        `, [shop1List]);
+
+        await pool.query(`
+          UPDATE ${cardsTable}
+          SET type = 'shop2'
+          WHERE image_id = ANY($1)
+        `, [shop2List]);
+
+        await pool.query(`
+          UPDATE ${cardsTable}
+          SET type = 'shop3'
+          WHERE image_id = ANY($1)
+        `, [shop3List]);
+
+        await pool.query(`
+          UPDATE ${cardsTable}
+          SET type = 'shop4'
+          WHERE image_id = ANY($1)
+        `, [shop4List]);
+
+        // Set type = 'leader' for leaderImageId
+        await pool.query(`
+          UPDATE ${cardsTable}
+          SET type = 'leader'
+          WHERE image_id = $1
+        `, [leaderImageId]);
+
+        // Set type = 'base' for baseImageId
+        await pool.query(`
+          UPDATE ${cardsTable}
+          SET type = 'base'
+          WHERE image_id = $1
+        `, [baseImageId]);
     }
-
-    // Insert new user
-    const result = await pool.query(
-      `INSERT INTO players (username, password, arcane_track, bandit_track, ghoul_track, legion_track, pirate_track, bond, wisdom, ghoul_bribed, legion_bribed, arcane_bribed, redbotLink, flaminglasersword, yellowbotlink, batterybelt, summonerlight, etherbow, righteouswings, potency, elvenmetronome, riverrock, stethoscope, techglasses, shieldoflight, mjolnirarmor, wolfwhistle, trenchcoat, bluebotlink, staffofjustice)
-      VALUES ($1, $2, 1, 1, 1, 1, 1, 0, 0, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false) RETURNING *`,
-      [username, password]
-    );
-
-    // Sanitize table names
-    const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
-    const cardsTable = `${safeUsername}_cards`;
-
-    // Create cards table
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS ${cardsTable} (
-        name VARCHAR(30),
-        type VARCHAR(30),
-        heirloom_id VARCHAR(30),
-        image_id VARCHAR(30),
-        health_max INT,
-        ability1_name VARCHAR(30),
-        ability1_desc VARCHAR(100),
-        ability1_cost INT,
-        ability1_uses INT,
-        ability2_name VARCHAR(30),
-        ability2_desc VARCHAR(100),
-        ability2_cost INT,
-        ability2_uses INT,
-        initial_protection INT
-      )
-    `);
-
-    // Insert all characters in characterList
-    await pool.query(`
-      INSERT INTO ${cardsTable} (name, type, heirloom_id, image_id, health_max, ability1_name, ability1_desc, ability1_cost, ability1_uses, ability2_name, ability2_desc, ability2_cost, ability2_uses, initial_protection)
-      SELECT name, 'shop', heirloom_id, image_id, health_max, ability1_name, ability1_desc, ability1_cost, ability1_uses, ability2_name, ability2_desc, ability2_cost, ability2_uses, initial_protection
-      FROM characters_base
-      WHERE image_id = ANY($1)
-    `, [characterList]);
-
-    // update types to shops
-    await pool.query(`
-      UPDATE ${cardsTable}
-      SET type = 'shop1'
-      WHERE image_id = ANY($1)
-    `, [shop1List]);
-
-    await pool.query(`
-      UPDATE ${cardsTable}
-      SET type = 'shop2'
-      WHERE image_id = ANY($1)
-    `, [shop2List]);
-
-    await pool.query(`
-      UPDATE ${cardsTable}
-      SET type = 'shop3'
-      WHERE image_id = ANY($1)
-    `, [shop3List]);
-
-    await pool.query(`
-      UPDATE ${cardsTable}
-      SET type = 'shop4'
-      WHERE image_id = ANY($1)
-    `, [shop4List]);
-
-    // Set type = 'leader' for leaderImageId
-    await pool.query(`
-      UPDATE ${cardsTable}
-      SET type = 'leader'
-      WHERE image_id = $1
-    `, [leaderImageId]);
-
-    // Set type = 'base' for baseImageId
-    await pool.query(`
-      UPDATE ${cardsTable}
-      SET type = 'base'
-      WHERE image_id = $1
-    `, [baseImageId]);
+    
 
     res.status(201).json(result.rows[0]);
   } catch (err) {
@@ -651,6 +726,49 @@ app.post('/api/:username/cards/updateAbility1ByHeirloom', async (req, res) => {
       return res.status(404).json({ error: 'Card not found' });
     }
     res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/players/:username/forge/:heirloomKey', async (req, res) => {
+  const { username, heirloomKey } = req.params;
+
+  try {
+    const result = await pool.query(
+      `UPDATE players
+       SET ${heirloomKey} = true,
+           arcane_track = 1,
+           bandit_track = 1,
+           ghoul_track = 1,
+           legion_track = 1,
+           pirate_track = 1,
+           bond = 0,
+           arcane_bribed = false,
+           ghoul_bribed = false,
+           legion_bribed = false
+       WHERE username = $1
+       RETURNING *`,
+      [username]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Player not found' });
+    }
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/:username/cards/deleteTable', async (req, res) => {
+  const { username } = req.params;
+  // Sanitize table name
+  const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
+  const cardsTable = `${safeUsername}_cards`;
+
+  try {
+    await pool.query(`DROP TABLE IF EXISTS ${cardsTable}`);
+    res.json({ message: `Table ${cardsTable} deleted.` });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

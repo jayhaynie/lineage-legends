@@ -534,7 +534,7 @@ body {
     font-size: 30px;
     font-weight: bold;
 }
-#home-build-button {
+#home-forge-button {
     position: absolute;
     left: 30%;
     top: 50%;
@@ -558,6 +558,82 @@ body {
     font-size: 30px;
     font-weight: bold;
 }
+
+#forge-div {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    z-index: 101;
+}
+#forge-backing {
+    position: absolute;
+    top: 3%;
+    left: 15%;
+    width: 70%;
+    height: 94%;
+}
+#forge-img {
+    position: absolute;
+    top: 10%;
+    left: 25%;
+    width: 50%;
+    height: 80%;
+    border-radius:10px;
+    /* border: solid 4px blue; */
+}
+#leaders-defeated-text {
+    position: absolute;
+    top: 8.5%;
+    left: 57.5%;
+    font-size: 300%;
+    color: white;
+    font-weight: bold;
+}
+#cards-collected-text {
+    position: absolute;
+    top: 17.25%;
+    left: 56%;
+    font-size: 300%;
+    color: white;
+    font-weight: bold;
+}
+#forge-no-button {
+    position: absolute;
+    left: 35%;
+    top: 83%;
+    color: red;
+    font-size: 40px;
+    font-weight: bold;
+    border-radius: 10px;
+    z-index: 102;
+}
+#forge-hiding-div {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    z-index: 101;
+}
+#forge-text-img {
+    position: absolute;
+    top: 10%;
+    left: 25%;
+    width: 50%;
+    height: 80%;
+    border-radius:10px;
+    /* border: solid 4px blue; */
+}
+#forge-yes-button {
+    position: absolute;
+    left: 57%;
+    top: 83%;
+    color: green;
+    font-size: 40px;
+    font-weight: bold;
+    border-radius: 10px;
+    z-index: 102;
+}
 /* arcane map */
 #arcane-buttons-div {
     position: absolute;
@@ -575,6 +651,7 @@ body {
 }
 #arcane-trader-button {
     position: absolute;
+    display: none;
     left: 70%;
     top: 20%;
     color: blue;
@@ -591,6 +668,7 @@ body {
 }
 #arcane-beach2-button {
     position: absolute;
+    display: none;
     left: 55%;
     top: 85%;
     color: red;
@@ -599,6 +677,7 @@ body {
 }
 #arcane-academy-button {
     position: absolute;
+    display: none;
     left: 30%;
     top: 95%;
     color: red;
@@ -607,6 +686,7 @@ body {
 }
 #arcane-fields-button {
     position: absolute;
+    display: none;
     left: 65%;
     top: 70%;
     color: red;
@@ -615,6 +695,7 @@ body {
 }
 #arcane-falls-button {
     position: absolute;
+    display: none;
     left: 50%;
     top: 35%;
     color: red;
@@ -623,6 +704,7 @@ body {
 }
 #arcane-town-button {
     position: absolute;
+    display: none;
     left: 60%;
     top: 30%;
     color: red;
@@ -631,6 +713,7 @@ body {
 }
 #arcane-college-button {
     position: absolute;
+    display: none;
     left: 60%;
     top: 10%;
     color: red;
@@ -654,6 +737,7 @@ body {
 }
 #legion-trader-button {
     position: absolute;
+    display: none;
     left: 80%;
     top: 55%;
     color: blue;
@@ -670,6 +754,7 @@ body {
 }
 #legion-plains1-button {
     position: absolute;
+    display: none;
     left: 55%;
     top: 75%;
     color: red;
@@ -678,6 +763,7 @@ body {
 }
 #legion-crossroads-button {
     position: absolute;
+    display: none;
     left: 70%;
     top: 70%;
     color: red;
@@ -686,6 +772,7 @@ body {
 }
 #legion-plains2-button {
     position: absolute;
+    display: none;
     left: 85%;
     top: 85%;
     color: red;
@@ -694,6 +781,7 @@ body {
 }
 #legion-steeps-button {
     position: absolute;
+    display: none;
     left: 60%;
     top: 45%;
     color: red;
@@ -702,6 +790,7 @@ body {
 }
 #legion-courtyard-button {
     position: absolute;
+    display: none;
     left: 45%;
     top: 30%;
     color: red;
@@ -710,6 +799,7 @@ body {
 }
 #legion-castle-button {
     position: absolute;
+    display: none;
     left: 38%;
     top: 25%;
     color: red;
@@ -798,7 +888,7 @@ body {
     display: none;
     left: 5%;
     top: 10%;
-    color: red;
+    color: gold;
     font-size: 30px;
     font-weight: bold;
 }
@@ -827,14 +917,16 @@ body {
 }
 #ghoul-walls-button {
     position: absolute;
+    display: none;
     left: 85%;
     top: 45%;
     color: red;
     font-size: 30px;
     font-weight: bold;
 }
-#ghoul-houses1-button {
+#ghoul-houses-button {
     position: absolute;
+    display: none;
     left: 75%;
     top: 80%;
     color: red;
@@ -843,6 +935,7 @@ body {
 }
 #ghoul-entrance-button {
     position: absolute;
+    display: none;
     left: 40%;
     top: 60%;
     color: red;
@@ -851,6 +944,7 @@ body {
 }
 #ghoul-trader-button {
     position: absolute;
+    display: none;
     left: 20%;
     top: 65%;
     color: blue;
@@ -859,6 +953,7 @@ body {
 }
 #ghoul-caves1-button {
     position: absolute;
+    display: none;
     left: 40%;
     top: 40%;
     color: red;
@@ -867,6 +962,7 @@ body {
 }
 #ghoul-caves2-button {
     position: absolute;
+    display: none;
     left: 55%;
     top: 35%;
     color: red;
@@ -875,9 +971,10 @@ body {
 }
 #ghoul-citadel-button {
     position: absolute;
+    display: none;
     left: 50%;
     top: 20%;
-    color: red;
+    color: gold;
     font-size: 30px;
     font-weight: bold;
 }
