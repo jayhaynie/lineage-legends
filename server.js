@@ -1,4 +1,4 @@
-const express = require('express');
+// const express = require('express');
 const cors = require('cors');
 // const { Pool } = require('pg'); //local postgres
 const { DataSource } = require('typeorm');
