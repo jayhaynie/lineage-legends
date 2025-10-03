@@ -446,7 +446,7 @@ dialogueArrow.addEventListener('click', function() {
         dialogueText.textContent = "You will need to fight the enemy factions and defeat their leaders. This will not be easy and you will need to gather more allies. Find them at Traders along your journey. It seems warriors are always looking for new weapons and armor.";
         dialogueProgress = "1.4";
     } else if (dialogueProgress === "1.4") {
-        dialogueText.textContent = `Heavens bless you on this adventure ${leaderName}. Return to the island`;
+        dialogueText.textContent = `Heavens bless you on this adventure ${leaderName}. Return to the island when you have defeated all the faction leaders and collected all your allies. We will FORGE a mighty heirloom and display it in the armory to remember your legacy.`;
         dialogueProgress = "1.5";
     } else if (dialogueProgress === "1.5") {
         dialogueDiv.style.display = "none";
