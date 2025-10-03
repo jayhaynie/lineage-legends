@@ -1,6 +1,8 @@
 {
+"name": "Lineage Legends",
+"version": "1.0",
+"type": "module",
   "dependencies": {
-    "type": "module",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
