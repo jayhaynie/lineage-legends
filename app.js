@@ -264,6 +264,7 @@ submitButton.addEventListener('click', function() {
             alert("Please choose 2 different characters");
             return;
         } else {
+            crossfadeMusic(currentSound, travelMusic, 4000);
             splitShopCharacters();
 
             fetch('http://localhost:3000/api/players', {
@@ -374,8 +375,6 @@ submitButton.addEventListener('click', function() {
     if (entryMethod.logIn === 1) {
         loadLogInVariables();
     }
-
-    crossfadeMusic(currentSound, travelMusic, 4000);
 });
 
 async function loadLogInVariables() {
@@ -383,6 +382,7 @@ async function loadLogInVariables() {
     const data = await response.json();
     if (data.password === submitPassword) {
         console.log("Login successful!");
+        crossfadeMusic(currentSound, travelMusic, 4000);
         currentUsername = data.username;
 
         selectFcardDiv.style.display = "none";
