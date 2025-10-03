@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Dynamic API base URL for local and deployed environments
 const API_BASE_URL = (window.location.hostname === 'localhost' && window.location.port === '443')
     ? 'http://localhost:443'
-    : 'https://lineage-legends.onrender.com';
+    : 'postgresql://lineage_legends_postgres_db_user:rMByWgAjlCKzCli2JZ7J8UyBH2rl1Nq0@dpg-d3g1053e5dus73ahnea0-a/lineage_legends_postgres_db';
 
 const titleButton = document.getElementById("title-button");
 const createHeader = document.getElementById("create-header");
@@ -899,12 +899,46 @@ function randomBetween(min, max) {
 let difficulty = 1;
 
 const difficulties = {
-    1: { minEnemies: 1, maxEnemies: 3, reward: 200 },
-    2: { minEnemies: 2, maxEnemies: 4, reward: 500 },
-    3: { minEnemies: 3, maxEnemies: 5, reward: 800 },
-    4: { minEnemies: 4, maxEnemies: 6, reward: 1200 },
-    5: { minEnemies: 5, maxEnemies: 7, reward: 1600 },
-    6: { minEnemies: 6, maxEnemies: 6, reward: 2000 }
+    bandit: {
+        1: { minEnemies: 1, maxEnemies: 3, reward: 100 },
+        2: { minEnemies: 2, maxEnemies: 4, reward: 200 },
+        3: { minEnemies: 3, maxEnemies: 5, reward: 300 },
+        4: { minEnemies: 4, maxEnemies: 6, reward: 400 },
+        5: { minEnemies: 5, maxEnemies: 7, reward: 500 },
+        6: { minEnemies: 6, maxEnemies: 6, reward: 600 }
+    },
+    pirate: {
+        1: { minEnemies: 1, maxEnemies: 3, reward: 300 },
+        2: { minEnemies: 2, maxEnemies: 4, reward: 400 },
+        3: { minEnemies: 3, maxEnemies: 5, reward: 500 },
+        4: { minEnemies: 4, maxEnemies: 6, reward: 600 },
+        5: { minEnemies: 5, maxEnemies: 7, reward: 700 },
+        6: { minEnemies: 6, maxEnemies: 6, reward: 800 }
+    },
+    ghoul: {
+        1: { minEnemies: 1, maxEnemies: 3, reward: 500 },
+        2: { minEnemies: 2, maxEnemies: 4, reward: 600 },
+        3: { minEnemies: 3, maxEnemies: 5, reward: 700 },
+        4: { minEnemies: 4, maxEnemies: 6, reward: 800 },
+        5: { minEnemies: 5, maxEnemies: 7, reward: 900 },
+        6: { minEnemies: 6, maxEnemies: 6, reward: 1000 }
+    },
+    legion: {
+        1: { minEnemies: 1, maxEnemies: 3, reward: 700 },
+        2: { minEnemies: 2, maxEnemies: 4, reward: 800 },
+        3: { minEnemies: 3, maxEnemies: 5, reward: 900 },
+        4: { minEnemies: 4, maxEnemies: 6, reward: 1000 },
+        5: { minEnemies: 5, maxEnemies: 7, reward: 1100 },
+        6: { minEnemies: 6, maxEnemies: 6, reward: 1200 }
+    },
+    arcane: {
+        1: { minEnemies: 1, maxEnemies: 3, reward: 900 },
+        2: { minEnemies: 2, maxEnemies: 4, reward: 1000 },
+        3: { minEnemies: 3, maxEnemies: 5, reward: 1100 },
+        4: { minEnemies: 4, maxEnemies: 6, reward: 1200 },
+        5: { minEnemies: 5, maxEnemies: 7, reward: 1300 },
+        6: { minEnemies: 6, maxEnemies: 6, reward: 1400 }
+    }
 };
 
 let leaderBattle = false;
@@ -4664,7 +4698,7 @@ function checkForVictory() {
     }
     if (enemyCount === 0) {
         document.getElementById("victory-page-div").style.display = "block";
-        document.getElementById("bond-reward").textContent = difficulties[difficulty].reward;
+        document.getElementById("bond-reward").textContent = difficulties[currentlyAt][difficulty].reward;
         resetCharSelection();
         hideAllEnemyCharacterDivs();
 
@@ -6306,7 +6340,7 @@ document.getElementById("victory-button").addEventListener('click', function() {
     fetch(`API_BASE_URL/api/players/${currentUsername}/plusBond`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: difficulties[difficulty].reward }) 
+        body: JSON.stringify({ amount: difficulties[currentlyAt][difficulty].reward }) 
         })
         .then(res => res.json())
         .then(data => console.log('New bond:', data.bond));
