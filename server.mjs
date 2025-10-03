@@ -28,10 +28,11 @@ app.use(express.json());
 export const AppDataSource = new DataSource({
   url: process.env.DEPLOYED_URL,
   logging: false,
-  entities: [Student],
+  // entities: [Student],
   ssl: { rejectUnauthorized: false },
   migrations: [],
-  subscribers: [],
+  subscribers: []
+  
 });
 
 // local postgres connection
