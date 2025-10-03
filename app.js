@@ -443,10 +443,10 @@ dialogueArrow.addEventListener('click', function() {
         dialogueText.textContent = "This island is all we have been able to keep from them, but I fear not for much longer. I know little of war, but this island was once a meeting location for the land's greatest warriors."
         dialogueProgress = "1.3";
     } else if (dialogueProgress === "1.3") {
-        dialogueText.textContent = "You will need to fight the enemy factions and defeat their leaders. "
+        dialogueText.textContent = "You will need to fight the enemy factions and defeat their leaders. This will not be easy and you will need to gather more allies. Find them at Traders along your journey. It seems warriors are always looking for new weapons and armor.";
         dialogueProgress = "1.4";
     } else if (dialogueProgress === "1.4") {
-        dialogueText.textContent = `Heavens bless you on this adventure ${leaderName}. Return to me when you have defeated your first enemy leader and we will increase your abilities.`;
+        dialogueText.textContent = `Heavens bless you on this adventure ${leaderName}. Return to the island`;
         dialogueProgress = "1.5";
     } else if (dialogueProgress === "1.5") {
         dialogueDiv.style.display = "none";
