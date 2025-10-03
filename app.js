@@ -440,10 +440,10 @@ dialogueArrow.addEventListener('click', function() {
         dialogueProgress = "1.2";
     } else if (dialogueProgress === "1.2") {
         document.body.style.backgroundImage = "url('images/maps/map_home.png')";
-        dialogueText.textContent = "This island is all we have been able to keep from them, but I fear not for much longer. I know very little of war, but use this island as a base to gather allies and resources."
+        dialogueText.textContent = "This island is all we have been able to keep from them, but I fear not for much longer. I know little of war, but this island was once a meeting location for the land's greatest warriors."
         dialogueProgress = "1.3";
     } else if (dialogueProgress === "1.3") {
-        dialogueText.textContent = "You will need to fight through the enemy factions until you find their leader. Gather bond - our currency to finance your way to victory. On your way you will find traders to barter with, if you can recruit them to the island I'm sure they will give you discounted prices. Lastly - build what structures or defenses you may need  to be successful on your journey."
+        dialogueText.textContent = "You will need to fight the enemy factions and defeat their leaders. "
         dialogueProgress = "1.4";
     } else if (dialogueProgress === "1.4") {
         dialogueText.textContent = `Heavens bless you on this adventure ${leaderName}. Return to me when you have defeated your first enemy leader and we will increase your abilities.`;
