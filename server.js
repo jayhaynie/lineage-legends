@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const { Pool } = require('pg'); //postgres
+// const { Pool } = require('pg'); //local postgres
+const { DataSource } = require('typeorm');
 const path = require('node:path');
 
 require('dotenv').config();
@@ -18,14 +19,23 @@ app.use(cors({
 
 app.use(express.json());
 
-//postgres connection
-const pool = new Pool({
-  user: process.env.DB_USER,         // Fetch from .env
-  host: process.env.DB_HOST,         // Fetch from .env
-  database: process.env.DB_DATABASE, // Fetch from .env
-  password: process.env.DB_PASSWORD, // Fetch from .env
-  port: process.env.DB_PORT          // Fetch from .env
+export const AppDataSource = new DataSource({
+  url: process.env.DEPLOYED_URL,
+  logging: false,
+  entities: [Student],
+  ssl: { rejectUnauthorized: false },
+  migrations: [],
+  subscribers: [],
 });
+
+//local postgres connection
+// const pool = new Pool({
+//   user: process.env.DB_USER,         // Fetch from .env
+//   host: process.env.DB_HOST,         // Fetch from .env
+//   database: process.env.DB_DATABASE, // Fetch from .env
+//   password: process.env.DB_PASSWORD, // Fetch from .env
+//   port: process.env.DB_PORT          // Fetch from .env
+// });
 
 // Create a new user
 app.post('/api/players', async (req, res) => {
