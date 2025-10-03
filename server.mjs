@@ -26,13 +26,14 @@ app.use(cors({
 app.use(express.json());
 
 export const AppDataSource = new DataSource({
+  type: "postgres", 
   url: process.env.DEPLOYED_URL,
   logging: false,
   // entities: [Student],
   ssl: { rejectUnauthorized: false },
   migrations: [],
   subscribers: []
-  
+
 });
 
 // local postgres connection

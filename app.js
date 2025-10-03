@@ -5441,11 +5441,11 @@ function autoFindEnemyAbility() {
 
 async function autoFindEnemyAbilityAmount() {
     if (leaderBattle === true && attackingEnemy.id === "enemy1-div") {
-        const res = await fetch(`http://localhost:443/api/enemy_leader/${currentlyAt}/ability/${leaderAbilityNumber}`);
+        const res = await fetch(`API_BASE_URL/api/enemy_leader/${currentlyAt}/ability/${leaderAbilityNumber}`);
     const data = await res.json();
     attackingEnemyAbilityAmount = data.ammount;
     } else {
-        const res = await fetch(`http://localhost:443/api/enemy/ability1/${attackingEnemyAbility}`);
+        const res = await fetch(`API_BASE_URL/api/enemy/ability1/${attackingEnemyAbility}`);
         const data = await res.json();
         attackingEnemyAbilityAmount = data.ability1_ammount;
     }
@@ -5895,7 +5895,7 @@ async function autoApplyEnemyAbility() {
 let enemySummonCards = [];
 
 async function findEnemySummonCards() {
-    const res = await fetch(`http://localhost:443/api/enemies/type/${currentlyAt}`);
+    const res = await fetch(`API_BASE_URL/api/enemies/type/${currentlyAt}`);
     const data = await res.json();
     enemySummonCards = data;
 }
@@ -5920,7 +5920,7 @@ async function autoGetCharMaxHealth() {
     let src = imgElem.src.split('/').pop(); 
     let image_id = src.replace('Base.png', '').replace('Leader.png', '');
 
-    const res = await fetch(`http://localhost:443/api/character/${image_id}`);
+    const res = await fetch(`API_BASE_URL/api/character/${image_id}`);
     const data = await res.json();
     return data.health_max;
 }
@@ -5930,7 +5930,7 @@ async function autoGetEnemyMaxHealth() {
     let src = imgElem.src.split('/').pop(); 
     let image_id = src.replace('.png', '');
 
-    const res = await fetch(`http://localhost:443/api/enemy/${image_id}`);
+    const res = await fetch(`API_BASE_URL/api/enemy/${image_id}`);
     const data = await res.json();
     return data.health_max;
 }
@@ -5940,7 +5940,7 @@ async function autoGetAllEnemyMaxHealth(index) {
     let src = imgElem.src.split('/').pop(); 
     let image_id = src.replace('.png', '');
 
-    const res = await fetch(`http://localhost:443/api/enemy/${image_id}`);
+    const res = await fetch(`API_BASE_URL/api/enemy/${image_id}`);
     const data = await res.json();
     return data.health_max;
 }
@@ -6074,7 +6074,7 @@ let pirateProgress = 1;
 let currentBattleButton = null;
 
 async function pullFactionProgress() {
-    const res = await fetch(`http://localhost:443/api/players/${currentUsername}`);
+    const res = await fetch(`API_BASE_URL/api/players/${currentUsername}`);
     const data = await res.json();
     banditProgress = data.bandit_track;
     ghoulProgress = data.ghoul_track;
@@ -6176,7 +6176,7 @@ async function pushFactionProgress() {
         legion: legionProgress,
         pirate: pirateProgress
     };
-    await fetch(`http://localhost:443/api/players/${currentUsername}/faction/all`, {
+    await fetch(`API_BASE_URL/api/players/${currentUsername}/faction/all`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(progressData)
@@ -6303,7 +6303,7 @@ document.getElementById("victory-button").addEventListener('click', function() {
     }
 
     // add earned bond to players db table
-    fetch(`http://localhost:443/api/players/${currentUsername}/plusBond`, {
+    fetch(`API_BASE_URL/api/players/${currentUsername}/plusBond`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount: difficulties[difficulty].reward }) 
@@ -6475,7 +6475,7 @@ document.getElementById("bribe-trader-yes-button").addEventListener('click', asy
 });
 
 async function pushBribedTradersToDB() {
-    await fetch(`http://localhost:443/api/players/${currentUsername}/bribedTraders`, {
+    await fetch(`API_BASE_URL/api/players/${currentUsername}/bribedTraders`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -6515,20 +6515,20 @@ async function initializeTrader() {
 }
 
 async function initializeTotalBond() { // show total bond on trader initialize
-    const res = await fetch(`http://localhost:443/api/players/${currentUsername}`);
+    const res = await fetch(`API_BASE_URL/api/players/${currentUsername}`);
     const data = await res.json();
     document.getElementById("total-bond-text").textContent = data.bond;
 }
 
 async function listLeaderCharacter() {
-    const res = await fetch(`http://localhost:443/api/${currentUsername}/cards/leader`);
+    const res = await fetch(`API_BASE_URL/api/${currentUsername}/cards/leader`);
     const data = await res.json();
     document.getElementById("trader-character1").textContent = data.name;
     document.getElementById("trader-character1").style.display = "block";
 }
 
 async function listBaseCharacters() {
-    const res = await fetch(`http://localhost:443/api/${currentUsername}/cards/base`);
+    const res = await fetch(`API_BASE_URL/api/${currentUsername}/cards/base`);
     const data = await res.json();
     for (let i = 0; i < data.length; i++) {
         document.getElementById(`trader-character${i + 2}`).textContent = data[i].name;
@@ -6549,7 +6549,7 @@ async function showCharacterCards() {
         shopNumber = 4;
     }
 
-    const res = await fetch(`http://localhost:443/api/${currentUsername}/cards/shop/${shopNumber}`);
+    const res = await fetch(`API_BASE_URL/api/${currentUsername}/cards/shop/${shopNumber}`);
     const shopCards = await res.json();
 
     for (let i = 0; i < 4; i++) {
@@ -6593,7 +6593,7 @@ traderCardImages.forEach(card => {
 });
 
 async function populatebuyCard() {
-    const res = await fetch(`http://localhost:443/api/${currentUsername}/cards/image/${clickedCardImageId}`);
+    const res = await fetch(`API_BASE_URL/api/${currentUsername}/cards/image/${clickedCardImageId}`);
     const cardData = await res.json();
     document.getElementById("buy-card-character-img").src = `images/base-characters/${cardData.image_id}Base.png`;
     document.getElementById("buy-card-character-protection").textContent = cardData.initial_protection;
@@ -6625,7 +6625,7 @@ document.getElementById("buy-card-yes-button").addEventListener("click", async f
 });
 
 async function pushTypeChangeToDB() {
-    await fetch(`http://localhost:443/api/${currentUsername}/cards/setBase`, {
+    await fetch(`API_BASE_URL/api/${currentUsername}/cards/setBase`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ image_id: clickedCardImageId })
@@ -6750,7 +6750,7 @@ document.getElementById("confirm-purchase-yes-button").addEventListener("click",
 });
 
 async function populateConfirmPurchasePage() {
-    const res = await fetch(`http://localhost:443/api/${currentUsername}/cards/name/${encodeURIComponent(characterListButtonClickedName)}`);
+    const res = await fetch(`API_BASE_URL/api/${currentUsername}/cards/name/${encodeURIComponent(characterListButtonClickedName)}`);
     const characterData = await res.json();
     await checkAbilityStatus(characterData);
     
@@ -6973,7 +6973,7 @@ async function pushPurchaseToDB() {
         ability2_uses: parseInt(document.getElementById("after-upgrade-ability2-uses").textContent)
     };
 
-    await fetch(`http://localhost:443/api/${currentUsername}/cards/update`, {
+    await fetch(`API_BASE_URL/api/${currentUsername}/cards/update`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -6983,7 +6983,7 @@ async function pushPurchaseToDB() {
 }
 
 async function bondPurchase(cost) { // subtract cost from bond in the database
-    await fetch(`http://localhost:443/api/players/${currentUsername}/minusBond`, {
+    await fetch(`API_BASE_URL/api/players/${currentUsername}/minusBond`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount: parseInt(cost, 10) })
@@ -7010,7 +7010,7 @@ function showHeirlooms() {
 let ownedHeirlooms = [];
 
 async function pullOwnedHeirloomsFromDB() {
-    const res = await fetch(`http://localhost:443/api/players/${currentUsername}/trueColumns`);
+    const res = await fetch(`API_BASE_URL/api/players/${currentUsername}/trueColumns`);
     const data = await res.json();
     ownedHeirlooms = data.trueColumns || [];
 }
@@ -7032,7 +7032,7 @@ heirloomButtons.forEach(heirloom => {
 });
 
 async function checkIfCharacterInDeck(heirloom) { // and fill out before/after divs
-    const res = await fetch(`http://localhost:443/api/${currentUsername}/cards/baseOrLeader`);
+    const res = await fetch(`API_BASE_URL/api/${currentUsername}/cards/baseOrLeader`);
     const chars = await res.json();
 
     let found = false;
@@ -7108,7 +7108,7 @@ document.getElementById("armory-confirm-yes-button").addEventListener('click', a
 
 let heirloomId = null;
 async function pushChannelHeirloomToDB() {
-    await fetch(`http://localhost:443/api/${currentUsername}/cards/updateAbility1ByHeirloom`, {
+    await fetch(`API_BASE_URL/api/${currentUsername}/cards/updateAbility1ByHeirloom`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -7254,7 +7254,7 @@ function calculateLeadersDefeated() {
 
 let cardsCollectedNumber = 0;
 async function calculateCardsCollected() {
-    const res = await fetch(`http://localhost:443/api/${currentUsername}/cards/baseOrLeader`);
+    const res = await fetch(`API_BASE_URL/api/${currentUsername}/cards/baseOrLeader`);
     const chars = await res.json();
 
     cardsCollectedNumber = chars.length;
@@ -7330,11 +7330,11 @@ async function pushForgedHeirloomToDB() {
         heirloomKey = "staffofjustice";
     }
     // changes heirloom = true /resets _track and _bribed
-    await fetch(`http://localhost:443/api/players/${currentUsername}/forge/${heirloomKey}`, {
+    await fetch(`API_BASE_URL/api/players/${currentUsername}/forge/${heirloomKey}`, {
         method: "POST"
     });
     // delete entire playerName_cards table (will be re-created after with new leader and base card)
-    await fetch(`http://localhost:443/api/${currentUsername}/cards/deleteTable`, {
+    await fetch(`API_BASE_URL/api/${currentUsername}/cards/deleteTable`, {
         method: "POST"
     });
 }
