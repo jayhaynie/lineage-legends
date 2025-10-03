@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
 })
 
-// function fadeMusic {
-
-// }
+// possibly use these to streamline app.js fetch calls `${hostAddress}:${portVariable}..........`
+// const hostAddress = process.env.HOST || 'http://localhost:3000';
+// const portVariable = process.env.PORT || '3000';
 
 const titleButton = document.getElementById("title-button");
 const createHeader = document.getElementById("create-header");

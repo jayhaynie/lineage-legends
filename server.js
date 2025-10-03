@@ -1,11 +1,16 @@
 const express = require('express');
 const cors = require('cors');
 const { Pool } = require('pg'); //postgres
+const path = require('node:path');
 
 require('dotenv').config();
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
+const host = process.env.HOST || '0.0.0.0';
+app.listen(port, host);
+
+app.use(express.static(__dirname));
 
 app.use(cors({
   origin: '*'  //allowing all local origins
@@ -772,9 +777,5 @@ app.post('/api/:username/cards/deleteTable', async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-});
-
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
 });
 
