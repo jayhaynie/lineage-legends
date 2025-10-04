@@ -15,9 +15,7 @@ const __dirname = dirname(__filename);
 const app = express();
 const port = process.env.PORT || 443;
 const host = process.env.HOST || '0.0.0.0';
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+app.listen(port, host);
 
 app.use(express.static(__dirname));
 
@@ -29,7 +27,7 @@ app.use(express.json());
 
 export const AppDataSource = new DataSource({
   type: "postgres", 
-  url: process.env.DEPLOYED_URL,
+  url: process.env.DATABASE_URL,
   logging: false,
   // entities: [Student],
   ssl: { rejectUnauthorized: false },
