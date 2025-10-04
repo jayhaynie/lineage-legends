@@ -333,9 +333,10 @@ app.get('/api/leader/:image_id', async (req, res) => {
 });
 
 app.get('/api/:username/cards/leader', async (req, res) => {
-  const { username } = req.params;
-  const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
-  const cardsTable = `${safeUsername}_cards`;
+  let { username } = req.params;
+  // Sanitize username
+  username = String(username || '').replace(/[^a-zA-Z0-9_]/g, '');
+  const cardsTable = `${username}_cards`;
   try {
     const result = await client.query(
       `SELECT * FROM ${cardsTable} WHERE type = 'leader' LIMIT 1`
@@ -350,9 +351,10 @@ app.get('/api/:username/cards/leader', async (req, res) => {
 });
 
 app.get('/api/:username/cards/base', async (req, res) => {
-  const { username } = req.params;
-  const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
-  const cardsTable = `${safeUsername}_cards`;
+  let { username } = req.params;
+  // Sanitize username
+  username = String(username || '').replace(/[^a-zA-Z0-9_]/g, '');
+  const cardsTable = `${username}_cards`;
   try {
     const result = await client.query(
       `SELECT * FROM ${cardsTable} WHERE type = 'base'`
@@ -574,10 +576,10 @@ app.post('/api/players/:username/faction/all', async (req, res) => {
 });
 
 app.get('/api/:username/cards/shop/:shopNumber', async (req, res) => {
-  const { username, shopNumber } = req.params;
-  // Sanitize table name
-  const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
-  const cardsTable = `${safeUsername}_cards`;
+  let { username, shopNumber } = req.params;
+  // Sanitize username
+  username = String(username || '').replace(/[^a-zA-Z0-9_]/g, '');
+  const cardsTable = `${username}_cards`;
   const shopType = `shop${shopNumber}`;
   try {
     const result = await client.query(
@@ -591,10 +593,10 @@ app.get('/api/:username/cards/shop/:shopNumber', async (req, res) => {
 });
 
 app.get('/api/:username/cards/name/:cardName', async (req, res) => {
-  const { username, cardName } = req.params;
-  // Sanitize table name
-  const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
-  const cardsTable = `${safeUsername}_cards`;
+  let { username, cardName } = req.params;
+  // Sanitize username
+  username = String(username || '').replace(/[^a-zA-Z0-9_]/g, '');
+  const cardsTable = `${username}_cards`;
   try {
     const result = await client.query(
       `SELECT * FROM ${cardsTable} WHERE name = $1`,
@@ -610,7 +612,7 @@ app.get('/api/:username/cards/name/:cardName', async (req, res) => {
 });
 
 app.post('/api/:username/cards/update', async (req, res) => {
-  const { username } = req.params;
+  let { username } = req.params;
   const {
     name, // the card's name (used to identify the row)
     protection, // 
@@ -621,9 +623,9 @@ app.post('/api/:username/cards/update', async (req, res) => {
     ability2_uses
   } = req.body;
 
-  // Sanitize table name
-  const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
-  const cardsTable = `${safeUsername}_cards`;
+  // Sanitize username
+  username = String(username || '').replace(/[^a-zA-Z0-9_]/g, '');
+  const cardsTable = `${username}_cards`;
 
   try {
     const result = await client.query(
@@ -643,10 +645,10 @@ app.post('/api/:username/cards/update', async (req, res) => {
 });
 
 app.get('/api/:username/cards/image/:imageId', async (req, res) => {
-  const { username, imageId } = req.params;
-  // Sanitize table name
-  const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
-  const cardsTable = `${safeUsername}_cards`;
+  let { username, imageId } = req.params;
+  // Sanitize username
+  username = String(username || '').replace(/[^a-zA-Z0-9_]/g, '');
+  const cardsTable = `${username}_cards`;
   try {
     const result = await client.query(
       `SELECT * FROM ${cardsTable} WHERE image_id = $1`,
@@ -662,12 +664,12 @@ app.get('/api/:username/cards/image/:imageId', async (req, res) => {
 });
 
 app.post('/api/:username/cards/setBase', async (req, res) => {
-  const { username } = req.params;
+  let { username } = req.params;
   const { image_id } = req.body;
 
-  // Sanitize table name
-  const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
-  const cardsTable = `${safeUsername}_cards`;
+  // Sanitize username
+  username = String(username || '').replace(/[^a-zA-Z0-9_]/g, '');
+  const cardsTable = `${username}_cards`;
 
   try {
     const result = await client.query(
@@ -747,10 +749,10 @@ app.get('/api/players/:username/trueColumns', async (req, res) => {
 });
 
 app.get('/api/:username/cards/baseOrLeader', async (req, res) => {
-  const { username } = req.params;
-  // Sanitize table name
-  const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
-  const cardsTable = `${safeUsername}_cards`;
+  let { username } = req.params;
+  // Sanitize username
+  username = String(username || '').replace(/[^a-zA-Z0-9_]/g, '');
+  const cardsTable = `${username}_cards`;
   try {
     const result = await client.query(
       `SELECT * FROM ${cardsTable} WHERE type = 'base' OR type = 'leader'`
@@ -762,12 +764,12 @@ app.get('/api/:username/cards/baseOrLeader', async (req, res) => {
 });
 
 app.post('/api/:username/cards/updateAbility1ByHeirloom', async (req, res) => {
-  const { username } = req.params;
+  let { username } = req.params;
   const { heirloom_id, ability1_name, ability1_desc } = req.body;
 
-  // Sanitize table name
-  const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
-  const cardsTable = `${safeUsername}_cards`;
+  // Sanitize username
+  username = String(username || '').replace(/[^a-zA-Z0-9_]/g, '');
+  const cardsTable = `${username}_cards`;
 
   try {
     const result = await client.query(
@@ -816,10 +818,10 @@ app.post('/api/players/:username/forge/:heirloomKey', async (req, res) => {
 });
 
 app.post('/api/:username/cards/deleteTable', async (req, res) => {
-  const { username } = req.params;
-  // Sanitize table name
-  const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
-  const cardsTable = `${safeUsername}_cards`;
+  let { username } = req.params;
+  // Sanitize username
+  username = String(username || '').replace(/[^a-zA-Z0-9_]/g, '');
+  const cardsTable = `${username}_cards`;
 
   try {
     await client.query(`DROP TABLE IF EXISTS ${cardsTable}`);
