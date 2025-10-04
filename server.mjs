@@ -47,7 +47,7 @@ const client = new Client({
   database: process.env.DB_DATABASE, // Fetch from .env
   password: process.env.DB_PASSWORD, // Fetch from .env
   port: process.env.DB_PORT,         // Fetch from .env
-  ssl: process.env.DB_SSL // Enable SSL
+  ssl: process.env.DB_SSL === 'true' // Enable SSL
 });
 
 client.connect((err) => {
