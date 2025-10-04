@@ -41,13 +41,18 @@ export const AppDataSource = new DataSource({
 
 });
 
+let sslConfig = false;
+if (process.env.DB_SSL === 'true') {
+  sslConfig = { rejectUnauthorized: false };
+}
+
 const client = new Client({
   user: process.env.DB_USER,         // Fetch from .env
   host: process.env.DB_HOST,         // Fetch from .env
   database: process.env.DB_DATABASE, // Fetch from .env
   password: process.env.DB_PASSWORD, // Fetch from .env
   port: process.env.DB_PORT,         // Fetch from .env
-  ssl: process.env.DB_SSL === 'true' // Enable SSL
+  ssl: sslConfig // Enable SSL
   // ssl: false
 });
 
