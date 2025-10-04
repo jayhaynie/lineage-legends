@@ -944,7 +944,7 @@ const difficulties = {
 let leaderBattle = false;
 
 function randomEnemy(difficulty) {
-    const settings = difficulties[difficulty];
+    const settings = difficulties[currentlyAt][difficulty];
     let numEnemies = randomBetween(settings.minEnemies, settings.maxEnemies);
 
     if (leaderBattle === true) {
