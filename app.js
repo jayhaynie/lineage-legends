@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Dynamic API base URL for local and deployed environments
 const API_BASE_URL = (window.location.hostname === 'localhost' && window.location.port === '443')
     ? 'http://localhost:443'
-    : '0.0.0.0:443';// next try 10000, then try 0.0.0.0
+    : 'https://lineage-legends-postgres-db.onrender.com';// tried process.env.DATABASE_URL
 
 const titleButton = document.getElementById("title-button");
 const createHeader = document.getElementById("create-header");
