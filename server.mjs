@@ -11,6 +11,8 @@ import { dirname } from 'path';
 
 //Jay testing deployment1
 console.log('Jay testing deployment1');
+console.log(process.env.DB_HOST);
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
