@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Dynamic API base URL for local and deployed environments
 const API_BASE_URL = (window.location.hostname === 'localhost' && window.location.port === '443')
     ? 'http://localhost:443'
-    : 'postgresql://lineage_legends_postgres_db_user:rMByWgAjlCKzCli2JZ7J8UyBH2rl1Nq0@dpg-d3g1053e5dus73ahnea0-a/lineage_legends_postgres_db';
+    : process.env.DATABASE_URL;
 
 const titleButton = document.getElementById("title-button");
 const createHeader = document.getElementById("create-header");
