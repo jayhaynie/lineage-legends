@@ -15,7 +15,9 @@ const __dirname = dirname(__filename);
 const app = express();
 const port = process.env.PORT || 443;
 const host = process.env.HOST || '0.0.0.0';
-app.listen(port, host);
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
 
 app.use(express.static(__dirname));
 
