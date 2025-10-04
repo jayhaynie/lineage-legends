@@ -9,6 +9,9 @@ dotenv.config();
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
+//Jay testing deployment1
+console.log('Jay testing deployment1');
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -261,6 +264,8 @@ app.get('/api/character/:image_id', async (req, res) => {
 
 app.get('/api/characters', async (req, res) => {
   try {
+    //Jay testing deployment
+    console.log('Jay testing deployment');
     const result = await pool.query('SELECT image_id FROM characters_base');
     res.json(result.rows.map(row => row.image_id));
   } catch (err) {
